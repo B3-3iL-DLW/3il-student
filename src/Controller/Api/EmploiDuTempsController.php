@@ -27,6 +27,13 @@ class EmploiDuTempsController extends AbstractController
         }
     }
 
+    #[Route('/api/classes', name: 'api_classes')]
+    public function getClasses(): JsonResponse
+    {
+        $classes = $this->scrapeClasses('https://eleves.groupe3il.fr/edt_eleves/00_index.php');
+        return $this->json($classes);
+    }
+
     private function defineCreneaux(): array
     {
         return [
