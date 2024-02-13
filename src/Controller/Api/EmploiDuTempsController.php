@@ -55,6 +55,12 @@ class EmploiDuTempsController extends AbstractController
         foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $semaine) {
             // Parcourir chaque jour de la semaine
             foreach ($semaine['JOUR'] as $jour) {
+                $jourDeLaSemaine = date('N', strtotime($jour['Date']));
+
+                // Si le jour est un samedi ou un dimanche, passer à l'itération suivante
+                if ($jourDeLaSemaine > 5) {
+                    continue;
+                }
                 // Initialiser un tableau pour stocker les informations d'un jour
                 $jourData = [];
                 $jourData['date'] = $jour['Date'];
@@ -71,6 +77,7 @@ class EmploiDuTempsController extends AbstractController
                         $coursData['id'] = $creneau['Id'] ?? null;
                         $coursData['couleur'] = $creneau['Couleur'] ?? null;
                         $coursData['horaire'] = $creneaux[$creneau['Creneau']];
+                        $coursData['salle'] = $creneau['Salles'] ?? null;
 
                         // Ajouter les informations du cours au tableau du jour
                         $jourData['cours'][] = $coursData;
