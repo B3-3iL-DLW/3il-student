@@ -68,12 +68,36 @@ class EmploiDuTempsController extends AbstractController
                 if ($jourDeLaSemaine > 5) {
                     continue;
                 }
+
                 // Initialiser un tableau pour stocker les informations d'un jour
                 $jourData = [];
                 $jourData['date'] = $jour['Date'];
                 $jourData['jour'] = $jour['Jour'];
 
+                // Indicateur pour vérifier si tous les créneaux sont nuls
+                $allCreneauxNull = true;
+
                 // Parcourir chaque créneau du jour
+                foreach ($jour['CRENEAU'] as $creneau) {
+                    // Vérifier si le numéro de créneau existe dans votre liste de créneaux définis
+                    if (isset($creneaux[$creneau['Creneau']])) {
+
+                        if (isset($creneau['Id'])) {
+                            // Marquer l'indicateur à false si au moins un créneau n'est pas nul
+                            if ($creneau['Id'] !== null) {
+                                $allCreneauxNull = false;
+                            }
+                        }
+                    
+                    }
+                }
+
+                // Si tous les créneaux sont nuls, passer à l'itération suivante
+                if ($allCreneauxNull) {
+                    continue;
+                }
+
+                // Parcourir à nouveau chaque créneau pour construire les données filtrées
                 foreach ($jour['CRENEAU'] as $creneau) {
                     // Vérifier si le numéro de créneau existe dans votre liste de créneaux définis
                     if (isset($creneaux[$creneau['Creneau']])) {
