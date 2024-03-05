@@ -1,40 +1,35 @@
 <?php
 
-namespace App\Controller\Api;
+namespace App\Service;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\DomCrawler\Crawler;
 
-class EmploiDuTempsController extends AbstractController
+class TimetableService
 {
-    #[Route('/api/edt', name: 'api_edt')]
-    public function index(Request $request): JsonResponse
+
+    private $classesScraperService;
+
+    public function __construct(ClassesScraperService $classesScraperService)
     {
-        $classParam = $request->query->get('class_param');
-        $xmlUrl = $this->determineXmlUrl($classParam);
-
-        if ($xmlUrl) {
-            $parsedJson = $this->fetchAndParseData($xmlUrl);
+        $this->classesScraperService = $classesScraperService;
+    }
 
 
-            return $this->json($parsedJson);
-        } else {
-            return $this->json(['error' => 'Invalid class_param'], JsonResponse::HTTP_BAD_REQUEST);
+    public function getXmlFile(string $classParam): ?string
+    {
+        $classesList = $this->classesScraperService->scrapeClasses('https://eleves.groupe3il.fr/edt_eleves.php/00_index.php');
+
+        foreach ($classesList as $class) {
+            if ($class['name'] === $classParam) {
+                $encodedClassFile = str_replace(' ', '%20', $class['file']);
+                return "https://eleves.groupe3il.fr/edt_eleves/{$encodedClassFile}";
+            }
         }
+
+        return null;
     }
 
-    #[Route('/api/classes', name: 'api_classes')]
-    public function getClasses(): JsonResponse
-    {
-        $classes = $this->scrapeClasses('https://eleves.groupe3il.fr/edt_eleves/00_index.php');
-        return $this->json($classes);
-    }
-
-    private function defineCreneaux(): array
+    public function defineCreneaux(): array
     {
         return [
             "1" => ["start" => "8h30", "end" => "10h"],
@@ -46,16 +41,10 @@ class EmploiDuTempsController extends AbstractController
         ];
     }
 
-    private function fetchAndParseData(string $xmlUrl): array
+
+    public function filterParsedData(array $parsedData): array
     {
         $creneaux = $this->defineCreneaux();
-
-        $httpClient = HttpClient::create();
-        $xmlContent = $httpClient->request('GET', $xmlUrl)->getContent();
-        $xmlHash = simplexml_load_string($xmlContent);
-
-        $parsedData = json_decode(json_encode($xmlHash), true);
-
         $filteredData = [];
 
         // Parcourir chaque semaine
@@ -88,7 +77,6 @@ class EmploiDuTempsController extends AbstractController
                                 $allCreneauxNull = false;
                             }
                         }
-                    
                     }
                 }
 
@@ -123,38 +111,23 @@ class EmploiDuTempsController extends AbstractController
         return $filteredData;
     }
 
-
-
-    private function scrapeClasses(string $pageUrl): array
+    public function fetchXmlData(string $xmlUrl): string
     {
         $httpClient = HttpClient::create();
-        $htmlContent = $httpClient->request('GET', $pageUrl)->getContent();
-        $crawler = new Crawler($htmlContent);
-
-        $classes = [];
-        $crawler->filter('#idGroupe option')->each(function ($option) use (&$classes) {
-            $classes[] = [
-                'file' => $option->attr('value'),
-                'name' => $option->text(),
-            ];
-        });
-
-        return $classes;
+        return $httpClient->request('GET', $xmlUrl)->getContent();
     }
 
-    private function determineXmlUrl(string $classParam): ?string
+    public function parseXmlData(string $xmlContent): array
     {
+        $xmlHash = simplexml_load_string($xmlContent);
+        return json_decode(json_encode($xmlHash), true);
+    }
 
 
-        $classesList = $this->scrapeClasses('https://eleves.groupe3il.fr/edt_eleves/00_index.php');
-
-        foreach ($classesList as $class) {
-            if ($class['name'] === $classParam) {
-                $encodedClassFile = str_replace(' ', '%20', $class['file']);
-                return "https://eleves.groupe3il.fr/edt_eleves/{$encodedClassFile}";
-            }
-        }
-
-        return null;
+    public function fetchAndParseData(string $xmlUrl): array
+    {
+        $xmlContent = $this->fetchXmlData($xmlUrl);
+        $parsedData = $this->parseXmlData($xmlContent);
+        return $this->filterParsedData($parsedData);
     }
 }
