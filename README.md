@@ -21,7 +21,3 @@ Pour installer le projet, veuillez suivre les instructions fournies dans les REA
 Ce projet a été réalisé par Lukas, Jules et Yan dans le cadre de leurs études.
 
 ---
-
-N'hésitez pas à contribuer et à améliorer ce projet ! Si vous avez des questions ou des problèmes, veuillez ouvrir une issue sur GitHub.
-
-Merci pour votre intérêt et votre soutien ! 🚀
