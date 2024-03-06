@@ -21,17 +21,17 @@ class TimetableController extends AbstractController
     public function index(Request $request): JsonResponse
     {
         $classParam = $request->query->get('class_param');
+        if (!$classParam) {
+            return $this->json(['error' => 'class_param is missing'], JsonResponse::HTTP_BAD_REQUEST);
+        }
+        
         $xmlUrl = $this->timetableService->getXmlFile($classParam);
-
-        dd($xmlUrl);
-        dd($classParam);
 
         if ($xmlUrl) {
             $parsedJson = $this->timetableService->fetchAndParseData($xmlUrl);
-
             return $this->json($parsedJson);
         } else {
-            return $this->json(['error' => 'Invalid class_param'], JsonResponse::HTTP_BAD_REQUEST);
+            return $this->json(['error' => 'Invalid xml url'], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
 }

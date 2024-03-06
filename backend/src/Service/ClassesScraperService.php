@@ -13,8 +13,12 @@ class ClassesScraperService
         $htmlContent = $httpClient->request('GET', $url)->getContent();
         $crawler = new Crawler($htmlContent);
 
-        $classes = $crawler->filter('select[name="classe"] option')->each(function (Crawler $node, $i) {
-            return $node->text();
+        $classes = [];
+        $crawler->filter('#idGroupe option')->each(function ($option) use (&$classes) {
+            $classes[] = [
+                'file' => $option->attr('value'),
+                'name' => $option->text(),
+            ];
         });
 
         return $classes;
