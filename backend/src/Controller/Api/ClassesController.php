@@ -19,7 +19,7 @@ class ClassesController extends AbstractController
     #[Route('/api/classes', name: 'api_classes')]
     public function getClasses(): JsonResponse
     {
-        $classes = $this->classesScraperService->scrapeClasses('https://eleves.groupe3il.fr/edt_eleves/00_index.php');
+        $classes = $this->classesScraperService->scrapeClasses();
         return $this->json($classes);
     }
 }

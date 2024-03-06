@@ -21,7 +21,7 @@ Pour installer l'API et ses dépendances, suivez les étapes ci-dessous :
 
 L'API offre les endpoints suivants :
 
-- `/api/timetable` : Permet de récupérer l'emploi du temps d'une classe spécifique.
+- `/api/timetable?class_param=XX` : Permet de récupérer l'emploi du temps d'une classe spécifique.
 - `/api/classes` : Permet de récupérer la liste des classes disponibles.
 
 ## Utilisation

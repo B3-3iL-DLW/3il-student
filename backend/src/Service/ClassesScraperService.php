@@ -7,10 +7,16 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class ClassesScraperService
 {
-    public function scrapeClasses(string $url): array
+    private string $schedule_url;
+
+    public function __construct(string $schedule_url)
+    {
+        $this->schedule_url = $schedule_url;
+    }
+    public function scrapeClasses(): array
     {
         $httpClient = HttpClient::create();
-        $htmlContent = $httpClient->request('GET', $url)->getContent();
+        $htmlContent = $httpClient->request('GET', $this->schedule_url)->getContent();
         $crawler = new Crawler($htmlContent);
 
         $classes = $crawler->filter('select[name="classe"] option')->each(function (Crawler $node, $i) {
