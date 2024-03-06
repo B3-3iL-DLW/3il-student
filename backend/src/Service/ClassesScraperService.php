@@ -16,7 +16,7 @@ class ClassesScraperService
     public function scrapeClasses(): array
     {
         $httpClient = HttpClient::create();
-        $htmlContent = $httpClient->request('GET', $this->schedule_url)->getContent();
+        $htmlContent = $httpClient->request('GET', $this->schedule_url.'00_index.php')->getContent();
         $crawler = new Crawler($htmlContent);
 
         $classes = [];

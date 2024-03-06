@@ -19,7 +19,7 @@ class TimetableService
 
     public function getXmlFile(string $classParam): ?string
     {
-        $classesList = $this->classesScraperService->scrapeClasses($this->schedule_url . '00_index.php');
+        $classesList = $this->classesScraperService->scrapeClasses();
         foreach ($classesList as $class) {
             if ($class['name'] === $classParam) {
                 $encodedClassFile = str_replace(' ', '%20', $class['file']);
