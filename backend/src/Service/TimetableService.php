@@ -17,7 +17,7 @@ class TimetableService
 
     public function getXmlFile(string $classParam): ?string
     {
-        $classesList = $this->classesScraperService->scrapeClasses('https://eleves.groupe3il.fr/edt_eleves.php/00_index.php');
+        $classesList = $this->classesScraperService->scrapeClasses('https://eleves.groupe3il.fr/edt_eleves/00_index.php');
 
         foreach ($classesList as $class) {
             if ($class['name'] === $classParam) {
@@ -53,7 +53,7 @@ class TimetableService
             foreach ($semaine['JOUR'] as $jour) {
                 $jourDeLaSemaine = date('N', strtotime($jour['Date']));
 
-                // Si le jour est un samedi ou un dimanche, passer à l'itération suivante
+                // ignore week-end
                 if ($jourDeLaSemaine > 5) {
                     continue;
                 }

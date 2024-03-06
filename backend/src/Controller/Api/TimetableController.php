@@ -23,6 +23,9 @@ class TimetableController extends AbstractController
         $classParam = $request->query->get('class_param');
         $xmlUrl = $this->timetableService->getXmlFile($classParam);
 
+        dd($xmlUrl);
+        dd($classParam);
+
         if ($xmlUrl) {
             $parsedJson = $this->timetableService->fetchAndParseData($xmlUrl);
 
@@ -31,6 +34,4 @@ class TimetableController extends AbstractController
             return $this->json(['error' => 'Invalid class_param'], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
-
-
 }
