@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - dev
-      - -ci/ci-cd-for-api
+      - ci/ci-cd-for-api
 
 jobs:
   deploy:
