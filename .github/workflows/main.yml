@@ -20,8 +20,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Upload PHP code
-        run: scp -r . ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/home/julesartd/www/api-dev-edt-3il
-
+        run: scp -o StrictHostKeyChecking=no -r . ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/home/julesartd/www/api-dev-edt-3il
       - name: SSH into server and run composer install
         uses: appleboy/ssh-action@master
         with:
