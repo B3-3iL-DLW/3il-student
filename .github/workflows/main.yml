@@ -29,5 +29,5 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/julesartd/www/api-dev-edt-3il
+            cd /home/julesartd/www/api-dev-edt-3il/backend
             composer2 install
