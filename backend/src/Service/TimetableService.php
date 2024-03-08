@@ -8,21 +8,22 @@ class TimetableService
 {
 
     private $classesScraperService;
+    private $schedule_url;
 
-    public function __construct(ClassesScraperService $classesScraperService)
+    public function __construct(ClassesScraperService $classesScraperService, string $schedule_url)
     {
         $this->classesScraperService = $classesScraperService;
+        $this->schedule_url = $schedule_url;
     }
 
 
     public function getXmlFile(string $classParam): ?string
     {
-
-        $classesList = $this->classesScraperService->scrapeClasses('https://eleves.groupe3il.fr/edt_eleves/00_index.php');
+        $classesList = $this->classesScraperService->scrapeClasses();
         foreach ($classesList as $class) {
             if ($class['name'] === $classParam) {
                 $encodedClassFile = str_replace(' ', '%20', $class['file']);
-                return "https://eleves.groupe3il.fr/edt_eleves/{$encodedClassFile}";
+                return $this->schedule_url . $encodedClassFile;
             }
         }
 

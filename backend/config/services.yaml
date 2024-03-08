@@ -4,7 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-
+    app.schedule_url: '%env(APP_3IL_SCHEDULE_URL)%'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -22,5 +22,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\Service\ClassesScraperService: ~
-    App\Service\AnotherService: ~
+    App\Service\ClassesScraperService:
+        arguments:
+            $schedule_url: '%app.schedule_url%'
+    App\Service\TimetableService:
+        arguments:
+            $schedule_url: '%app.schedule_url%'
