@@ -1,10 +1,9 @@
-name: SSH Upload and Composer Install
+name: SSH Upload and Composer Install on DEV
 
 on:
   push:
     branches:
       - dev
-      - ci/ci-cd-for-api
 
 jobs:
   deploy:
