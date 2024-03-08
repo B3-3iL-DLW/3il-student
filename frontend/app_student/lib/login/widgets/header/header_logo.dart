@@ -6,7 +6,7 @@ class HeaderLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200.0, // Hauteur du Container
+      height: 210.0, // Hauteur du Container
       color: const Color(0xFF005067),
       child: Center(
         child: SizedBox(

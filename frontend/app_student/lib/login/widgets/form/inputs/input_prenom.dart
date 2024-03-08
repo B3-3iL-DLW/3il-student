@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 
-class INETextField extends StatelessWidget {
-  const INETextField({super.key});
+class FirstnameTextField extends StatelessWidget {
+  const FirstnameTextField({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-          left: 25.0,
-          top: 10.0,
-          right: 25.0), // Ajout d'un padding à gauche, en haut et à droite
+      padding: const EdgeInsets.only(left: 25.0, top: 30.0, right: 25.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'INE',
+            'Prénom',
             style: TextStyle(
               fontSize: 12.0,
               color: Colors.grey[600],
@@ -22,8 +19,11 @@ class INETextField extends StatelessWidget {
           ),
           const SizedBox(height: 10.0),
           TextFormField(
+            style: TextStyle(
+              color: Colors.grey[600],
+            ),
             decoration: InputDecoration(
-              hintText: 'Numéro INE',
+              hintText: 'Entrez votre prénom ici',
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               border: const OutlineInputBorder(

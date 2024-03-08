@@ -17,7 +17,7 @@ class HeaderText extends StatelessWidget {
         child: Text(
           content,
           style: const TextStyle(
-            fontSize: 32.0,
+            fontSize: 34.0,
             fontFamily: 'Arial',
             fontWeight: FontWeight.bold,
           ),

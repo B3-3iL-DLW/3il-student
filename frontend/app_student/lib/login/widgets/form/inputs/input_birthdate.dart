@@ -1,20 +1,38 @@
 import 'package:flutter/material.dart';
 
-class INETextField extends StatelessWidget {
-  const INETextField({super.key});
+class BirthDateField extends StatefulWidget {
+  const BirthDateField({super.key});
+
+  @override
+  BirthDateFieldState createState() => BirthDateFieldState();
+}
+
+class BirthDateFieldState extends State<BirthDateField> {
+  DateTime _selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-          left: 25.0,
-          top: 10.0,
-          right: 25.0), // Ajout d'un padding à gauche, en haut et à droite
+      padding: const EdgeInsets.only(left: 25.0, top: 30.0, right: 25.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'INE',
+            'Date de naissance',
             style: TextStyle(
               fontSize: 12.0,
               color: Colors.grey[600],
@@ -22,8 +40,9 @@ class INETextField extends StatelessWidget {
           ),
           const SizedBox(height: 10.0),
           TextFormField(
+            readOnly: true,
             decoration: InputDecoration(
-              hintText: 'Numéro INE',
+              hintText: _selectedDate.toLocal().toString().split(' ')[0],
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               border: const OutlineInputBorder(
@@ -35,6 +54,7 @@ class INETextField extends StatelessWidget {
                 borderRadius: BorderRadius.zero,
               ),
             ),
+            onTap: () => _selectDate(context),
           ),
         ],
       ),
