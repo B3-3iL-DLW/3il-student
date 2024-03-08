@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
         dayScheduleRepository: DayScheduleRepository(
             apiService: apiService, className: 'B3%20Groupe%203%20DLW-FA'));
 
+
     return MaterialApp(
       title: 'Class List',
       theme: ThemeData(

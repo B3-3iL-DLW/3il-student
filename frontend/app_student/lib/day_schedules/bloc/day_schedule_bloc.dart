@@ -9,7 +9,10 @@ class DayScheduleBloc {
   Stream<List<DaySchedule>> get dayScheduleStream =>
       _dayScheduleController.stream;
 
-  DayScheduleBloc({required this.dayScheduleRepository});
+  DayScheduleBloc({required this.dayScheduleRepository}) {
+    fetchDaySchedules('B3 GROUPE 3 DLW-FA');
+    // TODO : get the class name from the shared preferences
+  }
 
   fetchDaySchedules(String className) async {
     final daySchedules = await dayScheduleRepository.getDaySchedules(className);
