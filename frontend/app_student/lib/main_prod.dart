@@ -1,9 +1,10 @@
-import 'package:app_student/api/classes/repositories/class_repository.dart';
-import 'package:app_student/classes/views/class.dart';
+import 'package:app_student/api/api_service.dart';
+import 'package:app_student/api/day_schedule/repositories/day_schedule.dart';
 import 'package:app_student/config/prod_config.dart';
+import 'package:app_student/day_schedules/bloc/day_schedule_bloc.dart';
+import 'package:app_student/day_schedules/views/day_schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'classes/bloc/class_bloc.dart';
 import 'config/config.dart';
 
 void main() {
@@ -21,16 +22,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final config = Provider.of<Config>(context);
-    final classBloc =
-        ClassBloc(classRepository: ClassRepository(apiUrl: config.apiUrl));
+    final ApiService apiService = ApiService(apiUrl: config.apiUrl);
+
+    final dayScheduleBloc = DayScheduleBloc(
+        dayScheduleRepository: DayScheduleRepository(
+            apiService: apiService, className: 'B3%20Groupe%203%20DLW-FA'));
 
     return MaterialApp(
       title: 'Class List',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ClassListPage(
-        classBloc: classBloc,
+      home: DayScheduleView(
+        dayScheduleBloc: dayScheduleBloc,
       ),
     );
   }
