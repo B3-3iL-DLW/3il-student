@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "app_student",
+            "cwd": "frontend\\app_student",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "app_student (profile mode)",
+            "cwd": "frontend\\app_student",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "app_student (release mode)",
+            "cwd": "frontend\\app_student",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

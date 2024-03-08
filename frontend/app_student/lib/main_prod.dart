@@ -1,8 +1,17 @@
+import 'package:app_student/config/prod_config.dart';
 import 'package:app_student/login/views/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'config/config.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    Provider<Config>(
+      create: (_) => ProdConfig(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -11,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Mon Application',
+      title: 'Class List',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         focusColor: const Color(0xffE84E0F),
