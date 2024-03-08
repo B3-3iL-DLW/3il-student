@@ -26,13 +26,13 @@ class INETextField extends StatelessWidget {
               hintText: 'Numéro INE',
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-              border: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
-                borderRadius: BorderRadius.zero,
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(3.0),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Theme.of(context).focusColor),
-                borderRadius: BorderRadius.zero,
+                borderRadius: BorderRadius.circular(3.0),
               ),
             ),
           ),

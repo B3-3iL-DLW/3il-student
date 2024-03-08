@@ -26,13 +26,13 @@ class FirstnameTextField extends StatelessWidget {
               hintText: 'Entrez votre prénom ici',
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-              border: const OutlineInputBorder(
+              border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey),
-                borderRadius: BorderRadius.zero,
+                borderRadius: BorderRadius.circular(3.0),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Theme.of(context).focusColor),
-                borderRadius: BorderRadius.zero,
+                borderRadius: BorderRadius.circular(3.0),
               ),
             ),
           ),
