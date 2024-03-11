@@ -51,27 +51,22 @@ class TimetableService
         foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $week) {
             foreach ($week['JOUR'] as $day) {
                 // Remove the slashes from the date and convert it to a date object
-                $weekDay = date('N', strtotime(str_replace('/', '-', $day['Date'])));
+                $weekDayNumber = date('N', strtotime(str_replace('/', '-', $day['Date'])));
 
-                // On ignore les jours du week-end
-                if ($weekDay > 5) {
+                if ($weekDayNumber > 5) {
                     continue;
                 }
 
                 $jourData = [];
                 // Overwrite the day number with the actual day name because 3iL is weird
-                $jourData['jour'] = $weekDay;
+                $jourData['jour'] = $weekDayNumber;
                 $jourData['date'] = $day['Date'];
 
                 $allCreneauxNull = true;
 
-                // Parcourir chaque créneau du jour
                 foreach ($day['CRENEAU'] as $creneau) {
-                    // Vérifier si le numéro de créneau existe dans votre liste de créneaux définis
                     if (isset($creneaux[$creneau['Creneau']])) {
-
                         if (isset($creneau['Id'])) {
-                            // Marquer l'indicateur à false si au moins un créneau n'est pas nul
                             if ($creneau['Id'] !== null) {
                                 $allCreneauxNull = false;
                             }
@@ -79,16 +74,17 @@ class TimetableService
                     }
                 }
 
-                // Si tous les créneaux sont nuls, passer à l'itération suivante
                 if ($allCreneauxNull) {
                     continue;
                 }
 
-                // Parcourir à nouveau chaque créneau pour construire les données filtrées
                 foreach ($day['CRENEAU'] as $creneau) {
-                    // Vérifier si le numéro de créneau existe dans votre liste de créneaux définis
                     if (isset($creneaux[$creneau['Creneau']])) {
-                        // Créer un tableau pour stocker les informations d'un cours
+                        // Si Salles contient Teams on met visio à true et on enlève le mot Teams
+                        if (str_contains($creneau['Salles'] ?? null, 'Teams')) {
+                            $coursData['Salles'] = str_replace('Teams', '', $creneau['Salles']);
+                            $creneau['visio'] = true;
+                        }
                         $coursData = [];
                         $coursData['creneau'] = $creneau['Creneau'];
                         $coursData['activite'] = $creneau['Activite'] ?? null;
@@ -96,13 +92,11 @@ class TimetableService
                         $coursData['couleur'] = $creneau['Couleur'] ?? null;
                         $coursData['horaire'] = $creneaux[$creneau['Creneau']];
                         $coursData['salle'] = $creneau['Salles'] ?? null;
-
-                        // Ajouter les informations du cours au tableau du jour
+                        $coursData['visio'] = $creneau['visio'] ?? false;
                         $jourData['cours'][] = $coursData;
                     }
                 }
 
-                // Ajouter les informations du jour au tableau filtré
                 $filteredData[] = $jourData;
             }
         }
