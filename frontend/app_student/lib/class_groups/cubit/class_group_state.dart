@@ -8,7 +8,7 @@ class ClassGroupInitial extends ClassGroupState {}
 class ClassGroupLoading extends ClassGroupState {}
 
 class ClassGroupLoaded extends ClassGroupState {
-  final List<ClassGroupEntity> classes;
+  final List<ClassGroupModel> classes;
 
   ClassGroupLoaded(this.classes);
 }
