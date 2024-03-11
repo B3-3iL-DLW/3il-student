@@ -7,7 +7,6 @@ use App\Entity\Event;
 use App\Entity\EventHours;
 use App\Entity\Timetable;
 use App\Entity\WeekSchedule;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
