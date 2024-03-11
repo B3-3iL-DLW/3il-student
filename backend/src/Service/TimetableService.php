@@ -18,13 +18,14 @@ class TimetableService
 
     private $classesScraperService;
     private $schedule_url;
+    private $xmlService;
 
-    public function __construct(ClassesScraperService $classesScraperService, string $schedule_url)
+    public function __construct(ClassesScraperService $classesScraperService, string $schedule_url, XMLService $xmlService)
     {
         $this->classesScraperService = $classesScraperService;
         $this->schedule_url = $schedule_url;
+        $this->xmlService = $xmlService;
     }
-
 
     public function getXmlFile(string $classParam): ?string
     {
@@ -110,30 +111,10 @@ class TimetableService
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
      */
-    public function fetchXmlData(string $xmlUrl): string
-    {
-        $httpClient = HttpClient::create();
-        $content = $httpClient->request('GET', $xmlUrl)->getContent();
-        return $content;
-    }
-
-    public function parseXmlData(string $xmlContent): array
-    {
-        $xmlHash = simplexml_load_string($xmlContent);
-        return json_decode(json_encode($xmlHash), true);
-    }
-
-
-    /**
-     * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ClientExceptionInterface
-     */
     public function fetchAndParseData(string $xmlUrl): Timetable
     {
-        $xmlContent = $this->fetchXmlData($xmlUrl);
-        $parsedData = $this->parseXmlData($xmlContent);
+        $xmlContent = $this->xmlService->fetchXmlData($xmlUrl);
+        $parsedData = $this->xmlService->parseXmlData($xmlContent);
         return $this->filterParsedData($parsedData);
     }
 }
