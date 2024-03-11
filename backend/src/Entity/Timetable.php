@@ -6,6 +6,8 @@ use App\Repository\TimetableRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 #[ORM\Entity(repositoryClass: TimetableRepository::class)]
 class Timetable
@@ -13,7 +15,7 @@ class Timetable
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id;
 
     #[ORM\OneToMany(targetEntity: WeekSchedule::class, mappedBy: 'timetable')]
     private Collection $Weeks;
@@ -26,6 +28,13 @@ class Timetable
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**

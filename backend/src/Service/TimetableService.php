@@ -7,7 +7,7 @@ use App\Entity\Event;
 use App\Entity\EventHours;
 use App\Entity\Timetable;
 use App\Entity\WeekSchedule;
-use Cassandra\Time;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -57,6 +57,7 @@ class TimetableService
     {
         $creneaux = $this->defineCreneaux();
         $timetable = new Timetable();
+        $timetable->setId(random_int(0, 1000000));
 
         foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $week) {
 
@@ -74,6 +75,7 @@ class TimetableService
                 $daySchedule = new DaySchedule();
                 $daySchedule->setDate(\DateTime::createFromFormat('d/m/Y', $day['Date']));
                 $daySchedule->setJour($weekDayNumber);
+                $daySchedule->setId(random_int(0, 1000000));
 
                 foreach ($day['CRENEAU'] as $creneau) {
                     if (isset($creneaux[$creneau['Creneau']])) {
@@ -91,6 +93,7 @@ class TimetableService
                         $event->setVisio(str_contains($creneau['Salles'] ?? null, 'Teams'));
 
                         $daySchedule->addEvent($event);
+
                     }
                 }
 
@@ -111,7 +114,8 @@ class TimetableService
     public function fetchXmlData(string $xmlUrl): string
     {
         $httpClient = HttpClient::create();
-        return $httpClient->request('GET', $xmlUrl)->getContent();
+        $content = $httpClient->request('GET', $xmlUrl)->getContent();
+        return $content;
     }
 
     public function parseXmlData(string $xmlContent): array

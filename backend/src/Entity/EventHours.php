@@ -24,6 +24,13 @@ class EventHours
         return $this->id;
     }
 
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
+
+
     public function getStartAt(): ?string
     {
         return $this->startAt;
