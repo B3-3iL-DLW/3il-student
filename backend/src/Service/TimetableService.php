@@ -48,27 +48,25 @@ class TimetableService
         $creneaux = $this->defineCreneaux();
         $filteredData = [];
 
-        // Parcourir chaque semaine
-        foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $semaine) {
-            // Parcourir chaque jour de la semaine
-            foreach ($semaine['JOUR'] as $jour) {
-                $jourDeLaSemaine = date('N', strtotime($jour['Date']));
+        foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $week) {
+            foreach ($week['JOUR'] as $day) {
+                // Remove the slashes from the date and convert it to a date object
+                $weekDay = date('N', strtotime(str_replace('/', '-', $day['Date'])));
 
-                // ignore week-end
-                if ($jourDeLaSemaine > 5) {
+                // On ignore les jours du week-end
+                if ($weekDay > 5) {
                     continue;
                 }
 
-                // Initialiser un tableau pour stocker les informations d'un jour
                 $jourData = [];
-                $jourData['date'] = $jour['Date'];
-                $jourData['jour'] = $jour['Jour'];
+                // Overwrite the day number with the actual day name because 3iL is weird
+                $jourData['jour'] = $weekDay;
+                $jourData['date'] = $day['Date'];
 
-                // Indicateur pour vérifier si tous les créneaux sont nuls
                 $allCreneauxNull = true;
 
                 // Parcourir chaque créneau du jour
-                foreach ($jour['CRENEAU'] as $creneau) {
+                foreach ($day['CRENEAU'] as $creneau) {
                     // Vérifier si le numéro de créneau existe dans votre liste de créneaux définis
                     if (isset($creneaux[$creneau['Creneau']])) {
 
@@ -87,7 +85,7 @@ class TimetableService
                 }
 
                 // Parcourir à nouveau chaque créneau pour construire les données filtrées
-                foreach ($jour['CRENEAU'] as $creneau) {
+                foreach ($day['CRENEAU'] as $creneau) {
                     // Vérifier si le numéro de créneau existe dans votre liste de créneaux définis
                     if (isset($creneaux[$creneau['Creneau']])) {
                         // Créer un tableau pour stocker les informations d'un cours
