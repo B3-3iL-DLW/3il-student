@@ -7,6 +7,7 @@ use App\Entity\Event;
 use App\Entity\EventHours;
 use App\Entity\Timetable;
 use App\Entity\WeekSchedule;
+use Random\RandomException;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -16,9 +17,9 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 class TimetableService
 {
 
-    private $classesScraperService;
-    private $schedule_url;
-    private $xmlService;
+    private ClassesScraperService $classesScraperService;
+    private string $schedule_url;
+    private XMLService $xmlService;
 
     public function __construct(ClassesScraperService $classesScraperService, string $schedule_url, XMLService $xmlService)
     {
@@ -27,6 +28,12 @@ class TimetableService
         $this->xmlService = $xmlService;
     }
 
+    /**
+     * Get the xml file for a given class
+     *
+     * @param string $classParam
+     * @return string|null
+     */
     public function getXmlFile(string $classParam): ?string
     {
         $classesList = $this->classesScraperService->scrapeClasses();
@@ -40,6 +47,11 @@ class TimetableService
         return null;
     }
 
+    /**
+     * Define the time slots for the timetable
+     *
+     * @return array
+     */
     public function defineCreneaux(): array
     {
         return [
@@ -52,7 +64,13 @@ class TimetableService
         ];
     }
 
-
+    /**
+     * Put the parsed data into entity objects
+     *
+     * @param array $parsedData
+     * @return Timetable
+     * @throws RandomException
+     */
     public function filterParsedData(array $parsedData): Timetable
     {
         $creneaux = $this->defineCreneaux();
@@ -106,10 +124,14 @@ class TimetableService
     }
 
     /**
+     * Fetch and parse the xml file
+     *
+     * @param string $xmlUrl The url of the xml file
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
+     * @throws RandomException
      */
     public function fetchAndParseData(string $xmlUrl): Timetable
     {

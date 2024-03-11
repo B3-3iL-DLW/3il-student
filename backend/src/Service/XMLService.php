@@ -11,6 +11,9 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 class XMLService
 {
     /**
+     * Fetch XML data from a given URL
+     *
+     * @param string $xmlUrl The URL of the XML file
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
@@ -22,6 +25,12 @@ class XMLService
         return $httpClient->request('GET', $xmlUrl)->getContent();
     }
 
+/**
+     * Parse XML data into an array
+     *
+     * @param string $xmlContent The content of the XML file
+     * @return array
+     */
     public function parseXmlData(string $xmlContent): array
     {
         $xmlHash = simplexml_load_string($xmlContent);
