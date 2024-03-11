@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\ClassGroups;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
@@ -29,10 +30,10 @@ class ClassesScraperService
 
         $classes = [];
         $crawler->filter('#idGroupe option')->each(function ($option) use (&$classes) {
-            $classes[] = [
-                'file' => $option->attr('value'),
-                'name' => $option->text(),
-            ];
+            $classGroup = new ClassGroups();
+            $classGroup->setName($option->text());
+            $classGroup->setFile($option->attr('value'));
+            $classes[] = $classGroup;
         });
 
         return $classes;

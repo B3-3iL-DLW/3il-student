@@ -6,7 +6,6 @@ use App\Entity\DaySchedule;
 use App\Entity\Event;
 use App\Entity\EventHours;
 use App\Entity\WeekSchedule;
-use Random\RandomException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
