@@ -5,10 +5,8 @@ namespace App\Service;
 use App\Entity\DaySchedule;
 use App\Entity\Event;
 use App\Entity\EventHours;
-use App\Entity\Timetable;
 use App\Entity\WeekSchedule;
 use Random\RandomException;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -33,6 +31,7 @@ class TimetableService
      *
      * @param string $classParam
      * @return string|null
+     * @throws TransportExceptionInterface
      */
     public function getXmlFile(string $classParam): ?string
     {
@@ -69,13 +68,11 @@ class TimetableService
      *
      * @param array $parsedData
      * @return Timetable
-     * @throws RandomException
      */
-    public function filterParsedData(array $parsedData): Timetable
+    public function parseData(array $parsedData): array
     {
         $creneaux = $this->defineCreneaux();
-        $timetable = new Timetable();
-        $timetable->setId(random_int(0, 1000000));
+        $weeks = [];
 
         foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $week) {
 
@@ -117,10 +114,10 @@ class TimetableService
 
                 $weekSchedule->addDaySchedule($daySchedule);
             }
-            $timetable->addWeek($weekSchedule);
+            $weeks[] = $weekSchedule;
         }
 
-        return $timetable;
+        return $weeks;
     }
 
     /**
@@ -131,12 +128,11 @@ class TimetableService
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
-     * @throws RandomException
      */
-    public function fetchAndParseData(string $xmlUrl): Timetable
+    public function fetchAndParseData(string $xmlUrl): array
     {
         $xmlContent = $this->xmlService->fetchXmlData($xmlUrl);
-        $parsedData = $this->xmlService->parseXmlData($xmlContent);
-        return $this->filterParsedData($parsedData);
+        $parsedXml = $this->xmlService->parseXmlData($xmlContent);
+        return $this->parseData($parsedXml);
     }
 }

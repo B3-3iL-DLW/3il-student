@@ -21,9 +21,6 @@ class WeekSchedule
     #[ORM\OneToMany(targetEntity: DaySchedule::class, mappedBy: 'weekSchedule')]
     private Collection $DaySchedule;
 
-    #[ORM\ManyToOne(inversedBy: 'Weeks')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Timetable $timetable = null;
 
     public function __construct()
     {
@@ -84,15 +81,5 @@ class WeekSchedule
         return $this;
     }
 
-    public function getTimetable(): ?Timetable
-    {
-        return $this->timetable;
-    }
 
-    public function setTimetable(?Timetable $timetable): static
-    {
-        $this->timetable = $timetable;
-
-        return $this;
-    }
 }
