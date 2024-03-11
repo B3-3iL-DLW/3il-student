@@ -4,10 +4,14 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-simplexml": "*",
+        "doctrine/dbal": "^3",
+        "doctrine/doctrine-bundle": "^2.11",
+        "doctrine/doctrine-migrations-bundle": "^3.3",
+        "doctrine/orm": "^3.1",
         "symfony/apache-pack": "^1.0",
         "symfony/console": "6.4.*",
         "symfony/css-selector": "6.4.*",
@@ -16,13 +20,15 @@
         "symfony/flex": "^2.4",
         "symfony/framework-bundle": "6.4.*",
         "symfony/http-client": "6.4.*",
+        "symfony/property-access": "6.4.*",
         "symfony/requirements-checker": "^2.0",
         "symfony/runtime": "6.4.*",
+        "symfony/serializer": "6.4.*",
         "symfony/yaml": "6.4.*"
     },
     "require-dev": {
         "symfony/debug-bundle": "6.4.*",
-        "symfony/maker-bundle": "^1.53"
+        "symfony/maker-bundle": "^1.56"
     },
     "config": {
         "allow-plugins": {

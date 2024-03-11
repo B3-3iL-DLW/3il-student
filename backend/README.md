@@ -17,6 +17,8 @@ Pour installer l'API et ses dépendances, suivez les étapes ci-dessous :
 2. Naviguez vers le répertoire `/backend` dans votre terminal.
 3. Exécutez la commande `composer install` pour installer toutes les dépendances nécessaires.
 
+
+
 ## Endpoints
 
 L'API offre les endpoints suivants :
