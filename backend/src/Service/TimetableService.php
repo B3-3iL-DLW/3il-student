@@ -9,6 +9,10 @@ use App\Entity\Timetable;
 use App\Entity\WeekSchedule;
 use Cassandra\Time;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class TimetableService
 {
@@ -68,7 +72,6 @@ class TimetableService
                 }
 
                 $daySchedule = new DaySchedule();
-                // Format de la date : 04/03/2024
                 $daySchedule->setDate(\DateTime::createFromFormat('d/m/Y', $day['Date']));
                 $daySchedule->setJour($weekDayNumber);
 
@@ -99,6 +102,12 @@ class TimetableService
         return $timetable;
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ClientExceptionInterface
+     */
     public function fetchXmlData(string $xmlUrl): string
     {
         $httpClient = HttpClient::create();
@@ -112,6 +121,12 @@ class TimetableService
     }
 
 
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ClientExceptionInterface
+     */
     public function fetchAndParseData(string $xmlUrl): Timetable
     {
         $xmlContent = $this->fetchXmlData($xmlUrl);
