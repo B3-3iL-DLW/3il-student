@@ -28,7 +28,10 @@ class TimetableController extends AbstractController
         $xmlUrl = $this->timetableService->getXmlFile($classParam);
 
         if ($xmlUrl) {
-            $parsedJson = $this->timetableService->fetchAndParseData($xmlUrl);
+            $timetable = $this->timetableService->fetchAndParseData($xmlUrl);
+            dd($timetable);
+            // On convertit l'objet Timetable en json
+            $parsedJson = json_decode(json_encode($timetable), true);
             return $this->json($parsedJson);
         } else {
             return $this->json(['error' => 'Invalid XML url'], JsonResponse::HTTP_BAD_REQUEST);

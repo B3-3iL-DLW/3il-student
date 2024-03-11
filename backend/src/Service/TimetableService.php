@@ -2,6 +2,12 @@
 
 namespace App\Service;
 
+use App\Entity\DaySchedule;
+use App\Entity\Event;
+use App\Entity\EventHours;
+use App\Entity\Timetable;
+use App\Entity\WeekSchedule;
+use Cassandra\Time;
 use Symfony\Component\HttpClient\HttpClient;
 
 class TimetableService
@@ -43,65 +49,54 @@ class TimetableService
     }
 
 
-    public function filterParsedData(array $parsedData): array
+    public function filterParsedData(array $parsedData): Timetable
     {
         $creneaux = $this->defineCreneaux();
-        $filteredData = [];
+        $timetable = new Timetable();
 
         foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $week) {
+
+            $weekSchedule = new WeekSchedule();
+            $weekSchedule->setId($week['SemId']);
+            $weekSchedule->setCode($week['SemCod']);
+
             foreach ($week['JOUR'] as $day) {
-                // Remove the slashes from the date and convert it to a date object
                 $weekDayNumber = date('N', strtotime(str_replace('/', '-', $day['Date'])));
 
                 if ($weekDayNumber > 5) {
                     continue;
                 }
 
-                $jourData = [];
-                // Overwrite the day number with the actual day name because 3iL is weird
-                $jourData['jour'] = $weekDayNumber;
-                $jourData['date'] = $day['Date'];
-
-                $allCreneauxNull = true;
+                $daySchedule = new DaySchedule();
+                // Format de la date : 04/03/2024
+                $daySchedule->setDate(\DateTime::createFromFormat('d/m/Y', $day['Date']));
+                $daySchedule->setJour($weekDayNumber);
 
                 foreach ($day['CRENEAU'] as $creneau) {
                     if (isset($creneaux[$creneau['Creneau']])) {
-                        if (isset($creneau['Id'])) {
-                            if ($creneau['Id'] !== null) {
-                                $allCreneauxNull = false;
-                            }
-                        }
+                        $eventHours = new EventHours();
+                        $eventHours->setStartAt($creneaux[$creneau['Creneau']]['start']);
+                        $eventHours->setEndAt($creneaux[$creneau['Creneau']]['end']);
+
+                        $event = new Event();
+                        $event->setCreneau($creneau['Creneau']);
+                        $event->setActivite($creneau['Activite'] ?? "Pas cours");
+                        $event->setId($creneau['Id'] ?? 0);
+                        $event->setCouleur($creneau['Couleur'] ?? "#000000");
+                        $event->setHoraire($eventHours);
+                        $event->setSalle($creneau['Salles'] ?? "");
+                        $event->setVisio(str_contains($creneau['Salles'] ?? null, 'Teams'));
+
+                        $daySchedule->addEvent($event);
                     }
                 }
 
-                if ($allCreneauxNull) {
-                    continue;
-                }
-
-                foreach ($day['CRENEAU'] as $creneau) {
-                    if (isset($creneaux[$creneau['Creneau']])) {
-                        // Si Salles contient Teams on met visio à true et on enlève le mot Teams
-                        if (str_contains($creneau['Salles'] ?? null, 'Teams')) {
-                            $coursData['Salles'] = str_replace('Teams', '', $creneau['Salles']);
-                            $creneau['visio'] = true;
-                        }
-                        $coursData = [];
-                        $coursData['creneau'] = $creneau['Creneau'];
-                        $coursData['activite'] = $creneau['Activite'] ?? null;
-                        $coursData['id'] = $creneau['Id'] ?? null;
-                        $coursData['couleur'] = $creneau['Couleur'] ?? null;
-                        $coursData['horaire'] = $creneaux[$creneau['Creneau']];
-                        $coursData['salle'] = $creneau['Salles'] ?? null;
-                        $coursData['visio'] = $creneau['visio'] ?? false;
-                        $jourData['cours'][] = $coursData;
-                    }
-                }
-
-                $filteredData[] = $jourData;
+                $weekSchedule->addDaySchedule($daySchedule);
             }
+            $timetable->addWeek($weekSchedule);
         }
 
-        return $filteredData;
+        return $timetable;
     }
 
     public function fetchXmlData(string $xmlUrl): string
@@ -117,7 +112,7 @@ class TimetableService
     }
 
 
-    public function fetchAndParseData(string $xmlUrl): array
+    public function fetchAndParseData(string $xmlUrl): Timetable
     {
         $xmlContent = $this->fetchXmlData($xmlUrl);
         $parsedData = $this->parseXmlData($xmlContent);
