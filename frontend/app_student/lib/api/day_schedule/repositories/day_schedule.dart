@@ -1,5 +1,5 @@
 import 'package:app_student/api/api_service.dart';
-import '../entities/day_schedule.dart';
+import '../entities/day_schedule_entity.dart';
 
 class DayScheduleRepository {
   final String className;
@@ -7,8 +7,8 @@ class DayScheduleRepository {
 
   DayScheduleRepository({required this.className, required this.apiService});
 
-  Future<List<DaySchedule>> getDaySchedules($className) {
-    return apiService.getData('/api/timetable?class_param=$className',
-        (item) => DaySchedule.fromJson(item));
-  }
+Future<List<DaySchedule>> getDayCourses($className) {
+  return apiService.getData('/api/timetable?class_param=$className',
+      (item) => DaySchedule.fromJson(item));
+}
 }

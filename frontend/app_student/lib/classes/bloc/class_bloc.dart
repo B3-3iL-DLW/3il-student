@@ -1,15 +1,13 @@
 import 'dart:async';
 
-import 'package:app_student/api/classes/entities/class.dart';
-import 'package:app_student/api/classes/repositories/class_repository.dart';
-
-
+import 'package:app_student/api/class_groups/entities/class_group_entity.dart';
+import 'package:app_student/api/class_groups/repositories/class_group_repository.dart';
 
 class ClassBloc {
   final ClassRepository classRepository;
-  final _classController = StreamController<List<Class>>();
+  final _classController = StreamController<List<ClassGroupEntity>>();
 
-  Stream<List<Class>> get classStream => _classController.stream;
+  Stream<List<ClassGroupEntity>> get classStream => _classController.stream;
 
   ClassBloc({required this.classRepository}) {
     fetchClasses();

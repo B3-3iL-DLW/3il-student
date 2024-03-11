@@ -1,7 +1,6 @@
-import 'package:app_student/api/classes/entities/class.dart';
+import 'package:app_student/api/class_groups/entities/class_group_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:app_student/classes/bloc/class_bloc.dart';
-
 
 class ClassListPage extends StatefulWidget {
   final ClassBloc classBloc;
@@ -27,9 +26,10 @@ class ClassListPageState extends State<ClassListPage> {
       appBar: AppBar(
         title: const Text('Class List'),
       ),
-      body: StreamBuilder<List<Class>>(
+      body: StreamBuilder<List<ClassGroupEntity>>(
         stream: _classBloc.classStream,
-        builder: (BuildContext context, AsyncSnapshot<List<Class>> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<List<ClassGroupEntity>> snapshot) {
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           }

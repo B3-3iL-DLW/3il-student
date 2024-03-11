@@ -1,6 +1,7 @@
-import 'package:app_student/day_schedules/bloc/day_schedule_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:app_student/api/day_schedule/entities/day_schedule.dart';
+import 'package:app_student/api/day_schedule/entities/day_schedule_entity.dart';
+
+import '../bloc/day_course_bloc.dart';
 
 class DayScheduleView extends StatelessWidget {
   final DayScheduleBloc dayScheduleBloc;
@@ -19,7 +20,7 @@ class DayScheduleView extends StatelessWidget {
               final daySchedule = snapshot.data![index];
               return Card(
                 child: ListTile(
-                  title: Text(daySchedule.date),
+                  title: Text(daySchedule.date.toString()),
                   subtitle: Text('Jour: ${daySchedule.jour}'),
                 ),
               );
