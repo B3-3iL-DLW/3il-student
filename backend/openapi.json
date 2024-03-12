@@ -5,6 +5,16 @@
     "title": "3il Schedule API",
     "description": "API to access 3il schedule data"
   },
+  "servers": [
+    {
+      "url": "https://api.lukasvalois.com",
+      "description": "Production server"
+    },
+    {
+      "url": "https://api-dev.lukasvalois.com",
+      "description": "Testing server"
+    }
+  ],
   "paths": {
     "/api/classes": {
       "get": {
