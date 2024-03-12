@@ -36,4 +36,4 @@ jobs:
         run: dart --disable-analytics format --set-exit-if-changed frontend/app_student/lib
 
       - name: Lint
-        run: flutter analyze lib
+        run: flutter analyze frontend/app_student/lib
