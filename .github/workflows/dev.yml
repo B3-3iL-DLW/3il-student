@@ -1,4 +1,4 @@
-name: SSH Upload and Composer Install on DEV
+name: Upload backend to dev server and lint
 
 on:
   push:
