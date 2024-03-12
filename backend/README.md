@@ -25,7 +25,7 @@ L'API offre les endpoints suivants :
 - `/api/timetable?class_param=XX` : Permet de récupérer l'emploi du temps d'une classe spécifique.
 - `/api/classes` : Permet de récupérer la liste des classes disponibles.
 
-Vous pouvez retrouver 
+Vous pouvez retrouver la spécification OpenApi à la racine du projet Symfony
 
 ## Utilisation
 
