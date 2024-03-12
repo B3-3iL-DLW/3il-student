@@ -8,8 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class DayScheduleWidget extends StatelessWidget {
   final DayScheduleEntity daySchedule;
 
-  const DayScheduleWidget({Key? key, required this.daySchedule})
-      : super(key: key);
+  const DayScheduleWidget({super.key, required this.daySchedule});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +28,7 @@ class DayScheduleWidget extends StatelessWidget {
 class WeekScheduleWidget extends StatelessWidget {
   final WeekScheduleModel weekSchedule;
 
-  const WeekScheduleWidget({Key? key, required this.weekSchedule})
-      : super(key: key);
+  const WeekScheduleWidget({super.key, required this.weekSchedule});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +42,7 @@ class WeekScheduleWidget extends StatelessWidget {
 }
 
 class WeekSchedulePage extends StatelessWidget {
-  const WeekSchedulePage({Key? key}) : super(key: key);
+  const WeekSchedulePage({super.key});
 
   @override
   Widget build(BuildContext context) {
