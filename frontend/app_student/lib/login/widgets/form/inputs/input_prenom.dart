@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class FirstnameTextField extends StatelessWidget {
-  const FirstnameTextField({super.key});
+  final TextEditingController controller;
+
+  const FirstnameTextField({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class FirstnameTextField extends StatelessWidget {
           ),
           const SizedBox(height: 10.0),
           TextFormField(
+            controller: controller,
             style: TextStyle(
               color: Colors.grey[600],
             ),

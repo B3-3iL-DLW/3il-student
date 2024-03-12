@@ -1,9 +1,11 @@
 import 'package:app_student/config/dev_config.dart';
-import 'package:app_student/login/views/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'config/config.dart';
+import 'login/cubit/login_cubit.dart';
+import 'login/views/login_page.dart';
 
 void main() {
   runApp(
@@ -20,11 +22,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Class List',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          focusColor: const Color(0xffE84E0F),
-        ),
-        home: const LoginPage());
+      title: 'Class List',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        focusColor: const Color(0xffE84E0F),
+      ),
+      home: BlocProvider(
+        create: (context) => LoginCubit(),
+        child: const LoginPage(),
+      ),
+    );
   }
 }

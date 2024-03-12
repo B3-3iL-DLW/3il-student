@@ -5,18 +5,31 @@ import 'inputs/input_birthdate.dart';
 import 'inputs/input_ine.dart';
 import 'inputs/input_prenom.dart';
 
-class FormLogin extends StatelessWidget {
+class FormLogin extends StatefulWidget {
   const FormLogin({super.key});
 
   @override
+  _FormLoginState createState() => _FormLoginState();
+}
+
+class _FormLoginState extends State<FormLogin> {
+  final TextEditingController ineController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController birthDateController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Column(
         children: [
-          INETextField(),
-          BirthDateField(),
-          FirstnameTextField(),
-          SubmitButton()
+          INETextField(controller: ineController),
+          BirthDateField(controller: birthDateController),
+          FirstnameTextField(controller: nameController),
+          SubmitButton(
+            ineController: ineController,
+            nameController: nameController,
+            birthDateController: birthDateController,
+          )
         ],
       ),
     );

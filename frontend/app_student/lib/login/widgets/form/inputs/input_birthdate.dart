@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BirthDateField extends StatefulWidget {
-  const BirthDateField({super.key});
+  final TextEditingController controller;
+
+  const BirthDateField({super.key, required this.controller});
 
   @override
   BirthDateFieldState createState() => BirthDateFieldState();
@@ -20,6 +22,8 @@ class BirthDateFieldState extends State<BirthDateField> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
+        widget.controller.text =
+            _selectedDate.toLocal().toString().split(' ')[0];
       });
     }
   }
@@ -40,6 +44,7 @@ class BirthDateFieldState extends State<BirthDateField> {
           ),
           const SizedBox(height: 10.0),
           TextFormField(
+            controller: widget.controller,
             readOnly: true,
             decoration: InputDecoration(
               hintText: _selectedDate.toLocal().toString().split(' ')[0],
