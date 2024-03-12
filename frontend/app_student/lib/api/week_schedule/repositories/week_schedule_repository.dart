@@ -10,7 +10,7 @@ class WeekScheduleRepository {
   Future<List<WeekScheduleModel>> getWeeksSchedule(className) {
     return apiService.getData('/api/timetable?class_param=$className', (item) {
       final entity = WeekScheduleEntity.fromJson(item);
-      return WeekScheduleModel(weekSchedule: entity);
+      return WeekScheduleModel.fromEntity(entity);
     });
   }
 }
