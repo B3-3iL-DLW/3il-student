@@ -1,0 +1,39 @@
+name: Execute Lint and Format
+
+concurrency:
+  group: $-$
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+env:
+  FLUTTER_VERSION: 3.19.2
+
+jobs:
+  format-lint:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          cache: true
+          cache-key: ":os:-modules-:hash:"
+          channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Formatting
+        run: dart --disable-analytics format --set-exit-if-changed lib
+
+      - name: Lint
+        run: flutter analyze lib
