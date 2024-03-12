@@ -1,6 +1,5 @@
 import 'package:app_student/api/class_groups/models/class_group_model.dart';
 import 'package:app_student/api/class_groups/repositories/class_group_repository.dart';
-import 'package:app_student/api/class_groups/entities/class_group_entity.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
