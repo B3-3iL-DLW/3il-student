@@ -55,7 +55,7 @@ class LoginPage extends StatelessWidget {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text("Veuillez remplir tous les champs"),
+                content: Text('Veuillez remplir tous les champs'),
                 backgroundColor: Colors.red,
               ),
             );

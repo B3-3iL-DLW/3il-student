@@ -9,10 +9,10 @@ class FormLogin extends StatefulWidget {
   const FormLogin({super.key});
 
   @override
-  _FormLoginState createState() => _FormLoginState();
+  FormLoginState createState() => FormLoginState();
 }
 
-class _FormLoginState extends State<FormLogin> {
+class FormLoginState extends State<FormLogin> {
   final TextEditingController ineController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController birthDateController = TextEditingController();
