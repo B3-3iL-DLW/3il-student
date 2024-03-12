@@ -36,8 +36,8 @@ class TimetableService
     {
         $classesList = $this->classesScraperService->scrapeClasses();
         foreach ($classesList as $class) {
-            if ($class['name'] === $classParam) {
-                $encodedClassFile = str_replace(' ', '%20', $class['file']);
+            if ($class->getName() === $classParam) {
+                $encodedClassFile = str_replace(' ', '%20', $class->getFile());
                 return $this->schedule_url . $encodedClassFile;
             }
         }
@@ -66,7 +66,7 @@ class TimetableService
      * Put the parsed data into entity objects
      *
      * @param array $parsedData
-     * @return Timetable
+     * @return array
      */
     public function parseData(array $parsedData): array
     {
