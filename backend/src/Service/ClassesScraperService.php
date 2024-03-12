@@ -2,8 +2,10 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpClient\HttpClient;
+use App\Entity\ClassGroups;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class ClassesScraperService
 {
@@ -13,6 +15,12 @@ class ClassesScraperService
     {
         $this->schedule_url = $schedule_url;
     }
+
+    /**
+     * Scrape the classes from the schedule website.
+     *
+     * @throws TransportExceptionInterface
+     */
     public function scrapeClasses(): array
     {
         $httpClient = HttpClient::create();
@@ -21,10 +29,10 @@ class ClassesScraperService
 
         $classes = [];
         $crawler->filter('#idGroupe option')->each(function ($option) use (&$classes) {
-            $classes[] = [
-                'file' => $option->attr('value'),
-                'name' => $option->text(),
-            ];
+            $classGroup = new ClassGroups();
+            $classGroup->setName($option->text());
+            $classGroup->setFile($option->attr('value'));
+            $classes[] = $classGroup;
         });
 
         return $classes;
