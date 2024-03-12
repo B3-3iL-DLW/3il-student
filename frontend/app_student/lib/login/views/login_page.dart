@@ -13,7 +13,7 @@ class LoginPage extends StatelessWidget {
       body: Column(
         children: [
           HeaderLogo(),
-          HeaderText("Bonjour :)"),
+          HeaderText('Bonjour :)'),
           Expanded(child: FormLogin()),
         ],
       ),

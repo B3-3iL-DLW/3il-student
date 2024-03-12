@@ -2,7 +2,6 @@ import 'package:app_student/api/classes/entities/class.dart';
 import 'package:flutter/material.dart';
 import 'package:app_student/classes/bloc/class_bloc.dart';
 
-
 class ClassListPage extends StatefulWidget {
   final ClassBloc classBloc;
 
