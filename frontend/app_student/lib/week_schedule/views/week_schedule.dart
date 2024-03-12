@@ -1,4 +1,3 @@
-
 import 'package:app_student/api/week_schedule/repositories/week_schedule_repositories.dart';
 import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
 import 'package:flutter/material.dart';
@@ -31,15 +30,14 @@ class WeekSchedulePage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final WeekSchedule = state.weekSchedule[index];
                   return ListTile(
-                    title: Text(
-                        'Date: ${WeekSchedule.date}, Jour: ${WeekSchedule.jour}'),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: WeekSchedule.events.map((event) {
-                        return Text(
-                            'Event: ${event.activite}, Start at: ${event.horaires.startAt}, End Time: ${event.horaires.endAt}');
-                      }).toList(),
-                    ),
+                    title: Text('Code: ${WeekSchedule.code}'),
+                    // subtitle: Column(
+                    //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //   children: WeekSchedule.events.map((event) {
+                    //     return Text(
+                    //         'Event: ${event.activite}, Start at: ${event.horaires.startAt}, End Time: ${event.horaires.endAt}');
+                    //   }).toList(),
+                    // ),
                   );
                 },
               );

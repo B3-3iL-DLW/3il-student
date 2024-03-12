@@ -10,13 +10,12 @@ class WeekScheduleEntity {
   });
 
   factory WeekScheduleEntity.fromJson(Map<String, dynamic> json) {
-    var daySchedulesFromJson = json['DaySchedule'] as List;
-    List<DayScheduleEntity> daySchedulesList =
-        daySchedulesFromJson.map((i) => DayScheduleEntity.fromJson(i)).toList();
-
     return WeekScheduleEntity(
       code: json['code'],
-      daySchedules: daySchedulesList,
+      daySchedules: (json['DaySchedule'] as List<dynamic>)
+          .map((daySchedule) =>
+              DayScheduleEntity.fromJson(daySchedule as Map<String, dynamic>))
+          .toList(),
     );
   }
 }

@@ -7,8 +7,8 @@ class DayScheduleRepository {
 
   DayScheduleRepository({required this.className, required this.apiService});
 
-Future<List<DayScheduleEntity>> getDaySchedule($className) {
-  return apiService.getData('/api/timetable?class_param=$className',
-      (item) => DayScheduleEntity.fromJson(item));
-}
+  Future<List<DayScheduleEntity>> getDaySchedule($className) {
+    return apiService.getData('/api/timetable?class_param=$className',
+        (item) => DayScheduleEntity.fromJson(item));
+  }
 }
