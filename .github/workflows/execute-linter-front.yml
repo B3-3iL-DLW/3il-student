@@ -33,7 +33,7 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
 
       - name: Formatting
-        run: dart --disable-analytics format --set-exit-if-changed lib
+        run: dart --disable-analytics format --set-exit-if-changed frontend/app_student/lib
 
       - name: Lint
         run: flutter analyze lib
