@@ -1,4 +1,4 @@
-import 'package:app_student/api/week_schedule/repositories/week_schedule_repositories.dart';
+import 'package:app_student/api/week_schedule/repositories/week_schedule_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 

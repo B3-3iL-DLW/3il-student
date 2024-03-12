@@ -1,45 +1,9 @@
-import 'package:app_student/api/day_schedule/entities/day_schedule_entity.dart';
-import 'package:app_student/api/week_schedule/models/week_schedule_model.dart';
-import 'package:app_student/api/week_schedule/repositories/week_schedule_repositories.dart';
+import 'package:app_student/api/week_schedule/repositories/week_schedule_repository.dart';
 import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
+import 'package:app_student/week_schedule/views/widgets/week_schedule_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DayScheduleWidget extends StatelessWidget {
-  final DayScheduleEntity daySchedule;
-
-  const DayScheduleWidget({super.key, required this.daySchedule});
-
-  @override
-  Widget build(BuildContext context) {
-    return ExpansionTile(
-      title: Text('Date: ${daySchedule.date}'),
-      children: daySchedule.events.map((event) {
-        return ListTile(
-          title: Text('Event: ${event.activite}'),
-          subtitle: Text(
-              'Start at: ${event.horaires.startAt}, End Time: ${event.horaires.endAt}'),
-        );
-      }).toList(),
-    );
-  }
-}
-
-class WeekScheduleWidget extends StatelessWidget {
-  final WeekScheduleModel weekSchedule;
-
-  const WeekScheduleWidget({super.key, required this.weekSchedule});
-
-  @override
-  Widget build(BuildContext context) {
-    return ExpansionTile(
-      title: Text('Code: ${weekSchedule.code}'),
-      children: weekSchedule.daySchedules.map((daySchedule) {
-        return DayScheduleWidget(daySchedule: daySchedule);
-      }).toList(),
-    );
-  }
-}
 
 class WeekSchedulePage extends StatelessWidget {
   const WeekSchedulePage({super.key});

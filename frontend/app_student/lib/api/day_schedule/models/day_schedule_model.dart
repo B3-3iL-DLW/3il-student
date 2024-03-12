@@ -11,4 +11,10 @@ class DayScheduleModel {
   int get jour => entity.jour;
 
   List<EventEntity> get events => entity.events;
+
+  factory DayScheduleModel.fromEntity(DayScheduleEntity entity) {
+    return DayScheduleModel(
+      entity: entity,
+    );
+  }
 }
