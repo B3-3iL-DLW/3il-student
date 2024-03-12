@@ -32,6 +32,9 @@ jobs:
           channel: "stable"
           flutter-version: ${{ env.FLUTTER_VERSION }}
 
+      - name: Install dependencies
+        run: flutter pub get
+
       - name: Formatting
         run: dart --disable-analytics format --set-exit-if-changed frontend/app_student/lib
 
