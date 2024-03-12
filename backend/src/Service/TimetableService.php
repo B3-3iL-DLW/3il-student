@@ -96,6 +96,7 @@ class TimetableService
                         $eventHours = new EventHours();
                         $eventHours->setStartAt($creneaux[$creneau['Creneau']]['start']);
                         $eventHours->setEndAt($creneaux[$creneau['Creneau']]['end']);
+                        $eventHours->setId(random_int(0, 1000000));
 
                         $event = new Event();
                         $event->setCreneau($creneau['Creneau']);
