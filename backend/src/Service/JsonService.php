@@ -10,12 +10,8 @@ use Symfony\Component\Serializer\Serializer;
 
 class JsonService
 {
-
     /**
-     * Convert an entity to a JSON string
-     *
-     * @param $entity
-     * @return string
+     * Convert an entity to a JSON string.
      */
     public function EntityToJson($entity): string
     {
@@ -30,10 +26,10 @@ class JsonService
             ],
         ];
 
-        $normalizer = array(new DateTimeNormalizer(), new ObjectNormalizer(null, null, null, null, null, null, $defaultContext));
+        $normalizer = [new DateTimeNormalizer(), new ObjectNormalizer(null, null, null, null, null, null, $defaultContext)];
 
         $serializer = new Serializer($normalizer, [$encoder]);
+
         return $serializer->serialize($entity, 'json');
     }
-
 }

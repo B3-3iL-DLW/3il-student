@@ -29,8 +29,6 @@ class EventHours
         $this->id = $id;
     }
 
-
-
     public function getStartAt(): ?string
     {
         return $this->startAt;

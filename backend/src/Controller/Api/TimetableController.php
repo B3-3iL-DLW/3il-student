@@ -24,11 +24,9 @@ class TimetableController extends AbstractController
         $this->jsonService = $jsonService;
     }
 
-
     /**
-     * Get the timetable for a given class
+     * Get the timetable for a given class.
      *
-     * @param Request $request
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
@@ -41,12 +39,13 @@ class TimetableController extends AbstractController
         if (!$classParam) {
             return $this->json(['error' => 'class_param is missing'], Response::HTTP_BAD_REQUEST);
         }
-        
+
         $xmlUrl = $this->timetableService->getXmlFile($classParam);
 
         if ($xmlUrl) {
             $timetable = $this->timetableService->fetchAndParseData($xmlUrl);
             $jsonTimeTable = $this->jsonService->EntityToJson($timetable);
+
             return new Response($jsonTimeTable, Response::HTTP_OK, ['Content-Type' => 'application/json']);
         } else {
             return $this->json(['error' => 'Invalid XML url'], Response::HTTP_BAD_REQUEST);

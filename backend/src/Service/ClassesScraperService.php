@@ -3,8 +3,8 @@
 namespace App\Service;
 
 use App\Entity\ClassGroups;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class ClassesScraperService
@@ -17,9 +17,8 @@ class ClassesScraperService
     }
 
     /**
-     * Scrape the classes from the schedule website
+     * Scrape the classes from the schedule website.
      *
-     * @return array
      * @throws TransportExceptionInterface
      */
     public function scrapeClasses(): array
