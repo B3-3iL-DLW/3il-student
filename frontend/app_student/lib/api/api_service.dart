@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -25,6 +26,9 @@ class ApiService {
           } catch (e) {
             print(
                 'Failed to convert item: $e'); // Print the error if conversion fails
+            print(
+                'Failed item: $item'); // Print the item that failed to convert
+
             throw e;
           }
         }).toList();

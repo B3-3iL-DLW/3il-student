@@ -12,12 +12,14 @@ class DayScheduleEntity {
   });
 
   factory DayScheduleEntity.fromJson(Map<String, dynamic> json) {
-    var eventsFromJson = json['cours'] as List;
+    var eventsFromJson = json['events'] as List;
     List<EventEntity> eventsList =
         eventsFromJson.map((i) => EventEntity.fromJson(i)).toList();
 
+    DateTime date = DateTime.parse(json['date']);
+
     return DayScheduleEntity(
-      date: json['date'],
+      date: date,
       jour: json['jour'],
       events: eventsList,
     );
