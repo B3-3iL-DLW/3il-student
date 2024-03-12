@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import '../../event_hours/entities/event_hours_entity.dart';
 
 class EventEntity {
@@ -9,7 +7,7 @@ class EventEntity {
   final String couleur;
   final EventHoursEntity horaires;
   final String salle;
-  final Bool visio;
+  final bool visio;
 
   EventEntity({
     required this.id,
@@ -29,7 +27,7 @@ class EventEntity {
       couleur: json['couleur'] ?? 'null',
       horaires: EventHoursEntity.fromJson(json['horaire']),
       salle: json['salle'] ?? 'null',
-      visio: json['visio'] ?? 'null',
+      visio: json['visio'] ?? false,
     );
   }
 }

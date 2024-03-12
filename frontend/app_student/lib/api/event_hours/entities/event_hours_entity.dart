@@ -9,8 +9,8 @@ class EventHoursEntity {
 
   factory EventHoursEntity.fromJson(Map<String, dynamic> json) {
     return EventHoursEntity(
-      startAt: json['start'],
-      endAt: json['end'],
+      startAt: json['startAt'],
+      endAt: json['endAt'],
     );
   }
 }
