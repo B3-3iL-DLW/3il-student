@@ -18,13 +18,14 @@ Pour installer l'API et ses dépendances, suivez les étapes ci-dessous :
 3. Exécutez la commande `composer install` pour installer toutes les dépendances nécessaires.
 
 
-
 ## Endpoints
 
 L'API offre les endpoints suivants :
 
 - `/api/timetable?class_param=XX` : Permet de récupérer l'emploi du temps d'une classe spécifique.
 - `/api/classes` : Permet de récupérer la liste des classes disponibles.
+
+Vous pouvez retrouver la spécification OpenApi à la racine du projet Symfony
 
 ## Utilisation
 

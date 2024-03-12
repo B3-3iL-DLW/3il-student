@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:app_student/api/classes/entities/class.dart';
 import 'package:app_student/api/classes/repositories/class_repository.dart';
 
-
-
 class ClassBloc {
   final ClassRepository classRepository;
   final _classController = StreamController<List<Class>>();

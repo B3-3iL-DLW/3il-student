@@ -13,7 +13,6 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class TimetableService
 {
-
     private ClassesScraperService $classesScraperService;
     private string $schedule_url;
     private XMLService $xmlService;
@@ -26,10 +25,8 @@ class TimetableService
     }
 
     /**
-     * Get the xml file for a given class
+     * Get the xml file for a given class.
      *
-     * @param string $classParam
-     * @return string|null
      * @throws TransportExceptionInterface
      */
     public function getXmlFile(string $classParam): ?string
@@ -38,7 +35,8 @@ class TimetableService
         foreach ($classesList as $class) {
             if ($class->getName() === $classParam) {
                 $encodedClassFile = str_replace(' ', '%20', $class->getFile());
-                return $this->schedule_url . $encodedClassFile;
+
+                return $this->schedule_url.$encodedClassFile;
             }
         }
 
@@ -46,27 +44,22 @@ class TimetableService
     }
 
     /**
-     * Define the time slots for the timetable
-     *
-     * @return array
+     * Define the time slots for the timetable.
      */
     public function defineCreneaux(): array
     {
         return [
-            "1" => ["start" => "8h30", "end" => "10h"],
-            "2" => ["start" => "10h30", "end" => "12h"],
-            "3" => ["start" => "12h", "end" => "13h30"],
-            "4" => ["start" => "13h30", "end" => "15h"],
-            "5" => ["start" => "15h15", "end" => "16h45"],
-            "6" => ["start" => "17h", "end" => "18h30"]
+            '1' => ['start' => '8h30', 'end' => '10h'],
+            '2' => ['start' => '10h30', 'end' => '12h'],
+            '3' => ['start' => '12h', 'end' => '13h30'],
+            '4' => ['start' => '13h30', 'end' => '15h'],
+            '5' => ['start' => '15h15', 'end' => '16h45'],
+            '6' => ['start' => '17h', 'end' => '18h30'],
         ];
     }
 
     /**
-     * Put the parsed data into entity objects
-     *
-     * @param array $parsedData
-     * @return array
+     * Put the parsed data into entity objects.
      */
     public function parseData(array $parsedData): array
     {
@@ -74,7 +67,6 @@ class TimetableService
         $weeks = [];
 
         foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $week) {
-
             $weekSchedule = new WeekSchedule();
             $weekSchedule->setId($week['SemId']);
             $weekSchedule->setCode($week['SemCod']);
@@ -100,15 +92,14 @@ class TimetableService
 
                         $event = new Event();
                         $event->setCreneau($creneau['Creneau']);
-                        $event->setActivite($creneau['Activite'] ?? "Pas cours");
+                        $event->setActivite($creneau['Activite'] ?? 'Pas cours');
                         $event->setId($creneau['Id'] ?? 0);
-                        $event->setCouleur($creneau['Couleur'] ?? "#000000");
+                        $event->setCouleur($creneau['Couleur'] ?? '#000000');
                         $event->setHoraire($eventHours);
-                        $event->setSalle($creneau['Salles'] ?? "");
+                        $event->setSalle($creneau['Salles'] ?? '');
                         $event->setVisio(str_contains($creneau['Salles'] ?? null, 'Teams'));
 
                         $daySchedule->addEvent($event);
-
                     }
                 }
 
@@ -121,9 +112,10 @@ class TimetableService
     }
 
     /**
-     * Fetch and parse the xml file
+     * Fetch and parse the xml file.
      *
      * @param string $xmlUrl The url of the xml file
+     *
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
@@ -133,6 +125,7 @@ class TimetableService
     {
         $xmlContent = $this->xmlService->fetchXmlData($xmlUrl);
         $parsedXml = $this->xmlService->parseXmlData($xmlContent);
+
         return $this->parseData($parsedXml);
     }
 }

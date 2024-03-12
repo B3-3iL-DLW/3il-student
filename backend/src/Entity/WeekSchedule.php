@@ -21,7 +21,6 @@ class WeekSchedule
     #[ORM\OneToMany(targetEntity: DaySchedule::class, mappedBy: 'weekSchedule')]
     private Collection $DaySchedule;
 
-
     public function __construct()
     {
         $this->DaySchedule = new ArrayCollection();
@@ -80,6 +79,4 @@ class WeekSchedule
 
         return $this;
     }
-
-
 }
