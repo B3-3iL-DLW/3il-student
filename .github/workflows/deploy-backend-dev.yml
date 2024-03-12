@@ -1,0 +1,57 @@
+name: Upload backend to dev server and lint
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+
+env:
+  FLUTTER_VERSION: 3.10.1
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install SSH key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Upload PHP code
+        run: scp -o StrictHostKeyChecking=no -r * ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/home/julesartd/www/api-dev-edt-3il
+
+
+  install_dependencies:
+    needs: deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH Into Server and Install Composer Dependencies
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/julesartd/www/api-dev-edt-3il/backend
+            composer2 install
+      
+      - name: SSH Into Server and execute Linter for PHP
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/julesartd/www/api-dev-edt-3il/backend
+            vendor/bin/php-cs-fixer fix src
+      
+
+          
