@@ -2,133 +2,130 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpClient\HttpClient;
+use App\Entity\DaySchedule;
+use App\Entity\Event;
+use App\Entity\EventHours;
+use App\Entity\WeekSchedule;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class TimetableService
 {
+    private ClassesScraperService $classesScraperService;
+    private string $schedule_url;
+    private XMLService $xmlService;
 
-    private $classesScraperService;
-    private $schedule_url;
-
-    public function __construct(ClassesScraperService $classesScraperService, string $schedule_url)
+    public function __construct(ClassesScraperService $classesScraperService, string $schedule_url, XMLService $xmlService)
     {
         $this->classesScraperService = $classesScraperService;
         $this->schedule_url = $schedule_url;
+        $this->xmlService = $xmlService;
     }
 
-
+    /**
+     * Get the xml file for a given class.
+     *
+     * @throws TransportExceptionInterface
+     */
     public function getXmlFile(string $classParam): ?string
     {
         $classesList = $this->classesScraperService->scrapeClasses();
         foreach ($classesList as $class) {
-            if ($class['name'] === $classParam) {
-                $encodedClassFile = str_replace(' ', '%20', $class['file']);
-                return $this->schedule_url . $encodedClassFile;
+            if ($class->getName() === $classParam) {
+                $encodedClassFile = str_replace(' ', '%20', $class->getFile());
+
+                return $this->schedule_url.$encodedClassFile;
             }
         }
 
         return null;
     }
 
+    /**
+     * Define the time slots for the timetable.
+     */
     public function defineCreneaux(): array
     {
         return [
-            "1" => ["start" => "8h30", "end" => "10h"],
-            "2" => ["start" => "10h30", "end" => "12h"],
-            "3" => ["start" => "12h", "end" => "13h30"],
-            "4" => ["start" => "13h30", "end" => "15h"],
-            "5" => ["start" => "15h15", "end" => "16h45"],
-            "6" => ["start" => "17h", "end" => "18h30"]
+            '1' => ['start' => '8h30', 'end' => '10h'],
+            '2' => ['start' => '10h30', 'end' => '12h'],
+            '3' => ['start' => '12h', 'end' => '13h30'],
+            '4' => ['start' => '13h30', 'end' => '15h'],
+            '5' => ['start' => '15h15', 'end' => '16h45'],
+            '6' => ['start' => '17h', 'end' => '18h30'],
         ];
     }
 
-
-    public function filterParsedData(array $parsedData): array
+    /**
+     * Put the parsed data into entity objects.
+     */
+    public function parseData(array $parsedData): array
     {
         $creneaux = $this->defineCreneaux();
-        $filteredData = [];
+        $weeks = [];
 
-        // Parcourir chaque semaine
-        foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $semaine) {
-            // Parcourir chaque jour de la semaine
-            foreach ($semaine['JOUR'] as $jour) {
-                $jourDeLaSemaine = date('N', strtotime($jour['Date']));
+        foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $week) {
+            $weekSchedule = new WeekSchedule();
+            $weekSchedule->setId($week['SemId']);
+            $weekSchedule->setCode($week['SemCod']);
 
-                // ignore week-end
-                if ($jourDeLaSemaine > 5) {
+            foreach ($week['JOUR'] as $day) {
+                $weekDayNumber = date('N', strtotime(str_replace('/', '-', $day['Date'])));
+
+                if ($weekDayNumber > 5) {
                     continue;
                 }
 
-                // Initialiser un tableau pour stocker les informations d'un jour
-                $jourData = [];
-                $jourData['date'] = $jour['Date'];
-                $jourData['jour'] = $jour['Jour'];
+                $daySchedule = new DaySchedule();
+                $daySchedule->setDate(\DateTime::createFromFormat('d/m/Y', $day['Date']));
+                $daySchedule->setJour($weekDayNumber);
+                $daySchedule->setId(random_int(0, 1000000));
 
-                // Indicateur pour vérifier si tous les créneaux sont nuls
-                $allCreneauxNull = true;
-
-                // Parcourir chaque créneau du jour
-                foreach ($jour['CRENEAU'] as $creneau) {
-                    // Vérifier si le numéro de créneau existe dans votre liste de créneaux définis
+                foreach ($day['CRENEAU'] as $creneau) {
                     if (isset($creneaux[$creneau['Creneau']])) {
+                        $eventHours = new EventHours();
+                        $eventHours->setStartAt($creneaux[$creneau['Creneau']]['start']);
+                        $eventHours->setEndAt($creneaux[$creneau['Creneau']]['end']);
+                        $eventHours->setId(random_int(0, 1000000));
 
-                        if (isset($creneau['Id'])) {
-                            // Marquer l'indicateur à false si au moins un créneau n'est pas nul
-                            if ($creneau['Id'] !== null) {
-                                $allCreneauxNull = false;
-                            }
-                        }
+                        $event = new Event();
+                        $event->setCreneau($creneau['Creneau']);
+                        $event->setActivite($creneau['Activite'] ?? 'Pas cours');
+                        $event->setId($creneau['Id'] ?? 0);
+                        $event->setCouleur($creneau['Couleur'] ?? '#000000');
+                        $event->setHoraire($eventHours);
+                        $event->setSalle($creneau['Salles'] ?? '');
+                        $event->setVisio(str_contains($creneau['Salles'] ?? null, 'Teams'));
+
+                        $daySchedule->addEvent($event);
                     }
                 }
 
-                // Si tous les créneaux sont nuls, passer à l'itération suivante
-                if ($allCreneauxNull) {
-                    continue;
-                }
-
-                // Parcourir à nouveau chaque créneau pour construire les données filtrées
-                foreach ($jour['CRENEAU'] as $creneau) {
-                    // Vérifier si le numéro de créneau existe dans votre liste de créneaux définis
-                    if (isset($creneaux[$creneau['Creneau']])) {
-                        // Créer un tableau pour stocker les informations d'un cours
-                        $coursData = [];
-                        $coursData['creneau'] = $creneau['Creneau'];
-                        $coursData['activite'] = $creneau['Activite'] ?? null;
-                        $coursData['id'] = $creneau['Id'] ?? null;
-                        $coursData['couleur'] = $creneau['Couleur'] ?? null;
-                        $coursData['horaire'] = $creneaux[$creneau['Creneau']];
-                        $coursData['salle'] = $creneau['Salles'] ?? null;
-
-                        // Ajouter les informations du cours au tableau du jour
-                        $jourData['cours'][] = $coursData;
-                    }
-                }
-
-                // Ajouter les informations du jour au tableau filtré
-                $filteredData[] = $jourData;
+                $weekSchedule->addDaySchedule($daySchedule);
             }
+            $weeks[] = $weekSchedule;
         }
 
-        return $filteredData;
+        return $weeks;
     }
 
-    public function fetchXmlData(string $xmlUrl): string
-    {
-        $httpClient = HttpClient::create();
-        return $httpClient->request('GET', $xmlUrl)->getContent();
-    }
-
-    public function parseXmlData(string $xmlContent): array
-    {
-        $xmlHash = simplexml_load_string($xmlContent);
-        return json_decode(json_encode($xmlHash), true);
-    }
-
-
+    /**
+     * Fetch and parse the xml file.
+     *
+     * @param string $xmlUrl The url of the xml file
+     *
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ClientExceptionInterface
+     */
     public function fetchAndParseData(string $xmlUrl): array
     {
-        $xmlContent = $this->fetchXmlData($xmlUrl);
-        $parsedData = $this->parseXmlData($xmlContent);
-        return $this->filterParsedData($parsedData);
+        $xmlContent = $this->xmlService->fetchXmlData($xmlUrl);
+        $parsedXml = $this->xmlService->parseXmlData($xmlContent);
+
+        return $this->parseData($parsedXml);
     }
 }

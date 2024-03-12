@@ -30,7 +30,7 @@ class FirstnameTextField extends StatelessWidget {
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
+                borderSide: const BorderSide(color: Colors.grey),
                 borderRadius: BorderRadius.circular(3.0),
               ),
               focusedBorder: OutlineInputBorder(
