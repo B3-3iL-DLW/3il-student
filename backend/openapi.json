@@ -1,0 +1,194 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "3il Schedule API",
+    "description": "API to access 3il schedule data"
+  },
+  "servers": [
+    {
+      "url": "https://api.lukasvalois.com",
+      "description": "Production server"
+    },
+    {
+      "url": "https://api-dev.lukasvalois.com",
+      "description": "Testing server"
+    }
+  ],
+  "paths": {
+    "/api/classes": {
+      "get": {
+        "summary": "Get list of classes",
+        "responses": {
+          "200": {
+            "description": "List of classes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "B3 Groupe 1 IRC-FA"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/timetable": {
+      "get": {
+        "summary": "Get timetable for a given class",
+        "parameters": [
+          {
+            "name": "class_param",
+            "in": "query",
+            "description": "Class parameter",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "B3 Groupe 1 IRC-FA"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Timetable for the given class",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timetable"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No timetable found for the provided class",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Timetable": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 6479
+          },
+          "code": {
+            "type": "string",
+            "example": "24/10"
+          },
+          "DaySchedule": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "example": 476589
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2024-03-04T08:57:17+01:00"
+                },
+                "jour": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "example": 29063
+                      },
+                      "creneau": {
+                        "type": "integer",
+                        "example": 1
+                      },
+                      "activite": {
+                        "type": "string",
+                        "example": "RSX HAUTE DISPO C"
+                      },
+                      "couleur": {
+                        "type": "string",
+                        "example": "#FFFFFF;"
+                      },
+                      "horaire": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "startAt": {
+                            "type": "string",
+                            "example": "8h30"
+                          },
+                          "endAt": {
+                            "type": "string",
+                            "example": "10h"
+                          }
+                        }
+                      },
+                      "salle": {
+                        "type": "string",
+                        "example": "206"
+                      },
+                      "visio": {
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "daySchedule": {
+                        "type": "string",
+                        "example": "476589"
+                      }
+                    }
+                  }
+                },
+                "weekSchedule": {
+                  "type": "string",
+                  "example": "6479"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "No timetable found for the provided class"
+          }
+        }
+      }
+    }
+  }
+}

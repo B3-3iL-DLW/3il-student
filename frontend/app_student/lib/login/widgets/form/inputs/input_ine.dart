@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class INETextField extends StatelessWidget {
-  const INETextField({super.key});
+  final TextEditingController controller;
+
+  const INETextField({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class INETextField extends StatelessWidget {
           ),
           const SizedBox(height: 10.0),
           TextFormField(
+            controller: controller,
             decoration: InputDecoration(
               hintText: 'Numéro INE',
               contentPadding:

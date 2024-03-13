@@ -12,7 +12,7 @@ class HeaderLogo extends StatelessWidget {
         child: SizedBox(
           width: 200.0, // Largeur de l'image
           height: 200.0, // Hauteur de l'image
-          child: Image.asset('images/3il-logo.jpg'),
+          child: Image.asset('assets/images/3il-logo.jpg'),
         ),
       ),
     );

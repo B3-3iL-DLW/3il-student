@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../cubit/login_cubit.dart';
 
 class SubmitButton extends StatelessWidget {
-  const SubmitButton({super.key});
+  final TextEditingController ineController;
+  final TextEditingController nameController;
+  final TextEditingController birthDateController;
+
+  const SubmitButton(
+      {super.key,
+      required this.ineController,
+      required this.nameController,
+      required this.birthDateController});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +41,15 @@ class SubmitButton extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                final String ine = ineController.text.trim();
+                final String name = nameController.text.trim();
+                final String birthDate = birthDateController.text.trim();
+
+                context
+                    .read<LoginCubit>()
+                    .saveLoginDetails(ine, name, birthDate);
+              },
               child: const Text('Connexion'),
             ),
           ),
