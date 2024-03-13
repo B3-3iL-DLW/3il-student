@@ -29,13 +29,14 @@ class LoginCubit extends Cubit<LoginState> {
     emit(RedirectToClassSelection());
   }
 
-  Future<void> checkUserAuthentication() async {
+  Future<bool> checkUserAuthentication() async {
     try {
       await userRepository.getUser();
       emit(LoginAuthenticated());
+      return true;
     } catch (e) {
-      emit(LoginFieldError());
+      emit(LoginInitial());
+      return false;
     }
-    emit(LoginInitial());
   }
 }

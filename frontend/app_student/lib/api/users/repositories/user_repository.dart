@@ -11,14 +11,13 @@ class UserRepository {
     String? name = prefs.getString('name');
     String? birthDate = prefs.getString('birthDate');
     String? className = prefs.getString('className');
-
     if (ine != null && name != null && birthDate != null) {
       return UserModel(
         entity: UserEntity(
           ine: ine,
           firstName: name,
           birthDate: DateTime.parse(birthDate),
-          classGroup: null,
+          promotionName: className,
         ),
       );
     } else {
@@ -29,6 +28,14 @@ class UserRepository {
   Future<void> saveUserDetails(
       String ine, String name, String birthDate, String className) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    UserModel(
+      entity: UserEntity(
+        ine: ine,
+        firstName: name,
+        birthDate: DateTime.parse(birthDate),
+        promotionName: className,
+      ),
+    );
     await prefs.setString('ine', ine);
     await prefs.setString('name', name);
     await prefs.setString('birthDate', birthDate);

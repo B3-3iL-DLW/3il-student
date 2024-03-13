@@ -2,8 +2,11 @@
 import 'package:app_student/api/api_service.dart';
 import 'package:app_student/api/class_groups/repositories/class_group_repository.dart';
 import 'package:app_student/api/users/repositories/user_repository.dart';
+import 'package:app_student/api/week_schedule/repositories/week_schedule_repository.dart';
 import 'package:app_student/class_groups/cubit/class_group_cubit.dart';
 import 'package:app_student/config/config.dart';
+import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
+import 'package:app_student/week_schedule/views/week_schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -15,6 +18,7 @@ import 'login/views/login_page.dart';
 class AppRoutes {
   static const classListPage = '/classList';
   static const loginPage = '/login';
+  static const schedulePage = '/schedule';
 
   static final routes = [
     GoRoute(
@@ -47,5 +51,25 @@ class AppRoutes {
         ),
       ),
     ),
+    GoRoute(
+        path: schedulePage,
+        pageBuilder: (context, state) => MaterialPage<void>(
+            key: state.pageKey,
+            child: MultiRepositoryProvider(
+                providers: [
+                  RepositoryProvider(create: (context) {
+                    return WeekScheduleRepository(
+                        apiService:
+                            ApiService(apiUrl: context.read<Config>().apiUrl));
+                  }),
+                  RepositoryProvider(create: (context) => UserRepository()),
+                ],
+                child: BlocProvider(
+                    create: (context) => WeekScheduleCubit(
+                          weekScheduleRepository:
+                              context.read<WeekScheduleRepository>(),
+                          userRepository: context.read<UserRepository>(),
+                        ),
+                    child: const WeekSchedulePage())))),
   ];
 }

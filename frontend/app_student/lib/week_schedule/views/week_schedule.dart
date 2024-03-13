@@ -4,6 +4,8 @@ import 'package:app_student/week_schedule/views/widgets/day_schedule_widget.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../api/users/repositories/user_repository.dart';
+
 class WeekSchedulePage extends StatelessWidget {
   const WeekSchedulePage({super.key});
 
@@ -11,12 +13,13 @@ class WeekSchedulePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final weekScheduleRepository =
         RepositoryProvider.of<WeekScheduleRepository>(context);
-    final weekScheduleCubit =
-        WeekScheduleCubit(weekScheduleRepository: weekScheduleRepository);
+    final userRepository = RepositoryProvider.of<UserRepository>(context);
+    final weekScheduleCubit = WeekScheduleCubit(
+        weekScheduleRepository: weekScheduleRepository,
+        userRepository: userRepository);
 
     return BlocProvider<WeekScheduleCubit>(
-      create: (context) =>
-          weekScheduleCubit..fetchWeekSchedule('B3 Groupe 3 DLW-FA'),
+      create: (context) => weekScheduleCubit..fetchUserAndSchedule(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Week Schedule'),
