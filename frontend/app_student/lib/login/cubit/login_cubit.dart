@@ -1,11 +1,13 @@
+import 'package:app_student/api/users/repositories/user_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(LoginInitial()) {
+  final UserRepository userRepository;
+
+  LoginCubit(this.userRepository) : super(LoginInitial()) {
     checkUserAuthentication();
   }
 
@@ -23,24 +25,17 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginFieldError());
       return;
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('ine', ine);
-    await prefs.setString('name', name);
-    await prefs.setString('birthDate', birthDate);
+    await userRepository.saveUserDetails(ine, name, birthDate, '');
     emit(RedirectToClassSelection());
   }
 
   Future<void> checkUserAuthentication() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? ine = prefs.getString('ine');
-    String? name = prefs.getString('name');
-    String? birthDate = prefs.getString('birthDate');
-    String? className = prefs.getString('className');
-
-    if (ine != null && name != null && birthDate != null && className != null) {
+    try {
+      await userRepository.getUser();
       emit(LoginAuthenticated());
-    } else {
-      emit(LoginInitial());
+    } catch (e) {
+      emit(LoginFieldError());
     }
+    emit(LoginInitial());
   }
 }

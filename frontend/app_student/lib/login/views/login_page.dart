@@ -1,16 +1,11 @@
-import 'package:app_student/api/api_service.dart';
-import 'package:app_student/api/class_groups/repositories/class_group_repository.dart';
-import 'package:app_student/config/config.dart';
 import 'package:app_student/login/cubit/login_cubit.dart';
 import 'package:app_student/login/widgets/form/form_login.dart';
 import 'package:app_student/login/widgets/header/header_text.dart';
 import 'package:app_student/week_schedule/views/week_schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../class_groups/cubit/class_group_cubit.dart';
-import '../../class_groups/views/class_group_view.dart';
 import '../widgets/header/header_logo.dart';
 
 class LoginPage extends StatelessWidget {
@@ -22,16 +17,7 @@ class LoginPage extends StatelessWidget {
       builder: (context, state) {
         if (state is RedirectToClassSelection) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            final config = Provider.of<Config>(context, listen: false);
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute<ClassListPage>(
-                builder: (context) => BlocProvider(
-                    create: (_) => ClassGroupCubit(
-                        classRepository: ClassGroupRepository(
-                            apiService: ApiService(apiUrl: config.apiUrl))),
-                    child: const ClassListPage()),
-              ),
-            );
+            context.go('/classList');
           });
           return Container();
         } else if (state is LoginInitial) {

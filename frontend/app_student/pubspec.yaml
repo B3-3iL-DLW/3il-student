@@ -42,6 +42,8 @@ dependencies:
   flutter_bloc: ^8.1.4
   meta: ^1.11.0
   flutter_svg: ^2.0.10+1
+  flutter_native_splash: ^2.3.13
+  go_router: ^13.2.0
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +74,9 @@ flutter:
 
   assets:
     - assets/images/3il-logo.jpg
+    - assets/images/3il-icon.png
+    - assets/images/3il-icon-white.png
+    - assets/images/3il-icon-blue.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

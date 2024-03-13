@@ -16,5 +16,5 @@ class ClassGroupLoaded extends ClassGroupState {
 class ClassGroupError extends ClassGroupState {
   final String message;
 
-  ClassGroupError(this.message);
+  ClassGroupError([this.message = 'An error occurred']);
 }

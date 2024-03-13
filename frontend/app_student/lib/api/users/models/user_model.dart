@@ -8,4 +8,5 @@ class UserModel {
   String get file => entity.ine;
   String get name => entity.firstName;
   DateTime get birthDate => entity.birthDate;
+  String get className => entity.classGroup?.name ?? '';
 }
