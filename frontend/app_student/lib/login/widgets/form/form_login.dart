@@ -16,6 +16,7 @@ class FormLoginState extends State<FormLogin> {
   final TextEditingController ineController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController birthDateController = TextEditingController();
+  DateTime birthDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +25,20 @@ class FormLoginState extends State<FormLogin> {
         child: Column(
           children: [
             INETextField(controller: ineController),
-            BirthDateField(controller: birthDateController),
+            BirthDateField(
+              controller: birthDateController,
+              onDateChanged: (newDate) {
+                setState(() {
+                  birthDate = newDate;
+                });
+              },
+            ),
             FirstnameTextField(controller: nameController),
             SubmitButton(
               ineController: ineController,
               nameController: nameController,
               birthDateController: birthDateController,
+              birthDate: birthDate,
             )
           ],
         ),
