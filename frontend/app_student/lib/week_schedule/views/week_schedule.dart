@@ -11,13 +11,13 @@ class WeekSchedulePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weekScheduleRepository =
-    RepositoryProvider.of<WeekScheduleRepository>(context);
+        RepositoryProvider.of<WeekScheduleRepository>(context);
     final weekScheduleCubit =
-    WeekScheduleCubit(weekScheduleRepository: weekScheduleRepository);
+        WeekScheduleCubit(weekScheduleRepository: weekScheduleRepository);
 
     return BlocProvider<WeekScheduleCubit>(
       create: (context) =>
-      weekScheduleCubit..fetchWeekSchedule('B3 Groupe 3 DLW-FA'),
+          weekScheduleCubit..fetchWeekSchedule('B3 Groupe 3 DLW-FA'),
       child: Scaffold(
         appBar: const AppBarWeekSchedule(),
         body: BlocBuilder<WeekScheduleCubit, WeekScheduleState>(
@@ -26,7 +26,8 @@ class WeekSchedulePage extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else if (state is WeekScheduleLoaded) {
               return Padding(
-                padding: const EdgeInsets.only(top: 30.0), // Ajoutez un espacement en haut
+                padding: const EdgeInsets.only(
+                    top: 30.0), // Ajoutez un espacement en haut
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height,
                   child: PageView.builder(
@@ -34,7 +35,8 @@ class WeekSchedulePage extends StatelessWidget {
                     itemBuilder: (context, weekIndex) {
                       final week = state.weekSchedule[weekIndex];
                       return PageView.builder(
-                        itemCount: week.daySchedules.length, // Nombre de jours dans la semaine
+                        itemCount: week.daySchedules
+                            .length, // Nombre de jours dans la semaine
                         itemBuilder: (context, dayIndex) {
                           final daySchedule = week.daySchedules[dayIndex];
                           return DayScheduleWidget(daySchedule: daySchedule);

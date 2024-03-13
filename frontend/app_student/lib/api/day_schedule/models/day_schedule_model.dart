@@ -10,7 +10,8 @@ class DayScheduleModel {
 
   int get jour => entity.jour;
 
-  List<EventModel> get events => entity.events.map((e) => EventModel(entity: e)).toList();
+  List<EventModel> get events =>
+      entity.events.map((e) => EventModel(entity: e)).toList();
 
   factory DayScheduleModel.fromEntity(DayScheduleEntity entity) {
     return DayScheduleModel(
