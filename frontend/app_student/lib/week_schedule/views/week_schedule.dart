@@ -1,6 +1,6 @@
 import 'package:app_student/api/week_schedule/repositories/week_schedule_repository.dart';
 import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
-import 'package:app_student/week_schedule/views/widgets/week_schedule_widget.dart';
+import 'package:app_student/week_schedule/views/widgets/day_schedule_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,12 +26,15 @@ class WeekSchedulePage extends StatelessWidget {
             if (state is WeekScheduleLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is WeekScheduleLoaded) {
-              return ListView.builder(
-                itemCount: state.weekSchedule.length,
-                itemBuilder: (context, index) {
-                  final weekSchedule = state.weekSchedule[index];
-                  return WeekScheduleWidget(weekSchedule: weekSchedule);
-                },
+              return Expanded(
+                child: PageView.builder(
+                  itemCount: state.weekSchedule[0].daySchedules.length,
+                  itemBuilder: (context, index) {
+                    final daySchedule =
+                        state.weekSchedule[0].daySchedules[index];
+                    return DayScheduleWidget(daySchedule: daySchedule);
+                  },
+                ),
               );
             } else if (state is WeekScheduleError) {
               return Center(child: Text(state.message));
