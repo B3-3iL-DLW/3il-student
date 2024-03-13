@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:app_student/timetable/widgets/card/courses_time.dart';
 import 'courses_details.dart';
+import 'courses_time.dart';
 
 class CourseCard extends StatelessWidget {
   final Map<String, dynamic> course;

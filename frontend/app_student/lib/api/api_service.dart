@@ -16,6 +16,7 @@ class ApiService {
 
       if (response.statusCode == 200) {
         List jsonResponse = json.decode(response.body);
+        print(jsonResponse);
         return jsonResponse.map((item) {
           try {
             return fromJson(item);

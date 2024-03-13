@@ -1,10 +1,11 @@
-import 'package:app_student/timetable/widgets/card/courses_cours.dart';
 import 'package:flutter/material.dart';
+
+import 'courses_cours.dart';
 
 class CourseDetails extends StatelessWidget {
   final Map<String, dynamic> course;
 
-  const CourseDetails({Key? key, required this.course}) : super(key: key);
+  const CourseDetails({super.key, required this.course});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class CourseDetails extends StatelessWidget {
     return Card(
       color: cardColor,
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           border: Border(
             left: BorderSide(
               color: borderColor,
