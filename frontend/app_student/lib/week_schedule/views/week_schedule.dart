@@ -21,12 +21,14 @@ class WeekSchedulePage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Week Schedule'),
         ),
+        // ...
         body: BlocBuilder<WeekScheduleCubit, WeekScheduleState>(
           builder: (context, state) {
             if (state is WeekScheduleLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is WeekScheduleLoaded) {
-              return Expanded(
+              return SizedBox(
+                height: MediaQuery.of(context).size.height,
                 child: PageView.builder(
                   itemCount: state.weekSchedule[0].daySchedules.length,
                   itemBuilder: (context, index) {
@@ -43,6 +45,7 @@ class WeekSchedulePage extends StatelessWidget {
             }
           },
         ),
+// ...
       ),
     );
   }

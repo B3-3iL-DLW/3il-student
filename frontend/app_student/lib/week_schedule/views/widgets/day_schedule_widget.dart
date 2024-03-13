@@ -9,10 +9,12 @@ class DayScheduleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: daySchedule.events.map((event) {
-        return CourseDetails(event: event);
-      }).toList(),
+    return SingleChildScrollView(
+      child: Column(
+        children: daySchedule.events.map((event) {
+          return CourseDetails(event: event);
+        }).toList(),
+      ),
     );
   }
 }
