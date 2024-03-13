@@ -6,7 +6,7 @@ class DatePickerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.calendar_today),
+      icon: const Icon(Icons.calendar_month, color: Colors.white),
       onPressed: () async {
         final date = await showDatePicker(
           context: context,

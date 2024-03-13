@@ -1,6 +1,7 @@
 import 'package:app_student/api/week_schedule/repositories/week_schedule_repository.dart';
 import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
 import 'package:app_student/week_schedule/views/widgets/day_schedule_widget.dart';
+import 'package:app_student/week_schedule/views/widgets/components/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,22 +22,31 @@ class WeekSchedulePage extends StatelessWidget {
     return BlocProvider<WeekScheduleCubit>(
       create: (context) => weekScheduleCubit..fetchUserAndSchedule(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Week Schedule'),
-        ),
+        appBar: const AppBarWeekSchedule(),
         body: BlocBuilder<WeekScheduleCubit, WeekScheduleState>(
           builder: (context, state) {
             if (state is WeekScheduleLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is WeekScheduleLoaded) {
-              return Expanded(
-                child: PageView.builder(
-                  itemCount: state.weekSchedule[0].daySchedules.length,
-                  itemBuilder: (context, index) {
-                    final daySchedule =
-                        state.weekSchedule[0].daySchedules[index];
-                    return DayScheduleWidget(daySchedule: daySchedule);
-                  },
+              return Padding(
+                padding: const EdgeInsets.only(
+                    top: 30.0), // Ajoutez un espacement en haut
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: PageView.builder(
+                    itemCount: state.weekSchedule.length, // Nombre de semaines
+                    itemBuilder: (context, weekIndex) {
+                      final week = state.weekSchedule[weekIndex];
+                      return PageView.builder(
+                        itemCount: week.daySchedules
+                            .length, // Nombre de jours dans la semaine
+                        itemBuilder: (context, dayIndex) {
+                          final daySchedule = week.daySchedules[dayIndex];
+                          return DayScheduleWidget(daySchedule: daySchedule);
+                        },
+                      );
+                    },
+                  ),
                 ),
               );
             } else if (state is WeekScheduleError) {
