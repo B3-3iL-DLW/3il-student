@@ -11,7 +11,8 @@ class HeaderLogo extends StatelessWidget {
       child: Align(
         alignment: Alignment.centerLeft, // Alignez à gauche
         child: Padding(
-          padding: const EdgeInsets.all(8.0), // Ajoutez une marge autour du logo
+          padding:
+              const EdgeInsets.all(8.0), // Ajoutez une marge autour du logo
           child: SizedBox(
             width: 100.0, // Réduisez la largeur de l'image
             height: 100.0, // Réduisez la hauteur de l'image
