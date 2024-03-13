@@ -1,7 +1,6 @@
 import 'package:app_student/login/cubit/login_cubit.dart';
 import 'package:app_student/login/widgets/form/form_login.dart';
 import 'package:app_student/login/widgets/header/header_text.dart';
-import 'package:app_student/week_schedule/views/week_schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -32,9 +31,7 @@ class LoginPage extends StatelessWidget {
           );
         } else if (state is LoginAuthenticated) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const WeekSchedulePage()),
-            );
+            context.go('/schedule');
           });
           return Container();
         } else if (state is LoginFieldError) {

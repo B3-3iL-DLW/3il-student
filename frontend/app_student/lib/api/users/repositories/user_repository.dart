@@ -34,4 +34,17 @@ class UserRepository {
     await prefs.setString('birthDate', birthDate);
     await prefs.setString('className', className);
   }
+
+  Future<void> deleteUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('ine');
+    await prefs.remove('name');
+    await prefs.remove('birthDate');
+    await prefs.remove('className');
+  }
+
+  Future<void> saveUserClass(String className) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('className', className);
+  }
 }

@@ -29,4 +29,9 @@ class ClassGroupCubit extends Cubit<ClassGroupState> {
   Future<UserModel> getConnectedUser() async {
     return userRepository.getUser();
   }
+
+  Future<void> saveClass(ClassGroupModel classGroup) async {
+    await userRepository.saveUserClass(classGroup.toString());
+    emit(ClassGroupSelected());
+  }
 }

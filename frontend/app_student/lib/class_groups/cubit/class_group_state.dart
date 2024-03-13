@@ -18,3 +18,5 @@ class ClassGroupError extends ClassGroupState {
 
   ClassGroupError([this.message = 'An error occurred']);
 }
+
+class ClassGroupSelected extends ClassGroupState {}
