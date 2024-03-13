@@ -5,15 +5,17 @@ class HeaderLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Image.asset(
-          'assets/images/3il-logo.jpg',
+    return AppBar(
+      backgroundColor: const Color(0xFF005067),
+      toolbarHeight: 70.0,
+      title: Opacity(
+        opacity: 0.5,
+        child: Image.asset(
+          'assets/images/3il-icon-white.png',
           fit: BoxFit.contain,
-          height: 32,
         ),
-      ],
+      ),
+      centerTitle: true,
     );
   }
 }
