@@ -15,8 +15,10 @@ class EventHours extends StatelessWidget {
       width: 50,
       child: Column(
         children: [
-          Text(event.horaires.startAt),
-          Text(event.horaires.endAt),
+          Text(event.horaires.startAt,
+              style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text(event.horaires.endAt,
+              style: const TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),
     );
