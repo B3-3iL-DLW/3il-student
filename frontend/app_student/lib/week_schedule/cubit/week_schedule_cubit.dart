@@ -31,6 +31,6 @@ class WeekScheduleCubit extends Cubit<WeekScheduleState> {
 
   void fetchUserAndSchedule() async {
     final user = await getUser();
-    fetchWeekSchedule(user.promotionName);
+    fetchWeekSchedule(user.className);
   }
 }

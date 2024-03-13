@@ -17,7 +17,7 @@ class UserRepository {
           ine: ine,
           firstName: name,
           birthDate: DateTime.parse(birthDate),
-          promotionName: className,
+          className: className,
         ),
       );
     } else {
@@ -33,7 +33,7 @@ class UserRepository {
         ine: ine,
         firstName: name,
         birthDate: DateTime.parse(birthDate),
-        promotionName: className,
+        className: className,
       ),
     );
     await prefs.setString('ine', ine);
