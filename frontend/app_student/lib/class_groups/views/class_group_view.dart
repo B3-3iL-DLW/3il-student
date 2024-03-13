@@ -14,7 +14,7 @@ class ClassListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final classRepository =
-    RepositoryProvider.of<ClassGroupRepository>(context);
+        RepositoryProvider.of<ClassGroupRepository>(context);
     final classCubit = ClassGroupCubit(classRepository: classRepository);
 
     return BlocProvider<ClassGroupCubit>(
