@@ -97,6 +97,7 @@ class TimetableService
                         $event->setCouleur($creneau['Couleur'] ?? '#000000');
                         $event->setHoraire($eventHours);
                         $event->setSalle($creneau['Salles'] ?? '');
+                        $event->setRepas('3' === $creneau['Creneau'] && empty($creneau['Activite']));
                         $event->setVisio(str_contains($creneau['Salles'] ?? null, 'Teams'));
 
                         $daySchedule->addEvent($event);

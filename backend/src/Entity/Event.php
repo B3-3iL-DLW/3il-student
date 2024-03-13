@@ -36,6 +36,9 @@ class Event
     #[ORM\JoinColumn(nullable: false)]
     private ?DaySchedule $daySchedule = null;
 
+    #[ORM\Column]
+    private ?bool $repas = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -128,6 +131,18 @@ class Event
     public function setDaySchedule(?DaySchedule $daySchedule): static
     {
         $this->daySchedule = $daySchedule;
+
+        return $this;
+    }
+
+    public function isRepas(): ?bool
+    {
+        return $this->repas;
+    }
+
+    public function setRepas(bool $repas): static
+    {
+        $this->repas = $repas;
 
         return $this;
     }
