@@ -9,7 +9,6 @@ import 'api/api_service.dart';
 import 'api/class_groups/repositories/class_group_repository.dart';
 import 'config/config.dart';
 
-
 void main() {
   final ClassGroupRepository classGroupRepository = ClassGroupRepository(
     apiService: ApiService(apiUrl: DevConfig().apiUrl),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class DatePickerButton extends StatelessWidget {
+  const DatePickerButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.calendar_today),
+      icon: const Icon(Icons.calendar_today),
       onPressed: () async {
         final date = await showDatePicker(
           context: context,

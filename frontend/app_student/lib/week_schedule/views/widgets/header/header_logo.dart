@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class HeaderLogo extends StatelessWidget {
-  const HeaderLogo({Key? key}) : super(key: key);
+  const HeaderLogo({super.key});
 
   @override
   Widget build(BuildContext context) {

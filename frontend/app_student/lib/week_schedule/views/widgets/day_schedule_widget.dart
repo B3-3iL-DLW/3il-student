@@ -9,12 +9,9 @@ class DayScheduleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      title: Text('Date: ${daySchedule.date}'),
+    return Column(
       children: daySchedule.events.map((event) {
-        return SingleChildScrollView(
-          child: CourseDetails(event: event),
-        );
+        return CourseDetails(event: event);
       }).toList(),
     );
   }
