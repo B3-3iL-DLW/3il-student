@@ -20,17 +20,19 @@ class FormLoginState extends State<FormLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          INETextField(controller: ineController),
-          BirthDateField(controller: birthDateController),
-          FirstnameTextField(controller: nameController),
-          SubmitButton(
-            ineController: ineController,
-            nameController: nameController,
-            birthDateController: birthDateController,
-          )
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            INETextField(controller: ineController),
+            BirthDateField(controller: birthDateController),
+            FirstnameTextField(controller: nameController),
+            SubmitButton(
+              ineController: ineController,
+              nameController: nameController,
+              birthDateController: birthDateController,
+            )
+          ],
+        ),
       ),
     );
   }
