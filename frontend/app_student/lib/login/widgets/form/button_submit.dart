@@ -7,12 +7,14 @@ class SubmitButton extends StatelessWidget {
   final TextEditingController ineController;
   final TextEditingController nameController;
   final TextEditingController birthDateController;
+  final DateTime birthDate;
 
   const SubmitButton(
       {super.key,
       required this.ineController,
       required this.nameController,
-      required this.birthDateController});
+      required this.birthDateController,
+      required this.birthDate});
 
   @override
   Widget build(BuildContext context) {
