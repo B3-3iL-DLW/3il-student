@@ -1,14 +1,22 @@
-import 'package:app_student/api/day_schedule/entities/day_schedule_entity.dart';
-
+import 'package:app_student/api/day_schedule/models/day_schedule_model.dart';
 import '../entities/week_schedule_entity.dart';
 
 class WeekScheduleModel {
-  final WeekScheduleEntity weekSchedule;
+  final String code;
+  final List<DayScheduleModel> daySchedules;
 
   WeekScheduleModel({
-    required this.weekSchedule,
+    required this.code,
+    required this.daySchedules,
   });
 
-  String get code => weekSchedule.code;
-  List<DayScheduleEntity> get daySchedules => weekSchedule.daySchedules;
+  factory WeekScheduleModel.fromEntity(WeekScheduleEntity entity) {
+    return WeekScheduleModel(
+      code: entity.code,
+      daySchedules: entity.daySchedules
+          .map((dayScheduleEntity) =>
+              DayScheduleModel.fromEntity(dayScheduleEntity))
+          .toList(),
+    );
+  }
 }

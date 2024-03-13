@@ -1,4 +1,4 @@
-import 'package:app_student/api/week_schedule/repositories/week_schedule_repositories.dart';
+import 'package:app_student/api/week_schedule/repositories/week_schedule_repository.dart';
 import 'package:app_student/config/dev_config.dart';
 import 'package:app_student/week_schedule/views/week_schedule.dart';
 
