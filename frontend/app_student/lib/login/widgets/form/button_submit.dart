@@ -48,8 +48,6 @@ class SubmitButton extends StatelessWidget {
                 final String name = nameController.text.trim();
                 final String birthDate = birthDateController.text.trim();
 
-                print(birthDate);
-
                 context
                     .read<LoginCubit>()
                     .saveLoginDetails(ine, name, birthDate);
