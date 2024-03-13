@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 class CourseCours extends StatelessWidget {
   final Map<String, dynamic> course;
 
-  const CourseCours({Key? key, required this.course}) : super(key: key);
+  const CourseCours({super.key, required this.course});
 
   @override
   Widget build(BuildContext context) {

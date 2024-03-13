@@ -27,9 +27,9 @@ class ClassListPage extends StatelessWidget {
             } else if (state is ClassGroupLoaded) {
               return Column(
                 children: [
-                  HeaderLogo(),
-                  const HeaderTitle('Your Title Here'),
-                  const HeaderText('Your Text Here'),
+                  const HeaderLogo(),
+                  const HeaderTitle('Bonjour, ####'),
+                  const HeaderText('Dans quelle classe êtes-vous ?'),
                   Expanded(
                     child: CardList(classesList: state.classes),
                   ),

@@ -1,11 +1,10 @@
+import 'package:app_student/api/events/entities/event_entity.dart';
 import 'package:flutter/material.dart';
 
-import 'courses_cours.dart';
-
 class CourseDetails extends StatelessWidget {
-  final Map<String, dynamic> course;
+  final EventEntity event;
 
-  const CourseDetails({super.key, required this.course});
+  const CourseDetails({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +30,9 @@ class CourseDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               const SizedBox(height: 45.0),
-              CourseCours(course: course),
+              Text('Cours: ${event.activite}'),
               const SizedBox(height: 10.0),
-              Text(course['salle']),
+              Text('Salle: ${event.salle}'),
             ],
           ),
         ),
