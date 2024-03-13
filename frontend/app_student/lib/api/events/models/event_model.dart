@@ -12,4 +12,5 @@ class EventModel {
   String get couleur => entity.couleur;
   EventHoursModel get horaires => EventHoursModel(entity: entity.horaires);
   String get salle => entity.salle;
+  bool get visio => entity.visio;
 }

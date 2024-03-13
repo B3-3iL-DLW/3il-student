@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         focusColor: const Color(0xffE84E0F),
+        fontFamily: 'Arial',
       ),
       home: BlocProvider(
         create: (context) => LoginCubit(),
