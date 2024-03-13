@@ -1,6 +1,5 @@
 import 'package:app_student/api/week_schedule/repositories/week_schedule_repository.dart';
 import 'package:app_student/config/dev_config.dart';
-import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
 import 'package:app_student/week_schedule/views/week_schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,8 +8,7 @@ import 'package:provider/provider.dart';
 import 'api/api_service.dart';
 import 'api/class_groups/repositories/class_group_repository.dart';
 import 'config/config.dart';
-import 'login/cubit/login_cubit.dart';
-import 'login/views/login_page.dart';
+
 
 void main() {
   final ClassGroupRepository classGroupRepository = ClassGroupRepository(

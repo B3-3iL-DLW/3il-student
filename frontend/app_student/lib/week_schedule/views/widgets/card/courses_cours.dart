@@ -16,7 +16,6 @@ class CourseCours extends StatelessWidget {
           'assets/images/microsoft-teams.svg',
           width: 30,
           height: 30,
-          color: Colors.white,
         ),
       ],
     );
