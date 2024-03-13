@@ -1,4 +1,4 @@
-import '../../events/entities/event_entity.dart';
+import 'package:app_student/api/events/models/event_model.dart';
 import '../entities/day_schedule_entity.dart';
 
 class DayScheduleModel {
@@ -10,7 +10,7 @@ class DayScheduleModel {
 
   int get jour => entity.jour;
 
-  List<EventEntity> get events => entity.events;
+  List<EventModel> get events => entity.events.map((e) => EventModel(entity: e)).toList();
 
   factory DayScheduleModel.fromEntity(DayScheduleEntity entity) {
     return DayScheduleModel(

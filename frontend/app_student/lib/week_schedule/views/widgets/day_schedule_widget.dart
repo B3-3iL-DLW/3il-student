@@ -1,5 +1,5 @@
 import 'package:app_student/api/day_schedule/models/day_schedule_model.dart';
-import 'package:app_student/week_schedule/views/widgets/card/courses_details.dart';
+import 'package:app_student/week_schedule/views/widgets/events/event_details.dart';
 import 'package:flutter/material.dart';
 
 class DayScheduleWidget extends StatelessWidget {
@@ -12,7 +12,7 @@ class DayScheduleWidget extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: daySchedule.events.map((event) {
-          return CourseDetails(event: event);
+          return EventDetails(event: event);
         }).toList(),
       ),
     );
