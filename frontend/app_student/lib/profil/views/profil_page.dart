@@ -1,5 +1,5 @@
 import 'package:app_student/class_groups/views/widgets/header/header_text.dart';
-import 'package:app_student/profils/views/widgets/class_group_button.dart';
+import 'package:app_student/profil/views/widgets/class_group_button.dart';
 import 'package:flutter/material.dart';
 import 'package:app_student/login/widgets/header/header_logo.dart';
 import 'package:flutter_svg/svg.dart';

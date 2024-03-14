@@ -1,11 +1,16 @@
-import 'package:app_student/config/prod_config.dart';
-import 'package:app_student/profils/views/profil_page.dart';
+import 'package:app_student/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'config/config.dart';
+import 'config/prod_config.dart';
 
-void main() {
+void main() async {
+  await dotenv.load();
   runApp(
     Provider<Config>(
       create: (_) => ProdConfig(),
@@ -19,13 +24,38 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Class List',
+    final router = GoRouter(
+      routes: AppRoutes.routes,
+      initialLocation: '/login',
+      errorPageBuilder: (context, state) {
+        return MaterialPage<void>(
+          child: Scaffold(
+            body: Center(
+              child: Text(
+                  AppLocalizations.of(context)!.error404(state.uri.toString())),
+            ),
+          ),
+        );
+      },
+    );
+
+    return MaterialApp.router(
+      title: '3iL Student App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         focusColor: const Color(0xffE84E0F),
+        fontFamily: 'Arial',
       ),
-      home: const ProfilPage(),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('fr'),
+      ],
+      routerConfig: router,
     );
   }
 }
