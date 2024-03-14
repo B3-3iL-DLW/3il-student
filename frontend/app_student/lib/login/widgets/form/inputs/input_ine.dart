@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class INETextField extends StatelessWidget {
   final TextEditingController controller;
@@ -16,7 +17,7 @@ class INETextField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'INE',
+            AppLocalizations.of(context)!.loginIneLabel,
             style: TextStyle(
               fontSize: 12.0,
               color: Colors.grey[600],
@@ -26,7 +27,7 @@ class INETextField extends StatelessWidget {
           TextFormField(
             controller: controller,
             decoration: InputDecoration(
-              hintText: 'Numéro INE',
+              hintText: AppLocalizations.of(context)!.loginIneHint,
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               border: OutlineInputBorder(

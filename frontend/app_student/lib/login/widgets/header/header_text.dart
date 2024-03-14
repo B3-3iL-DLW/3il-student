@@ -8,10 +8,7 @@ class HeaderText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-          top: 35.0,
-          left: 25.0,
-          bottom: 40), // Ajout d'un espacement à gauche de 10px
+      padding: const EdgeInsets.only(top: 35.0, left: 25.0, bottom: 40),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(

@@ -10,8 +10,8 @@ class HeaderLogo extends StatelessWidget {
       color: const Color(0xFF005067),
       child: Center(
         child: SizedBox(
-          width: 200.0, // Largeur de l'image
-          height: 200.0, // Hauteur de l'image
+          width: 200.0,
+          height: 200.0,
           child: Image.asset('assets/images/3il-logo.jpg'),
         ),
       ),

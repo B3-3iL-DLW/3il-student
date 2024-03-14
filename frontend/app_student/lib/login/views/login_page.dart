@@ -3,6 +3,7 @@ import 'package:app_student/login/widgets/form/form_login.dart';
 import 'package:app_student/login/widgets/header/header_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import '../widgets/header/header_logo.dart';
@@ -20,12 +21,12 @@ class LoginPage extends StatelessWidget {
           });
           return Container();
         } else if (state is LoginInitial) {
-          return const Scaffold(
+          return Scaffold(
             body: Column(
               children: [
-                HeaderLogo(),
-                HeaderText('Bonjour :)'),
-                Expanded(child: FormLogin()),
+                const HeaderLogo(),
+                HeaderText(AppLocalizations.of(context)!.loginWelcomeTitle),
+                const Expanded(child: FormLogin()),
               ],
             ),
           );
@@ -37,18 +38,19 @@ class LoginPage extends StatelessWidget {
         } else if (state is LoginFieldError) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Veuillez remplir tous les champs'),
+              SnackBar(
+                content: Text(AppLocalizations.of(context)!.loginFieldError),
                 backgroundColor: Colors.red,
               ),
             );
           });
-          return const Scaffold(
+          return Scaffold(
             body: Column(
               children: [
-                HeaderLogo(),
-                HeaderText('Bonjour :)'),
-                Expanded(child: FormLogin()),
+                const HeaderLogo(),
+                HeaderText(
+                    AppLocalizations.of(context)!.loginWelcomeTitleError),
+                const Expanded(child: FormLogin()),
               ],
             ),
           );
