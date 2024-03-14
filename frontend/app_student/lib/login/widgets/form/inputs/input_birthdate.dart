@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BirthDateField extends StatefulWidget {
   final TextEditingController controller;
@@ -42,7 +43,7 @@ class BirthDateFieldState extends State<BirthDateField> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Date de naissance',
+            AppLocalizations.of(context)!.loginBirthDateLabel,
             style: TextStyle(
               fontSize: 12.0,
               color: Colors.grey[600],

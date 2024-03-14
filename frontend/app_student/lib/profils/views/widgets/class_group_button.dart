@@ -1,21 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../cubit/login_cubit.dart';
-
-class SubmitButton extends StatelessWidget {
-  final TextEditingController ineController;
-  final TextEditingController nameController;
-  final TextEditingController birthDateController;
-  final DateTime birthDate;
-
-  const SubmitButton(
-      {super.key,
-      required this.ineController,
-      required this.nameController,
-      required this.birthDateController,
-      required this.birthDate});
+class ClassGroupButton extends StatelessWidget {
+  const ClassGroupButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,17 +32,9 @@ class SubmitButton extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                final String ine = ineController.text.trim();
-                final String name = nameController.text.trim();
-                final String birthDate = birthDateController.text.trim();
-
-                context
-                    .read<LoginCubit>()
-                    .saveLoginDetails(ine, name, birthDate);
+                GoRouter.of(context).go('/class-list');
               },
-              child: Text(
-                AppLocalizations.of(context)!.loginButton,
-              ),
+              child: const Text('Changer de classe'),
             ),
           ),
         ],
