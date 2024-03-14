@@ -5,6 +5,7 @@ import 'package:app_student/api/users/repositories/user_repository.dart';
 import 'package:app_student/api/week_schedule/repositories/week_schedule_repository.dart';
 import 'package:app_student/class_groups/cubit/class_group_cubit.dart';
 import 'package:app_student/config/config.dart';
+import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
 import 'package:app_student/week_schedule/views/week_schedule.dart';
 import 'package:flutter/material.dart';
@@ -56,20 +57,64 @@ class AppRoutes {
         pageBuilder: (context, state) => MaterialPage<void>(
             key: state.pageKey,
             child: MultiRepositoryProvider(
-                providers: [
-                  RepositoryProvider(create: (context) {
-                    return WeekScheduleRepository(
+              providers: [
+                RepositoryProvider(
+                    create: (context) => WeekScheduleRepository(
                         apiService:
-                            ApiService(apiUrl: context.read<Config>().apiUrl));
-                  }),
+                            ApiService(apiUrl: context.read<Config>().apiUrl))),
+                RepositoryProvider(create: (context) => UserRepository()),
+              ],
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => UserCubit(
+                        userRepository: context.read<UserRepository>()),
+                  ),
+                  BlocProvider(
+                    create: (context) => WeekScheduleCubit(
+                        weekScheduleRepository: WeekScheduleRepository(
+                            apiService: ApiService(
+                                apiUrl: context.read<Config>().apiUrl)),
+                        userRepository: context.read<UserRepository>(),
+                        initialDate: DateTime.now()),
+                  ),
+                ],
+                child: const WeekSchedulePage(),
+              ),
+            ))),
+    GoRoute(
+        name: 'schedule_date',
+        path: '/schedule:date',
+        pageBuilder: (context, state) {
+          final date = DateTime.parse(state.pathParameters['date']!);
+          return MaterialPage<void>(
+              key: state.pageKey,
+              child: MultiRepositoryProvider(
+                providers: [
+                  RepositoryProvider(
+                      create: (context) => WeekScheduleRepository(
+                          apiService: ApiService(
+                              apiUrl: context.read<Config>().apiUrl))),
                   RepositoryProvider(create: (context) => UserRepository()),
                 ],
-                child: BlocProvider(
-                    create: (context) => WeekScheduleCubit(
-                          weekScheduleRepository:
-                              context.read<WeekScheduleRepository>(),
+                child: MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                      create: (context) => UserCubit(
+                          userRepository: context.read<UserRepository>()),
+                    ),
+                    BlocProvider(
+                      create: (context) => WeekScheduleCubit(
+                          weekScheduleRepository: WeekScheduleRepository(
+                              apiService: ApiService(
+                                  apiUrl: context.read<Config>().apiUrl)),
                           userRepository: context.read<UserRepository>(),
-                        ),
-                    child: const WeekSchedulePage())))),
+                          initialDate: DateTime.now()),
+                    ),
+                  ],
+                  child: const WeekSchedulePage(),
+                ),
+              ));
+        }),
   ];
 }

@@ -4,6 +4,7 @@ import 'package:app_student/class_groups/views/widgets/card_list.dart';
 import 'package:app_student/class_groups/views/widgets/header/header_logo.dart';
 import 'package:app_student/class_groups/views/widgets/header/header_text.dart';
 import 'package:app_student/class_groups/views/widgets/header/header_title.dart';
+import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -25,7 +26,7 @@ class ClassGroupPage extends StatelessWidget {
     return BlocProvider<ClassGroupCubit>(
       create: (context) => classCubit..fetchClasses(),
       child: FutureBuilder<UserModel>(
-        future: context.read<ClassGroupCubit>().getConnectedUser(),
+        future: context.read<UserCubit>().getConnectedUser(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

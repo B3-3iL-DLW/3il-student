@@ -12,6 +12,23 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (event.activite == 'Pas cours' && event.creneau != 3) {
+      return Card(
+        color: Colors.grey.shade200,
+        child: Container(
+          decoration: const BoxDecoration(
+            border: Border(
+              left: BorderSide(
+                color: Colors.grey,
+                width: 10.0,
+              ),
+            ),
+          ),
+          width: 300,
+          height: 90,
+        ),
+      );
+    }
     return Card(
       color: const Color(0xFF007A8D).withOpacity(0.3),
       child: Container(
@@ -33,7 +50,7 @@ class EventCard extends StatelessWidget {
             mainAxisAlignment: event.creneau == 3
                 ? MainAxisAlignment.center
                 : MainAxisAlignment.spaceEvenly,
-            children: event.creneau == 3
+            children: event.repas == true
                 ? [
                     Center(
                       child: ColorFiltered(

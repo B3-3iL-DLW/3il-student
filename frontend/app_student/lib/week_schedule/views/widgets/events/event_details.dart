@@ -11,7 +11,7 @@ class EventDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         EventHours(event: event),
         EventCard(event: event),
