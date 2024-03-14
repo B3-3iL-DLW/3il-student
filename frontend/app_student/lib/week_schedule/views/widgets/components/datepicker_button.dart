@@ -52,8 +52,9 @@ class DatePickerButton extends StatelessWidget {
         final today = DateTime.now();
         final date = await selectDate(context, cubit, today);
         if (date != null) {
-          // ignore: use_build_context_synchronously
-          await navigateToDate(context, cubit, date); // Await the navigation
+          if (context.mounted) {
+            await navigateToDate(context, cubit, date); // Await the navigation
+          }
         }
       },
     );
