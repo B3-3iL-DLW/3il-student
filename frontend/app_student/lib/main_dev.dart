@@ -1,6 +1,7 @@
 import 'package:app_student/config/dev_config.dart';
 import 'package:app_student/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -8,7 +9,8 @@ import 'package:provider/provider.dart';
 
 import 'config/config.dart';
 
-void main() {
+void main() async {
+  await dotenv.load();
   runApp(
     Provider<Config>(
       create: (_) => DevConfig(),
