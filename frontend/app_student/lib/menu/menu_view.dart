@@ -5,8 +5,7 @@ class MenuBarView extends StatefulWidget {
   const MenuBarView({super.key});
 
   @override
-  State<MenuBarView> createState() =>
-      MenuBarViewState();
+  State<MenuBarView> createState() => MenuBarViewState();
 }
 
 class MenuBarViewState extends State<MenuBarView> {
