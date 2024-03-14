@@ -11,8 +11,8 @@ class DatePickerButton extends StatelessWidget {
     final index = (cubit.state as WeekScheduleLoaded)
         .allDaySchedules
         .indexWhere((event) =>
-    DateTime(event.date.year, event.date.month, event.date.day) ==
-        DateTime(date.year, date.month, date.day));
+            DateTime(event.date.year, event.date.month, event.date.day) ==
+            DateTime(date.year, date.month, date.day));
     if (index != -1) {
       cubit.changeDate(date);
       context.go('/schedule'); // Replace with the appropriate navigation logic
@@ -25,15 +25,15 @@ class DatePickerButton extends StatelessWidget {
       context: context,
       initialDate: cubit.state is WeekScheduleLoaded
           ? (cubit.state as WeekScheduleLoaded)
-          .allDaySchedules[(cubit.state as WeekScheduleLoaded).todayIndex]
-          .date
+              .allDaySchedules[(cubit.state as WeekScheduleLoaded).todayIndex]
+              .date
           : today,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
       selectableDayPredicate: (date) {
         return cubit.state is WeekScheduleLoaded &&
             (cubit.state as WeekScheduleLoaded).allDaySchedules.any((event) =>
-            DateTime(event.date.year, event.date.month, event.date.day) ==
+                DateTime(event.date.year, event.date.month, event.date.day) ==
                 DateTime(date.year, date.month, date.day));
       },
     );
@@ -52,11 +52,11 @@ class DatePickerButton extends StatelessWidget {
         final today = DateTime.now();
         final date = await selectDate(context, cubit, today);
         if (date != null) {
-          // ignore: use_build_context_synchronously
-          await navigateToDate(context, cubit, date); // Await the navigation
+          if (context.mounted) {
+            await navigateToDate(context, cubit, date); // Await the navigation
+          }
         }
       },
     );
   }
 }
-

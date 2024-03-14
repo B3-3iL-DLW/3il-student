@@ -56,7 +56,8 @@ class EventCard extends StatelessWidget {
                 ],
               ),
               Text('${AppLocalizations.of(context)!.roomLabel} ${event.salle}',
-                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.bold)),
             ],
           ),
         ),
