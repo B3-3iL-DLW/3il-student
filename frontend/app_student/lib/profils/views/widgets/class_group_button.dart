@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class ClassButton extends StatelessWidget {
-  const ClassButton({super.key});
+class ClassGroupButton extends StatelessWidget {
+  const ClassGroupButton({super.key});
 
   @override
   Widget build(BuildContext context) {
