@@ -5,6 +5,7 @@ import 'package:app_student/api/users/repositories/user_repository.dart';
 import 'package:app_student/api/week_schedule/repositories/week_schedule_repository.dart';
 import 'package:app_student/class_groups/cubit/class_group_cubit.dart';
 import 'package:app_student/config/config.dart';
+import 'package:app_student/profils/views/profil_page.dart';
 import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
 import 'package:app_student/week_schedule/views/week_schedule.dart';
@@ -20,6 +21,7 @@ class AppRoutes {
   static const classListPage = '/classList';
   static const loginPage = '/login';
   static const schedulePage = '/schedule';
+  static const profilPage = '/profil';
 
   static final routes = [
     GoRoute(
@@ -93,5 +95,12 @@ class AppRoutes {
                 child: const WeekSchedulePage(),
               ),
             ))),
+    GoRoute(
+      path: profilPage,
+      pageBuilder: (context, state) => MaterialPage<void>(
+        key:state.pageKey,
+        child: const ProfilPage(),
+      )
+    ),
   ];
 }
