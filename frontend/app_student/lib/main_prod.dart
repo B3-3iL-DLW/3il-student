@@ -1,5 +1,5 @@
 import 'package:app_student/config/prod_config.dart';
-import 'package:app_student/login/views/login_page.dart';
+import 'package:app_student/profils/views/profil_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         focusColor: const Color(0xffE84E0F),
       ),
-      home: const LoginPage(),
+      home: const ProfilPage(),
     );
   }
 }

@@ -30,5 +30,4 @@ class UserCubit extends Cubit<UserState> {
     await userRepository.saveUserClass(classGroup.name.toString());
     emit(UserClassesSelected());
   }
-
 }

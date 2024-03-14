@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FirstnameTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -13,7 +14,7 @@ class FirstnameTextField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Prénom',
+            AppLocalizations.of(context)!.loginFirstNameLabel,
             style: TextStyle(
               fontSize: 12.0,
               color: Colors.grey[600],
@@ -26,7 +27,7 @@ class FirstnameTextField extends StatelessWidget {
               color: Colors.grey[600],
             ),
             decoration: InputDecoration(
-              hintText: 'Entrez votre prénom ici',
+              hintText: AppLocalizations.of(context)!.loginFirstNameHint,
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               border: OutlineInputBorder(
