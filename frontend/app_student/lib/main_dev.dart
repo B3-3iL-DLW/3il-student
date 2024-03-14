@@ -7,7 +7,7 @@ import 'api/api_service.dart';
 import 'api/class_groups/repositories/class_group_repository.dart';
 import 'config/config.dart';
 import 'login/cubit/login_cubit.dart';
-import 'login/views/login_page.dart';
+import 'login/views/login_page.dart'; 
 
 void main() {
   final ClassGroupRepository classGroupRepository = ClassGroupRepository(
