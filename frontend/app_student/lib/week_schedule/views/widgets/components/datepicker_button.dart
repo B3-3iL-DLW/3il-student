@@ -43,7 +43,11 @@ class DatePickerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<WeekScheduleCubit>();
     return IconButton(
-      icon: const Icon(Icons.calendar_month, color: Colors.white, size: 30,),
+      icon: const Icon(
+        Icons.calendar_month,
+        color: Colors.white,
+        size: 30,
+      ),
       onPressed: () async {
         final today = DateTime.now();
         final date = await selectDate(context, cubit, today);

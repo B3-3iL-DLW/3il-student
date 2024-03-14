@@ -17,7 +17,8 @@ class EventDetails extends StatelessWidget {
           children: [
             EventHours(event: event),
             SizedBox(
-              width: constraints.maxWidth - 50, // Subtract the width of EventHours
+              width:
+                  constraints.maxWidth - 50, // Subtract the width of EventHours
               child: EventInfo(event: event),
             ),
           ],

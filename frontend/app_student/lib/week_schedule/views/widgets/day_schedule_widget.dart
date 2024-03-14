@@ -10,8 +10,10 @@ class DayScheduleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String formattedDate = DateFormat('EEEE dd MMMM yyyy', 'fr_FR').format(daySchedule.date);
-    String capitalizedDate = formattedDate[0].toUpperCase() + formattedDate.substring(1);
+    String formattedDate =
+        DateFormat('EEEE dd MMMM yyyy', 'fr_FR').format(daySchedule.date);
+    String capitalizedDate =
+        formattedDate[0].toUpperCase() + formattedDate.substring(1);
     return SingleChildScrollView(
       child: Column(
         children: [

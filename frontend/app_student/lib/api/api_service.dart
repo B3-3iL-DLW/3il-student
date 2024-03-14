@@ -13,7 +13,9 @@ class ApiService {
     String fullUrl = '$apiUrl$endpoint';
     fullUrl = Uri.encodeFull(fullUrl);
     try {
-      final response = await http.get(Uri.parse(fullUrl)).timeout(const Duration(seconds: 20), onTimeout: () {
+      final response = await http
+          .get(Uri.parse(fullUrl))
+          .timeout(const Duration(seconds: 20), onTimeout: () {
         throw TimeoutException('The connection has timed out!');
       });
 

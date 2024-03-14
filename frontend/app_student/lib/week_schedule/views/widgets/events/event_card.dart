@@ -26,7 +26,7 @@ class EventCard extends StatelessWidget {
         height: 110,
         child: Padding(
           padding:
-          const EdgeInsets.only(left: 20.0, right: 20, bottom: 3, top: 3),
+              const EdgeInsets.only(left: 20.0, right: 20, bottom: 3, top: 3),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: event.creneau == 3
@@ -42,8 +42,8 @@ class EventCard extends StatelessWidget {
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold)),
                   ColorFiltered(
-                    colorFilter: const ColorFilter.mode(
-                        Colors.white, BlendMode.srcIn),
+                    colorFilter:
+                        const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                     child: SvgPicture.asset(
                       event.visio
                           ? 'assets/images/teams.svg'
