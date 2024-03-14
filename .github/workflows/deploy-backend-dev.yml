@@ -22,8 +22,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Upload PHP code
-        run: scp -o StrictHostKeyChecking=no -r * ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/home/julesartd/www/api-dev-edt-3il
-
+        run: scp -o StrictHostKeyChecking=no -r backend ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/home/julesartd/www/api-dev-edt-3il
 
   install_dependencies:
     needs: deploy
@@ -49,16 +48,6 @@ jobs:
           script: |
             cd /home/julesartd/www/api-dev-edt-3il/backend
             vendor/bin/php-cs-fixer fix src
-
-      - name: Suppression du frontend
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /home/julesartd/www/api-dev-edt-3il
-            rm -rf frontend
       
 
           
