@@ -27,7 +27,9 @@ class MenuBarViewState extends State<MenuBarView> {
               'assets/images/disconnect.svg',
               height: 20,
               width: 20,
-              color: _selectedIndex == 0 ? Colors.blue : null,
+              colorFilter: _selectedIndex == 0
+                  ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
+                  : null,
             ),
             label: '',
           ),
@@ -36,7 +38,9 @@ class MenuBarViewState extends State<MenuBarView> {
               'assets/images/calendar.svg',
               height: 20,
               width: 20,
-              color: _selectedIndex == 1 ? Colors.blue : null,
+              colorFilter: _selectedIndex == 1
+                  ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
+                  : null,
             ),
             label: '',
           ),
@@ -45,7 +49,9 @@ class MenuBarViewState extends State<MenuBarView> {
               'assets/images/profil.svg',
               height: 20,
               width: 20,
-              color: _selectedIndex == 2 ? Colors.blue : null,
+              colorFilter: _selectedIndex == 2
+                  ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
+                  : null,
             ),
             label: '',
           ),
