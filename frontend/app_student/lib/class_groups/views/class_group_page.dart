@@ -6,6 +6,7 @@ import 'package:app_student/class_groups/views/widgets/header/header_text.dart';
 import 'package:app_student/class_groups/views/widgets/header/header_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../api/users/models/user_model.dart';
@@ -30,7 +31,9 @@ class ClassGroupPage extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Erreur: ${snapshot.error}'));
+            return Center(
+                child: Text(AppLocalizations.of(context)!
+                    .genericError(snapshot.error.toString())));
           } else {
             final user = snapshot.data;
             return Scaffold(
@@ -47,8 +50,10 @@ class ClassGroupPage extends StatelessWidget {
                     return Column(
                       children: [
                         const HeaderLogo(),
-                        HeaderTitle('Bonjour, ${user?.name}'),
-                        const HeaderText('Choisis ta promotion :'),
+                        HeaderTitle(AppLocalizations.of(context)!
+                            .classSelectionTitle(user!.name)),
+                        HeaderText(AppLocalizations.of(context)!
+                            .classSelectionSubtitle),
                         Expanded(
                           child: CardList(classesList: state.classes),
                         ),

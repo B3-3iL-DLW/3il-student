@@ -1,6 +1,8 @@
 import 'package:app_student/config/dev_config.dart';
 import 'package:app_student/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +29,8 @@ class MyApp extends StatelessWidget {
         return MaterialPage<void>(
           child: Scaffold(
             body: Center(
-              child: Text('Page not found: ${state.uri}'),
+              child: Text(
+                  AppLocalizations.of(context)!.error404(state.uri.toString())),
             ),
           ),
         );
@@ -41,6 +44,15 @@ class MyApp extends StatelessWidget {
         focusColor: const Color(0xffE84E0F),
         fontFamily: 'Arial',
       ),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('fr'),
+      ],
       routerConfig: router,
     );
   }

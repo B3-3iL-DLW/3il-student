@@ -1,0 +1,72 @@
+{
+  "error404": "Page non trouvée {pageUri}",
+  "@error404": {
+    "description": "Message d'erreur pour une page non trouvée",
+    "placeholders": {
+      "pageUri": {
+        "type": "String",
+        "example": "/login"
+      }
+    }
+  },
+  "genericError": "Une erreur est survenue",
+    "@genericError": {
+        "description": "Message d'erreur générique",
+        "placeholders": {
+            "error": {
+                "type": "String",
+                "example": "Une erreur est survenue"
+            }
+        }
+    },
+  "loginButton": "Connexion",
+    "@loginButton": {
+        "description": "Texte du bouton de connexion"
+    },
+  "loginFirstNameLabel": "Prénom",
+    "@loginFirstName": {
+        "description": "Texte du label pour le prénom"
+    },
+  "loginFirstNameHint": "Entrez votre prénom",
+    "@loginFirstNameHint": {
+        "description": "Texte de l'attribut placeholder pour le prénom"
+    },
+  "loginIneLabel": "INE",
+  "@loginIneLabel": {
+    "description": "Texte du label pour le numéro INE"
+  },
+  "loginIneHint": "Entrez votre numéro INE",
+  "@loginIneHint": {
+    "description": "Texte de l'attribut placeholder pour le numéro INE"
+  },
+  "loginBirthDateLabel": "Date de naissance",
+  "@loginBirthDateLabel": {
+    "description": "Texte du label pour la date de naissance"
+  },
+  "loginWelcomeTitle": "Bonjour :)",
+    "@loginWelcomeTitle": {
+        "description": "Texte d'accueil de la page de connexion"
+    },
+  "loginWelcomeTitleError": "Oops, ca va aller",
+    "@loginWelcomeTitleError": {
+        "description": "Texte d'erreur d'accueil de la page de connexion"
+    },
+  "loginFieldError": "Veuillez remplir tous les champs",
+    "@loginFieldError": {
+        "description": "Message d'erreur pour les champs de connexion"
+    },
+  "classSelectionTitle": "Salut {firstName} !",
+    "@classSelectionTitle": {
+        "description": "Texte d'accueil de la page de sélection de classe",
+        "placeholders": {
+            "firstName": {
+                "type": "String",
+                "example": "John"
+            }
+        }
+    },
+  "classSelectionSubtitle": "Sélectionne ta classe",
+    "@classSelectionSubtitle": {
+        "description": "Texte de sous-titre de la page de sélection de classe"
+    }
+}

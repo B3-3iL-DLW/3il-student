@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cubit/login_cubit.dart';
 
@@ -52,7 +53,9 @@ class SubmitButton extends StatelessWidget {
                     .read<LoginCubit>()
                     .saveLoginDetails(ine, name, birthDate);
               },
-              child: const Text('Connexion'),
+              child: Text(
+                AppLocalizations.of(context)!.loginButton,
+              ),
             ),
           ),
         ],
