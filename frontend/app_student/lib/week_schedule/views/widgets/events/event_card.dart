@@ -1,6 +1,7 @@
 import 'package:app_student/api/events/models/event_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EventCard extends StatelessWidget {
   const EventCard({
@@ -33,8 +34,8 @@ class EventCard extends StatelessWidget {
                 ? MainAxisAlignment.center
                 : MainAxisAlignment.spaceEvenly,
             children: [
-              const Text('1h30',
-                  style: TextStyle(color: Colors.white, fontSize: 12)),
+              Text(AppLocalizations.of(context)!.eventDuration,
+                  style: const TextStyle(color: Colors.white, fontSize: 12)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -54,9 +55,8 @@ class EventCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Text('Salle ${event.salle}',
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold)),
+              Text('${AppLocalizations.of(context)!.roomLabel} ${event.salle}',
+                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             ],
           ),
         ),
