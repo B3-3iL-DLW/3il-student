@@ -27,6 +27,13 @@ Avant de pousser votre code, assurez-vous de respecter les points suivants :
 - Exécutez `flutter analyze` pour détecter tout problème dans votre code.
 - Assurez-vous d'exécuter `pub get` pour installer toutes les dépendances du projet.
 
+### Variables d'environnement
+
+Pour que l'application fonctionne correctement, vous devez définir les variables d'environnement suivantes dans un fichier `.env` à la racine du projet :
+
+- `API_URL_DEV`: URL de l'API de développement.
+- `API_URL_PROD`: URL de l'API de production.
+
 ## Contributions
 
 Les contributions des autres étudiants sont les bienvenues! N'hésitez pas à proposer des améliorations, des corrections de bugs ou de nouvelles fonctionnalités en soumettant des pull requests.
