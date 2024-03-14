@@ -1,16 +1,36 @@
-# app_student
+# Application Flutter pour l'emploi du temps et les notes - Groupe 3iL
 
-A new Flutter project.
+Ce projet est une application mobile développée en Flutter par des étudiants du Groupe 3iL. Elle vise à fournir aux étudiants un accès facile à leur emploi du temps et à leurs notes.
 
-## Getting Started
+## Configuration
 
-This project is a starting point for a Flutter application.
+### Environnements
 
-A few resources to get you started if this is your first Flutter project:
+L'application est configurée pour fonctionner dans deux environnements différents : développement (dev) et production (prod). Chaque environnement utilise une API distincte.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Dev**: Utilise une API de développement pour tester et déboguer l'application.
+- **Prod**: Utilise une API de production pour une utilisation en direct.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Version de Flutter
+
+Ce projet utilise Flutter version 3.19.2.
+
+## Internationalisation (i18n)
+
+L'application utilise la fonctionnalité de localisation (l10n) de Flutter pour supporter plusieurs langues. N'oubliez pas de générer les fichiers de localisation en exécutant `flutter gen-l10n` avant de construire l'application.
+
+## Pré-requis
+
+Avant de pousser votre code, assurez-vous de respecter les points suivants :
+
+- Utilisez `dart format` pour formater votre code.
+- Exécutez `flutter analyze` pour détecter tout problème dans votre code.
+- Assurez-vous d'exécuter `pub get` pour installer toutes les dépendances du projet.
+
+## Contributions
+
+Les contributions des autres étudiants sont les bienvenues! N'hésitez pas à proposer des améliorations, des corrections de bugs ou de nouvelles fonctionnalités en soumettant des pull requests.
+
+## Licence
+
+Ce projet est destiné à des fins éducatives.
