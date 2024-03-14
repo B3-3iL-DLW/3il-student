@@ -1,4 +1,3 @@
 .idea/
 .vscode/
 backend/vendor/
-/backend/.php-cs-fixer.cache

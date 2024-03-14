@@ -10,27 +10,27 @@
     }
   },
   "genericError": "Une erreur est survenue",
-    "@genericError": {
-        "description": "Message d'erreur générique",
-        "placeholders": {
-            "error": {
-                "type": "String",
-                "example": "Une erreur est survenue"
-            }
-        }
-    },
+  "@genericError": {
+    "description": "Message d'erreur générique",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "Une erreur est survenue"
+      }
+    }
+  },
   "loginButton": "Connexion",
-    "@loginButton": {
-        "description": "Texte du bouton de connexion"
-    },
+  "@loginButton": {
+    "description": "Texte du bouton de connexion"
+  },
   "loginFirstNameLabel": "Prénom",
-    "@loginFirstName": {
-        "description": "Texte du label pour le prénom"
-    },
+  "@loginFirstName": {
+    "description": "Texte du label pour le prénom"
+  },
   "loginFirstNameHint": "Entrez votre prénom",
-    "@loginFirstNameHint": {
-        "description": "Texte de l'attribut placeholder pour le prénom"
-    },
+  "@loginFirstNameHint": {
+    "description": "Texte de l'attribut placeholder pour le prénom"
+  },
   "loginIneLabel": "INE",
   "@loginIneLabel": {
     "description": "Texte du label pour le numéro INE"
@@ -44,29 +44,39 @@
     "description": "Texte du label pour la date de naissance"
   },
   "loginWelcomeTitle": "Bonjour :)",
-    "@loginWelcomeTitle": {
-        "description": "Texte d'accueil de la page de connexion"
-    },
+  "@loginWelcomeTitle": {
+    "description": "Texte d'accueil de la page de connexion"
+  },
   "loginWelcomeTitleError": "Oops, ca va aller",
-    "@loginWelcomeTitleError": {
-        "description": "Texte d'erreur d'accueil de la page de connexion"
-    },
+  "@loginWelcomeTitleError": {
+    "description": "Texte d'erreur d'accueil de la page de connexion"
+  },
   "loginFieldError": "Veuillez remplir tous les champs",
-    "@loginFieldError": {
-        "description": "Message d'erreur pour les champs de connexion"
-    },
+  "@loginFieldError": {
+    "description": "Message d'erreur pour les champs de connexion"
+  },
   "classSelectionTitle": "Salut {firstName} !",
-    "@classSelectionTitle": {
-        "description": "Texte d'accueil de la page de sélection de classe",
-        "placeholders": {
-            "firstName": {
-                "type": "String",
-                "example": "John"
-            }
-        }
-    },
-  "classSelectionSubtitle": "Sélectionne ta classe",
-    "@classSelectionSubtitle": {
-        "description": "Texte de sous-titre de la page de sélection de classe"
+  "@classSelectionTitle": {
+    "description": "Texte d'accueil de la page de sélection de classe",
+    "placeholders": {
+      "firstName": {
+        "type": "String",
+        "example": "John"
+      }
     }
+  },
+  "classSelectionSubtitle": "Sélectionne ta classe",
+  "@classSelectionSubtitle": {
+    "description": "Texte de sous-titre de la page de sélection de classe"
+  },
+  "eventDuration": "1h30",
+  "@eventDuration": {
+    "description": "La durée de l'événement",
+    "example": "1h30"
+  },
+  "roomLabel": "Salle",
+  "@roomLabel": {
+    "description": "Label pour la salle",
+    "example": "Salle"
+  }
 }
