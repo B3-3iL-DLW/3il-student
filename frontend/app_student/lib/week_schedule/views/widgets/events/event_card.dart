@@ -12,23 +12,6 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (event.activite == 'Pas cours' && event.creneau != 3) {
-      return Card(
-        color: Colors.grey.shade200,
-        child: Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              left: BorderSide(
-                color: Colors.grey,
-                width: 10.0,
-              ),
-            ),
-          ),
-          width: 300,
-          height: 90,
-        ),
-      );
-    }
     return Card(
       color: const Color(0xFF007A8D).withOpacity(0.3),
       child: Container(
@@ -40,56 +23,41 @@ class EventCard extends StatelessWidget {
             ),
           ),
         ),
-        width: 300,
-        height: 90,
+        height: 110,
         child: Padding(
           padding:
-              const EdgeInsets.only(left: 20.0, right: 20, bottom: 3, top: 3),
+          const EdgeInsets.only(left: 20.0, right: 20, bottom: 3, top: 3),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: event.creneau == 3
                 ? MainAxisAlignment.center
                 : MainAxisAlignment.spaceEvenly,
-            children: event.repas == true
-                ? [
-                    Center(
-                      child: ColorFiltered(
-                        colorFilter: const ColorFilter.mode(
-                            Colors.white, BlendMode.srcIn),
-                        child: SvgPicture.asset(
-                          'assets/images/eating.svg',
-                          width: 40,
-                          height: 40,
-                        ),
-                      ),
-                    )
-                  ]
-                : [
-                    const Text('1h30',
-                        style: TextStyle(color: Colors.white, fontSize: 12)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(event.activite,
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
-                        ColorFiltered(
-                          colorFilter: const ColorFilter.mode(
-                              Colors.white, BlendMode.srcIn),
-                          child: SvgPicture.asset(
-                            event.visio
-                                ? 'assets/images/teams.svg'
-                                : 'assets/images/school.svg',
-                            width: 40,
-                            height: 40,
-                          ),
-                        ),
-                      ],
+            children: [
+              const Text('1h30',
+                  style: TextStyle(color: Colors.white, fontSize: 12)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(event.activite,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold)),
+                  ColorFiltered(
+                    colorFilter: const ColorFilter.mode(
+                        Colors.white, BlendMode.srcIn),
+                    child: SvgPicture.asset(
+                      event.visio
+                          ? 'assets/images/teams.svg'
+                          : 'assets/images/school.svg',
+                      width: 50,
+                      height: 50,
                     ),
-                    Text('Salle ${event.salle}',
-                        style: const TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold)),
-                  ],
+                  ),
+                ],
+              ),
+              Text('Salle ${event.salle}',
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.bold)),
+            ],
           ),
         ),
       ),

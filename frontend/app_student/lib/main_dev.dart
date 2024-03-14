@@ -2,17 +2,20 @@ import 'package:app_student/config/dev_config.dart';
 import 'package:app_student/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
 import 'config/config.dart';
 
 void main() {
-  runApp(
-    Provider<Config>(
-      create: (_) => DevConfig(),
-      child: const MyApp(),
-    ),
-  );
+  initializeDateFormatting('fr_FR', null).then((_) {
+    runApp(
+      Provider<Config>(
+        create: (_) => DevConfig(),
+        child: const MyApp(),
+      ),
+    );
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -35,6 +38,7 @@ class MyApp extends StatelessWidget {
     );
 
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       title: '3iL Student App',
       theme: ThemeData(
         primarySwatch: Colors.blue,

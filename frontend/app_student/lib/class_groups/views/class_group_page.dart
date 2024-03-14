@@ -10,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../api/users/models/user_model.dart';
-import '../../api/users/repositories/user_repository.dart';
 
 class ClassGroupPage extends StatelessWidget {
   const ClassGroupPage({super.key});
@@ -19,14 +18,14 @@ class ClassGroupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final classRepository =
         RepositoryProvider.of<ClassGroupRepository>(context);
-    final userRepository = RepositoryProvider.of<UserRepository>(context);
     final classCubit = ClassGroupCubit(
-        classRepository: classRepository, userRepository: userRepository);
+      classRepository: classRepository,
+    )..fetchClasses();
 
     return BlocProvider<ClassGroupCubit>(
-      create: (context) => classCubit..fetchClasses(),
+      create: (context) => classCubit,
       child: FutureBuilder<UserModel>(
-        future: context.read<UserCubit>().getConnectedUser(),
+        future: context.read<UserCubit>().getCurrentUser(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -35,32 +34,36 @@ class ClassGroupPage extends StatelessWidget {
           } else {
             final user = snapshot.data;
             return Scaffold(
-              body: BlocBuilder<ClassGroupCubit, ClassGroupState>(
-                builder: (context, state) {
-                  if (state is ClassGroupLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is ClassGroupSelected) {
+              body: BlocListener<UserCubit, UserState>(
+                listener: (context, state) {
+                  if (state is UserClassesSelected) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       context.go('/schedule');
                     });
-                    return const SizedBox.shrink();
-                  } else if (state is ClassGroupLoaded) {
-                    return Column(
-                      children: [
-                        const HeaderLogo(),
-                        HeaderTitle('Bonjour, ${user?.name}'),
-                        const HeaderText('Choisis ta promotion :'),
-                        Expanded(
-                          child: CardList(classesList: state.classes),
-                        ),
-                      ],
-                    );
-                  } else if (state is ClassGroupError) {
-                    return Center(child: Text(state.message));
-                  } else {
-                    return const SizedBox.shrink();
                   }
                 },
+                child: BlocBuilder<ClassGroupCubit, ClassGroupState>(
+                  builder: (context, state) {
+                    if (state is ClassGroupLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (state is ClassGroupLoaded) {
+                      return Column(
+                        children: [
+                          const HeaderLogo(),
+                          HeaderTitle('Bonjour, ${user?.name}'),
+                          const HeaderText('Choisis ta promotion :'),
+                          Expanded(
+                            child: CardList(classesList: state.classes),
+                          ),
+                        ],
+                      );
+                    } else if (state is ClassGroupError) {
+                      return Center(child: Text(state.message));
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
+                ),
               ),
             );
           }

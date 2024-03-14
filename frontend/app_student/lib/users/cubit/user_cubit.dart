@@ -1,3 +1,4 @@
+import 'package:app_student/api/class_groups/models/class_group_model.dart';
 import 'package:app_student/api/users/models/user_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -21,11 +22,13 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future<UserModel> getConnectedUser() async {
+  Future<UserModel> getCurrentUser() async {
     return userRepository.getUser();
   }
 
-  Future<void> saveUserClass(String className) async {
-    await userRepository.saveUserClass(className);
+  Future<void> saveUserClass(ClassGroupModel classGroup) async {
+    await userRepository.saveUserClass(classGroup.name.toString());
+    emit(UserClassesSelected());
   }
+
 }

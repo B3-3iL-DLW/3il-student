@@ -1,19 +1,15 @@
 import 'package:app_student/api/class_groups/models/class_group_model.dart';
-import 'package:app_student/api/users/models/user_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../api/class_groups/repositories/class_group_repository.dart';
-import '../../api/users/repositories/user_repository.dart';
 
 part 'class_group_state.dart';
 
 class ClassGroupCubit extends Cubit<ClassGroupState> {
   final ClassGroupRepository classRepository;
-  final UserRepository userRepository;
 
-  ClassGroupCubit({required this.classRepository, required this.userRepository})
-      : super(ClassGroupInitial());
+  ClassGroupCubit({required this.classRepository}) : super(ClassGroupInitial());
 
   Future<void> fetchClasses() async {
     try {
@@ -24,11 +20,5 @@ class ClassGroupCubit extends Cubit<ClassGroupState> {
     } catch (e) {
       emit(ClassGroupError(e.toString()));
     }
-  }
-
-
-  Future<void> saveClass(ClassGroupModel classGroup) async {
-    await userRepository.saveUserClass(classGroup.name.toString());
-    emit(ClassGroupSelected());
   }
 }

@@ -15,8 +15,7 @@ class DatePickerButton extends StatelessWidget {
             DateTime(date.year, date.month, date.day));
     if (index != -1) {
       cubit.changeDate(date);
-      context
-          .goNamed('schedule_date', pathParameters: {'date': date.toString()});
+      context.go('/schedule');
     }
   }
 
@@ -44,7 +43,7 @@ class DatePickerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<WeekScheduleCubit>();
     return IconButton(
-      icon: const Icon(Icons.calendar_month, color: Colors.white),
+      icon: const Icon(Icons.calendar_month, color: Colors.white, size: 30,),
       onPressed: () async {
         final today = DateTime.now();
         final date = await selectDate(context, cubit, today);
