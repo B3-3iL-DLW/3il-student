@@ -20,8 +20,6 @@ class MenuBarViewState extends State<MenuBarView> {
     _setSelectedIndex();
   }
 
-
-
   void _setSelectedIndex() {
     final route = GoRouter.of(context).routeInformationProvider.value.uri.path;
 
