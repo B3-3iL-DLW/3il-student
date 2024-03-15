@@ -1,7 +1,8 @@
 import 'package:app_student/api/events/models/event_model.dart';
+import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/svg.dart';
 
 class EventCard extends StatelessWidget {
   const EventCard({
@@ -14,12 +15,12 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color(0xFF007A8D).withOpacity(0.3),
+      color: CustomTheme.primaryColor.withOpacity(0.5),
       child: Container(
         decoration: const BoxDecoration(
           border: Border(
             left: BorderSide(
-              color: Color(0xFF005067),
+              color: CustomTheme.primaryColor,
               width: 10.0,
             ),
           ),

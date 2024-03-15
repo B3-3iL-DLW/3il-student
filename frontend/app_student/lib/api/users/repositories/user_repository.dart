@@ -54,4 +54,12 @@ class UserRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('className', className);
   }
+
+  Future<void> delete() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('ine');
+    await prefs.remove('name');
+    await prefs.remove('birthDate');
+    await prefs.remove('className');
+  }
 }

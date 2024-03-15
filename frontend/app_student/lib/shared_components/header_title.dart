@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
-class HeaderText extends StatelessWidget {
+class HeaderTitle extends StatelessWidget {
   final String content;
 
-  const HeaderText(this.content, {super.key});
+  const HeaderTitle(this.content, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,8 @@
 import 'package:app_student/routes.dart';
+import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import 'menu_item.dart';
@@ -39,7 +42,13 @@ class MenuBarViewState extends State<MenuBarView> {
 
     switch (index) {
       case 0:
+        context.read<UserCubit>().deleteUserClass();
         GoRouter.of(context).go(AppRoutes.loginPage);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.disconnectedMessage),
+          ),
+        );
         break;
       case 1:
         GoRouter.of(context).go(AppRoutes.schedulePage);
@@ -58,16 +67,19 @@ class MenuBarViewState extends State<MenuBarView> {
           iconPath: 'assets/images/disconnect.svg',
           selectedIndex: _selectedIndex,
           itemIndex: 0,
+          label: AppLocalizations.of(context)!.disconnect,
         ),
         MenuIcon(
           iconPath: 'assets/images/calendar.svg',
           selectedIndex: _selectedIndex,
           itemIndex: 1,
+          label: AppLocalizations.of(context)!.schedule,
         ),
         MenuIcon(
           iconPath: 'assets/images/profil.svg',
           selectedIndex: _selectedIndex,
           itemIndex: 2,
+          label: AppLocalizations.of(context)!.profil,
         ),
       ],
       currentIndex: _selectedIndex,
