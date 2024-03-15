@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -6,7 +5,7 @@ class UserInfoCard extends StatelessWidget {
   final String ine;
   final String birthDate;
 
-  UserInfoCard({required this.ine, required this.birthDate});
+  const UserInfoCard({super.key, required this.ine, required this.birthDate});
 
   @override
   Widget build(BuildContext context) {

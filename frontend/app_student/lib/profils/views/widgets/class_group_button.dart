@@ -1,6 +1,7 @@
 import 'package:app_student/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ClassGroupButton extends StatelessWidget {
   const ClassGroupButton({super.key});
@@ -35,7 +36,7 @@ class ClassGroupButton extends StatelessWidget {
               onPressed: () {
                 GoRouter.of(context).go(AppRoutes.classListPage);
               },
-              child: const Text('Changer de classe'),
+              child: Text(AppLocalizations.of(context)!.profilChangeClassButton),
             ),
           ),
         ],

@@ -40,7 +40,7 @@ class ProfilPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: HeaderText(
-              '${AppLocalizations.of(context)!.profilMessageTitle} $firstName',
+              AppLocalizations.of(context)!.profilMessageTitle(firstName),
             ),
           ),
           UserClassCard(className: className, firstName: firstName),

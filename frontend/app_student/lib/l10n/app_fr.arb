@@ -79,8 +79,18 @@
     "description": "Label pour la salle",
     "example": "Salle"
   },
-  "profilMessageTitle": "Quel beau profil,",
+  "profilMessageTitle": "Quel beau profil {firstName} !",
   "@profilMessageTitle": {
-    "description": "Message d'accueil de la page de profil"
+    "description": "Message d'accueil de la page de profil",
+    "placeholders": {
+      "firstName": {
+        "type": "String",
+        "example": "John"
+      }
+    }
+  },
+  "profilChangeClassButton": "Changer de classe",
+  "@profilChangeClassButton": {
+    "description": "Texte du bouton pour changer de classe"
   }
 }
