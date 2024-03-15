@@ -17,7 +17,7 @@ class WeekSchedulePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weekScheduleRepository =
-    RepositoryProvider.of<WeekScheduleRepository>(context);
+        RepositoryProvider.of<WeekScheduleRepository>(context);
     final userRepository = RepositoryProvider.of<UserRepository>(context);
     final weekScheduleCubit = WeekScheduleCubit(
         userCubit: context.read<UserCubit>(),
@@ -28,8 +28,7 @@ class WeekSchedulePage extends StatelessWidget {
       create: (context) => weekScheduleCubit..fetchUserAndSchedule(),
       child: BlocProvider<UserCubit>(
         create: (context) =>
-        UserCubit(userRepository: userRepository)
-          ..fetchUser(),
+            UserCubit(userRepository: userRepository)..fetchUser(),
         child: Scaffold(
           appBar: const AppBarWeekSchedule(),
           body: BlocBuilder<WeekScheduleCubit, WeekScheduleState>(
@@ -44,14 +43,11 @@ class WeekSchedulePage extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(top: 30.0),
                   child: SizedBox(
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height,
+                    height: MediaQuery.of(context).size.height,
                     child: PageView.builder(
                       controller: PageController(
                         initialPage:
-                        state.todayIndex != -1 ? state.todayIndex : 0,
+                            state.todayIndex != -1 ? state.todayIndex : 0,
                       ),
                       itemCount: allEvents.length,
                       itemBuilder: (context, index) {

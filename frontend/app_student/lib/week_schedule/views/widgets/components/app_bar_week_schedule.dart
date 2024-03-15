@@ -1,11 +1,14 @@
 import 'package:app_student/users/cubit/user_cubit.dart';
-import 'package:app_student/week_schedule/views/widgets/components/datepicker_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'datepicker_button.dart';
 
 class AppBarWeekSchedule extends StatelessWidget
     implements PreferredSizeWidget {
   const AppBarWeekSchedule({super.key});
+
+  static const double appBarHeight = 80.0;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class AppBarWeekSchedule extends StatelessWidget
     }
     return AppBar(
       backgroundColor: const Color(0xFF005067),
-      title: const SizedBox.shrink(), // Make the title empty
+      title: const SizedBox.shrink(),
       flexibleSpace: Stack(
         alignment: Alignment.center,
         children: [
@@ -25,7 +28,7 @@ class AppBarWeekSchedule extends StatelessWidget
               child: Opacity(
                 opacity: 0.5,
                 child: Transform.scale(
-                  scale: 3.0, // Adjust the scale factor to zoom the image
+                  scale: 3.0,
                   child: Image.asset(
                     'assets/images/3il-icon-white.png',
                     fit: BoxFit.cover,
@@ -52,5 +55,5 @@ class AppBarWeekSchedule extends StatelessWidget
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(70.0);
+  Size get preferredSize => const Size.fromHeight(appBarHeight);
 }

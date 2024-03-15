@@ -96,11 +96,10 @@ class AppRoutes {
               ),
             ))),
     GoRoute(
-      path: profilPage,
-      pageBuilder: (context, state) => MaterialPage<void>(
-        key:state.pageKey,
-        child: const ProfilPage(),
-      )
-    ),
+        path: profilPage,
+        pageBuilder: (context, state) => MaterialPage<void>(
+              key: state.pageKey,
+              child: const ProfilPage(),
+            )),
   ];
 }

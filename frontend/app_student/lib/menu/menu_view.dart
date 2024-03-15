@@ -4,8 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class MenuBarView extends StatefulWidget {
-
-  const MenuBarView ({super.key});
+  const MenuBarView({super.key});
 
   @override
   State<MenuBarView> createState() => MenuBarViewState();
