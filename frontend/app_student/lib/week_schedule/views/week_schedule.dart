@@ -68,7 +68,7 @@ class WeekSchedulePage extends StatelessWidget {
               }
             },
           ),
-          bottomNavigationBar: MenuBarView(),
+          bottomNavigationBar: const MenuBarView(),
         ),
       ),
     );
