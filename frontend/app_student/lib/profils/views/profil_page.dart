@@ -62,6 +62,7 @@ class ProfilPage extends StatelessWidget {
           const ClassGroupButton(),
         ],
       ),
+      bottomNavigationBar: const MenuBarView(),
     );
   }
 }

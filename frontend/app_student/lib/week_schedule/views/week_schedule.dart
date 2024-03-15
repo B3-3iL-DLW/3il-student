@@ -40,31 +40,33 @@ class WeekSchedulePage extends StatelessWidget {
                       .expand((week) => week.daySchedules)
                       .toList();
 
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: PageView.builder(
-                        controller: PageController(
-                          initialPage:
-                              state.todayIndex != -1 ? state.todayIndex : 0,
-                        ),
-                        itemCount: allEvents.length,
-                        itemBuilder: (context, index) {
-                          final daySchedule = allEvents[index];
-                          return DayScheduleWidget(daySchedule: daySchedule);
-                        },
+                return Padding(
+                  padding: const EdgeInsets.only(top: 30.0),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: PageView.builder(
+                      controller: PageController(
+                        initialPage:
+                            state.todayIndex != -1 ? state.todayIndex : 0,
                       ),
+                      itemCount: allEvents.length,
+                      itemBuilder: (context, index) {
+                        final daySchedule = allEvents[index];
+                        return DayScheduleWidget(daySchedule: daySchedule);
+                      },
                     ),
-                  );
-                } else if (state is WeekScheduleError) {
-                  return Center(child: Text(state.message));
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
-            ),
+                  ),
+                );
+              } else if (state is WeekScheduleError) {
+                return Center(child: Text(state.message));
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
           ),
-        ));
+          bottomNavigationBar: const MenuBarView(),
+        ),
+      ),
+    );
   }
 }
