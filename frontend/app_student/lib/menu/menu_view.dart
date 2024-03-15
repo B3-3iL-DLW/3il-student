@@ -1,7 +1,8 @@
 import 'package:app_student/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+
+import 'menu_item.dart';
 
 class MenuBarView extends StatefulWidget {
   const MenuBarView({super.key});
@@ -55,38 +56,21 @@ class MenuBarViewState extends State<MenuBarView> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            'assets/images/disconnect.svg',
-            height: 20,
-            width: 20,
-            colorFilter: _selectedIndex == 0
-                ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
-                : null,
-          ),
-          label: '',
+        MenuIcon(
+          iconPath: 'assets/images/disconnect.svg',
+          selectedIndex: _selectedIndex,
+          itemIndex: 0,
+
         ),
-        BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            'assets/images/calendar.svg',
-            height: 20,
-            width: 20,
-            colorFilter: _selectedIndex == 1
-                ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
-                : null,
-          ),
-          label: '',
+        MenuIcon(
+          iconPath: 'assets/images/calendar.svg',
+          selectedIndex: _selectedIndex,
+          itemIndex: 1,
         ),
-        BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            'assets/images/profil.svg',
-            height: 20,
-            width: 20,
-            colorFilter: _selectedIndex == 2
-                ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
-                : null,
-          ),
-          label: '',
+        MenuIcon(
+          iconPath: 'assets/images/profil.svg',
+          selectedIndex: _selectedIndex,
+          itemIndex: 2,
         ),
       ],
       currentIndex: _selectedIndex,
