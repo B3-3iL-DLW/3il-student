@@ -22,7 +22,9 @@ class WeekScheduleCubit extends Cubit<WeekScheduleState> {
 
   Future fetchWeekSchedule() async {
     try {
-      if (isClosed) return;
+      if (isClosed) {
+        return;
+      }
       emit(WeekScheduleLoading());
       final user = await userCubit.getCurrentUser();
       final weekSchedule =
@@ -38,8 +40,14 @@ class WeekScheduleCubit extends Cubit<WeekScheduleState> {
           daySchedule.date.month == initialDate!.month &&
           daySchedule.date.year == initialDate!.year);
 
+      if (isClosed) {
+        return;
+      }
       emit(WeekScheduleLoaded(weekSchedule, todayIndex, allEvents, user));
     } catch (e) {
+      if (isClosed) {
+        return;
+      }
       emit(WeekScheduleError(e.toString()));
     }
   }
