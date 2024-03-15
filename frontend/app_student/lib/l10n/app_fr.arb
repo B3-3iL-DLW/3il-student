@@ -78,5 +78,9 @@
   "@roomLabel": {
     "description": "Label pour la salle",
     "example": "Salle"
+  },
+  "profilMessageTitle": "Quel beau profil,",
+  "@profilMessageTitle": {
+    "description": "Message d'accueil de la page de profil"
   }
 }

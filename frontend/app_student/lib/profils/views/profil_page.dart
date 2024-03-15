@@ -4,6 +4,7 @@ import 'package:app_student/profils/views/widgets/class_group_button.dart';
 import 'package:flutter/material.dart';
 import 'package:app_student/login/widgets/header/header_logo.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfilPage extends StatelessWidget {
   const ProfilPage({super.key});
@@ -14,9 +15,11 @@ class ProfilPage extends StatelessWidget {
       body: Column(
         children: <Widget>[
           const HeaderLogo(),
-          const Padding(
-            padding: EdgeInsets.all(15.0),
-            child: HeaderText('Quel beau profil ####### !'),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: HeaderText(
+              AppLocalizations.of(context)!.profilMessageTitle,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(30.0),
