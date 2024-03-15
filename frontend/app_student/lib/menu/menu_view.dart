@@ -21,11 +21,11 @@ class MenuBarViewState extends State<MenuBarView> {
 
   void _setSelectedIndex() {
     final route = GoRouter.of(context).overridePlatformDefaultLocation;
-    if(route == AppRoutes.loginPage){
+    if (route == AppRoutes.loginPage) {
       _selectedIndex = 0;
-    } else if(route == AppRoutes.schedulePage){
+    } else if (route == AppRoutes.schedulePage) {
       _selectedIndex = 1;
-    } else if(route == AppRoutes.profilPage){
+    } else if (route == AppRoutes.profilPage) {
       _selectedIndex = 2;
     }
   }
