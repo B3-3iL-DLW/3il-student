@@ -66,6 +66,7 @@ class TimetableService
         $creneaux = $this->defineCreneaux();
         $weeks = [];
 
+
         foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $week) {
             $weekSchedule = new WeekSchedule();
             $weekSchedule->setId($week['SemId']);
