@@ -7,6 +7,7 @@ import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../api/users/repositories/user_repository.dart';
 import '../../components/app_bar.dart';
@@ -32,7 +33,12 @@ class ClassGroupPage extends StatelessWidget {
         appBar: const CustomAppBar(),
         body: BlocBuilder<UserCubit, UserState>(
           builder: (context, userState) {
-            if (userState is UserLoading) {
+            if (userState is UserClassesSelected) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.go('/schedule');
+              });
+              return const Center(child: CircularProgressIndicator());
+            } else if (userState is UserLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (userState is UserLoaded) {
               final user = userState.user;
@@ -55,12 +61,13 @@ class ClassGroupPage extends StatelessWidget {
                   } else if (classState is ClassGroupError) {
                     return Center(child: Text(classState.message));
                   } else {
-                    return const SizedBox.shrink();
+                    // On retourne erreur par défaut sur l'écran
+                    return const Text('Erreur inconnue 1');
                   }
                 },
               );
             } else {
-              return const SizedBox.shrink();
+              return const Text('Erreur inconnue 2');
             }
           },
         ),

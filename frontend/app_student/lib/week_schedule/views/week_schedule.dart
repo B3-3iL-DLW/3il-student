@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../api/users/repositories/user_repository.dart';
 import '../../components/app_bar.dart';
+import '../../menu/menu_view.dart';
 
 class WeekSchedulePage extends StatelessWidget {
   final DateTime? initialDate;
@@ -25,20 +26,20 @@ class WeekSchedulePage extends StatelessWidget {
         initialDate: initialDate);
 
     return BlocProvider<WeekScheduleCubit>(
-        create: (context) => weekScheduleCubit..fetchUserAndSchedule(),
-        child: BlocProvider<UserCubit>(
-          create: (context) =>
-              UserCubit(userRepository: userRepository)..fetchUser(),
-          child: Scaffold(
-            appBar: const CustomAppBar(widget: DatePickerButton()),
-            body: BlocBuilder<WeekScheduleCubit, WeekScheduleState>(
-              builder: (context, state) {
-                if (state is WeekScheduleLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is WeekScheduleLoaded) {
-                  final allEvents = state.weekSchedule
-                      .expand((week) => week.daySchedules)
-                      .toList();
+      create: (context) => weekScheduleCubit..fetchUserAndSchedule(),
+      child: BlocProvider<UserCubit>(
+        create: (context) =>
+            UserCubit(userRepository: userRepository)..fetchUser(),
+        child: Scaffold(
+          appBar: const CustomAppBar(widget: DatePickerButton()),
+          body: BlocBuilder<WeekScheduleCubit, WeekScheduleState>(
+            builder: (context, state) {
+              if (state is WeekScheduleLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is WeekScheduleLoaded) {
+                final allEvents = state.weekSchedule
+                    .expand((week) => week.daySchedules)
+                    .toList();
 
                 return Padding(
                   padding: const EdgeInsets.only(top: 30.0),

@@ -78,5 +78,9 @@
   "@roomLabel": {
     "description": "Label pour la salle",
     "example": "Salle"
-  }
+  },
+  "disconnectedMessage": "Vous avez été déconnecté",
+    "@disconnectedMessage": {
+        "description": "Message d'erreur pour une déconnexion"
+    }
 }

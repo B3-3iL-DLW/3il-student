@@ -55,10 +55,21 @@ class AppRoutes {
       path: loginPage,
       pageBuilder: (context, state) => MaterialPage<void>(
         key: state.pageKey,
-        child: RepositoryProvider(
-          create: (context) => UserRepository(),
-          child: BlocProvider(
-            create: (context) => LoginCubit(context.read<UserRepository>()),
+        child: MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider(create: (context) => UserRepository()),
+          ],
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => LoginCubit(context.read<UserRepository>()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    UserCubit(userRepository: context.read<UserRepository>())
+                      ..fetchUser(),
+              ),
+            ],
             child: const LoginPage(),
           ),
         ),

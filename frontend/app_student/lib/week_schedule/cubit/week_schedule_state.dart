@@ -13,8 +13,8 @@ class WeekScheduleLoaded extends WeekScheduleState {
   final List<DayScheduleModel> allDaySchedules;
   final UserModel user; // Ajout du champ UserModel
 
-  WeekScheduleLoaded(this.weekSchedule, this.todayIndex, this.allDaySchedules,
-      this.user); // Ajout du UserModel au constructeur
+  WeekScheduleLoaded(
+      this.weekSchedule, this.todayIndex, this.allDaySchedules, this.user);
 
   WeekScheduleLoaded copyWith({
     List<WeekScheduleModel>? weekSchedule,
