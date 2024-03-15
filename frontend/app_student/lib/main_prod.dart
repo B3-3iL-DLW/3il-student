@@ -1,5 +1,5 @@
 import 'package:app_student/config/prod_config.dart';
-import 'package:app_student/profils/views/profil_page.dart';
+import 'package:app_student/profils/views/profil.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

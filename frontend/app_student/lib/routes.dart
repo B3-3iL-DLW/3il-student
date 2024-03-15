@@ -5,7 +5,7 @@ import 'package:app_student/api/users/repositories/user_repository.dart';
 import 'package:app_student/api/week_schedule/repositories/week_schedule_repository.dart';
 import 'package:app_student/class_groups/cubit/class_group_cubit.dart';
 import 'package:app_student/config/config.dart';
-import 'package:app_student/profils/views/profil_page.dart';
+import 'package:app_student/profils/views/profil.dart';
 import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
 import 'package:app_student/week_schedule/views/week_schedule.dart';
@@ -13,9 +13,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import 'class_groups/views/class_group_page.dart';
+import 'class_groups/views/class_group.dart';
 import 'login/cubit/login_cubit.dart';
-import 'login/views/login_page.dart';
+import 'login/views/login.dart';
 
 class AppRoutes {
   static const classListPage = '/classList';

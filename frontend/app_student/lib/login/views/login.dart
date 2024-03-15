@@ -1,6 +1,6 @@
 import 'package:app_student/components/header_title.dart';
 import 'package:app_student/login/cubit/login_cubit.dart';
-import 'package:app_student/login/widgets/form/form_login.dart';
+import 'package:app_student/login/views/widgets/form/form_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
