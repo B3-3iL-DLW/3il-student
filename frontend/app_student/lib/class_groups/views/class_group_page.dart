@@ -7,9 +7,8 @@ import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../api/users/models/user_model.dart';
+import '../../api/users/repositories/user_repository.dart';
 import '../../components/app_bar.dart';
 
 class ClassGroupPage extends StatelessWidget {
@@ -19,58 +18,52 @@ class ClassGroupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final classRepository =
         RepositoryProvider.of<ClassGroupRepository>(context);
-    final classCubit = ClassGroupCubit(
-      classRepository: classRepository,
-    )..fetchClasses();
+    final userRepository = RepositoryProvider.of<UserRepository>(context);
+    final classCubit = ClassGroupCubit(classRepository: classRepository)
+      ..fetchClasses();
+    final userCubit = UserCubit(userRepository: userRepository)..fetchUser();
 
-    return BlocProvider<ClassGroupCubit>(
-      create: (context) => classCubit,
-      child: FutureBuilder<UserModel>(
-        future: context.read<UserCubit>().getCurrentUser(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Erreur: ${snapshot.error}'));
-          } else {
-            final user = snapshot.data;
-            return Scaffold(
-              appBar: const CustomAppBar(),
-              body: BlocListener<UserCubit, UserState>(
-                listener: (context, state) {
-                  if (state is UserClassesSelected) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      context.go('/schedule');
-                    });
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ClassGroupCubit>(create: (context) => classCubit),
+        BlocProvider<UserCubit>(create: (context) => userCubit),
+      ],
+      child: Scaffold(
+        appBar: const CustomAppBar(),
+        body: BlocBuilder<UserCubit, UserState>(
+          builder: (context, userState) {
+            if (userState is UserLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (userState is UserLoaded) {
+              final user = userState.user;
+              return BlocBuilder<ClassGroupCubit, ClassGroupState>(
+                builder: (context, classState) {
+                  if (classState is ClassGroupLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (classState is ClassGroupLoaded) {
+                    return Column(
+                      children: [
+                        HeaderTitle(AppLocalizations.of(context)!
+                            .classSelectionTitle(user.name)),
+                        HeaderSubtitle(AppLocalizations.of(context)!
+                            .classSelectionSubtitle),
+                        Expanded(
+                          child: CardList(classesList: classState.classes),
+                        ),
+                      ],
+                    );
+                  } else if (classState is ClassGroupError) {
+                    return Center(child: Text(classState.message));
+                  } else {
+                    return const SizedBox.shrink();
                   }
                 },
-                child: BlocBuilder<ClassGroupCubit, ClassGroupState>(
-                  builder: (context, state) {
-                    if (state is ClassGroupLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (state is ClassGroupLoaded) {
-                      return Column(
-                        children: [
-                          HeaderTitle(AppLocalizations.of(context)!
-                              .classSelectionTitle(user!.name)),
-                          HeaderSubtitle(AppLocalizations.of(context)!
-                              .classSelectionSubtitle),
-                          Expanded(
-                            child: CardList(classesList: state.classes),
-                          ),
-                        ],
-                      );
-                    } else if (state is ClassGroupError) {
-                      return Center(child: Text(state.message));
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                ),
-              ),
-            );
-          }
-        },
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          },
+        ),
       ),
     );
   }
