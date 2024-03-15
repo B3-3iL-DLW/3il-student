@@ -1,8 +1,8 @@
 import 'package:app_student/login/views/widgets/form/form_login.dart';
 import 'package:flutter/material.dart';
 
-import '../../components/header_logo.dart';
-import '../../components/header_title.dart';
+import '../../shared_components/header_logo.dart';
+import '../../shared_components/header_title.dart';
 
 class LoginView extends StatelessWidget {
   final String title;

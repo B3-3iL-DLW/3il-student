@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../api/users/repositories/user_repository.dart';
-import '../../components/app_bar.dart';
 import '../../menu/menu_view.dart';
+import '../../shared_components/app_bar.dart';
 
 class WeekSchedulePage extends StatelessWidget {
   final DateTime? initialDate;

@@ -1,10 +1,10 @@
-import 'package:app_student/components/header_logo.dart';
-import 'package:app_student/components/header_subtitle.dart';
 import 'package:app_student/profils/views/widgets/class_group_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../menu/menu_view.dart';
+import '../../shared_components/header_logo.dart';
+import '../../shared_components/header_subtitle.dart';
 
 class ProfilPage extends StatelessWidget {
   const ProfilPage({super.key});

@@ -1,8 +1,6 @@
 import 'package:app_student/api/class_groups/repositories/class_group_repository.dart';
 import 'package:app_student/class_groups/cubit/class_group_cubit.dart';
 import 'package:app_student/class_groups/views/widgets/card_list.dart';
-import 'package:app_student/components/header_subtitle.dart';
-import 'package:app_student/components/header_title.dart';
 import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +8,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../api/users/repositories/user_repository.dart';
-import '../../components/app_bar.dart';
+import '../../shared_components/app_bar.dart';
+import '../../shared_components/header_subtitle.dart';
+import '../../shared_components/header_title.dart';
 
 class ClassGroupPage extends StatelessWidget {
   const ClassGroupPage({super.key});
@@ -61,13 +61,12 @@ class ClassGroupPage extends StatelessWidget {
                   } else if (classState is ClassGroupError) {
                     return Center(child: Text(classState.message));
                   } else {
-                    // On retourne erreur par défaut sur l'écran
-                    return const Text('Erreur inconnue 1');
+                    return const Center(child: CircularProgressIndicator());
                   }
                 },
               );
             } else {
-              return const Text('Erreur inconnue 2');
+              return const Center(child: CircularProgressIndicator());
             }
           },
         ),
