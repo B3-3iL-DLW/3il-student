@@ -5,7 +5,7 @@ class UserClassCard extends StatelessWidget {
   final String className;
   final String firstName;
 
-  UserClassCard({required this.className, required this.firstName});
+  const UserClassCard({super.key, required this.className, required this.firstName});
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +16,8 @@ class UserClassCard extends StatelessWidget {
           leading: SizedBox(
             width: 50,
             child: ColorFiltered(
-              colorFilter: const ColorFilter.mode(
-                  Color(0xFF005067), BlendMode.srcIn),
+              colorFilter:
+                  const ColorFilter.mode(Color(0xFF005067), BlendMode.srcIn),
               child: SvgPicture.asset(
                 'assets/images/user.svg',
                 width: 30,

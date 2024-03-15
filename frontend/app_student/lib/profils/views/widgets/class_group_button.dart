@@ -36,7 +36,8 @@ class ClassGroupButton extends StatelessWidget {
               onPressed: () {
                 GoRouter.of(context).go(AppRoutes.classListPage);
               },
-              child: Text(AppLocalizations.of(context)!.profilChangeClassButton),
+              child:
+                  Text(AppLocalizations.of(context)!.profilChangeClassButton),
             ),
           ),
         ],

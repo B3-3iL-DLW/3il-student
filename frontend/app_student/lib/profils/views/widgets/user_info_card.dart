@@ -16,8 +16,8 @@ class UserInfoCard extends StatelessWidget {
           leading: SizedBox(
             width: 50,
             child: ColorFiltered(
-              colorFilter: const ColorFilter.mode(
-                  Color(0xFF005067), BlendMode.srcIn),
+              colorFilter:
+                  const ColorFilter.mode(Color(0xFF005067), BlendMode.srcIn),
               child: SvgPicture.asset(
                 'assets/images/student-info.svg',
                 width: 30,
