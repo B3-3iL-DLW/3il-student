@@ -5,7 +5,8 @@ class UserClassCard extends StatelessWidget {
   final String className;
   final String firstName;
 
-  const UserClassCard({super.key, required this.className, required this.firstName});
+  const UserClassCard(
+      {super.key, required this.className, required this.firstName});
 
   @override
   Widget build(BuildContext context) {
