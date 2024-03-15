@@ -8,6 +8,7 @@ class EventEntity {
   final EventHoursEntity horaires;
   final String salle;
   final bool visio;
+  final bool repas;
 
   EventEntity({
     required this.id,
@@ -17,6 +18,7 @@ class EventEntity {
     required this.horaires,
     required this.salle,
     required this.visio,
+    required this.repas,
   });
 
   factory EventEntity.fromJson(Map<String, dynamic> json) {
@@ -28,6 +30,7 @@ class EventEntity {
       horaires: EventHoursEntity.fromJson(json['horaire']),
       salle: json['salle'] ?? 'null',
       visio: json['visio'] ?? false,
+      repas: json['repas'] ?? false,
     );
   }
 }
