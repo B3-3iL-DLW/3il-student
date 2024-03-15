@@ -5,22 +5,21 @@ import '../users/cubit/user_cubit.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
-  final Widget? icon;
+  final Widget? widget;
 
-  const CustomAppBar({super.key, this.title, this.icon});
+  const CustomAppBar({super.key, this.title, this.widget});
 
   @override
   Widget build(BuildContext context) {
     final userState = context.watch<UserCubit>().state;
     String className = '';
     if (userState is UserLoaded) {
-      className = userState.user.entity.className ?? '';
+      className = userState.user.className ?? '';
     }
     return AppBar(
       backgroundColor: const Color(0xFF005067),
       title: title != null ? Text(title!) : const SizedBox.shrink(),
       flexibleSpace: Stack(
-        alignment: Alignment.center,
         children: [
           ClipRect(
             child: Center(
@@ -36,17 +35,27 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           ),
-          if (icon != null)
-            Positioned(
-              right: 0,
-              child: icon!,
-            ),
-          Text(
-            className,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 25.0,
-              fontWeight: FontWeight.bold,
+          Padding(
+            padding: const EdgeInsets.only(top: 45.0),
+            child: Stack(
+              children: [
+                Center(
+                  child: Text(
+                    className,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                if (widget != null)
+                  Positioned(
+                    right: 0.0,
+                    top: 10.0,
+                    child: widget!,
+                  ),
+              ],
             ),
           ),
         ],
@@ -55,5 +64,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(70.0);
+  Size get preferredSize => const Size.fromHeight(65.0);
 }

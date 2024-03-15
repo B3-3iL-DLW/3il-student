@@ -35,6 +35,7 @@ class ClassGroupPage extends StatelessWidget {
           } else {
             final user = snapshot.data;
             return Scaffold(
+              appBar: const CustomAppBar(),
               body: BlocListener<UserCubit, UserState>(
                 listener: (context, state) {
                   if (state is UserClassesSelected) {
@@ -50,7 +51,6 @@ class ClassGroupPage extends StatelessWidget {
                     } else if (state is ClassGroupLoaded) {
                       return Column(
                         children: [
-                          const CustomAppBar(),
                           HeaderTitle(AppLocalizations.of(context)!
                               .classSelectionTitle(user!.name)),
                           HeaderSubtitle(AppLocalizations.of(context)!
