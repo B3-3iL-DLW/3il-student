@@ -47,6 +47,7 @@ class ClassesScraperService
             }
         }
 
-        return $classes;
+        return array_values($classes);
+
     }
 }
