@@ -7,14 +7,14 @@ class MenuIcon extends BottomNavigationBarItem {
     required int selectedIndex,
     required int itemIndex,
   }) : super(
-    icon: SvgPicture.asset(
-      iconPath,
-      height: 20,
-      width: 20,
-      colorFilter: selectedIndex == itemIndex
-          ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
-          : null,
-    ),
-    label: '',
-  );
+          icon: SvgPicture.asset(
+            iconPath,
+            height: 20,
+            width: 20,
+            colorFilter: selectedIndex == itemIndex
+                ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
+                : null,
+          ),
+          label: '',
+        );
 }

@@ -58,7 +58,6 @@ class MenuBarViewState extends State<MenuBarView> {
           iconPath: 'assets/images/disconnect.svg',
           selectedIndex: _selectedIndex,
           itemIndex: 0,
-
         ),
         MenuIcon(
           iconPath: 'assets/images/calendar.svg',
