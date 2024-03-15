@@ -35,6 +35,18 @@ class ClassesScraperService
             $classes[] = $classGroup;
         });
 
+        return $this->removeUslessClasses($classes);
+    }
+
+    private function removeUslessClasses(array $classes): array
+    {
+        $uselessClasses = ['TSST -', 'CPI2 Groupe 3 INT', 'CQPM -'];
+        foreach ($classes as $key => $class) {
+            if (in_array($class->getName(), $uselessClasses)) {
+                unset($classes[$key]);
+            }
+        }
+
         return $classes;
     }
 }

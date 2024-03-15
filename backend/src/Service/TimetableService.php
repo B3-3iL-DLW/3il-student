@@ -66,6 +66,7 @@ class TimetableService
         $creneaux = $this->defineCreneaux();
         $weeks = [];
 
+
         foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $week) {
             $weekSchedule = new WeekSchedule();
             $weekSchedule->setId($week['SemId']);
@@ -85,11 +86,16 @@ class TimetableService
 
                 foreach ($day['CRENEAU'] as $creneau) {
                     if (isset($creneaux[$creneau['Creneau']])) {
+
+                        // Verification si la salle est un array vide car le XML de 3il est nul
+                        if (is_array($creneau['Salles'] ?? '')) {
+                            $creneau['Salles'] = '';
+                        }
+
                         $eventHours = new EventHours();
                         $eventHours->setStartAt($creneaux[$creneau['Creneau']]['start']);
                         $eventHours->setEndAt($creneaux[$creneau['Creneau']]['end']);
                         $eventHours->setId(random_int(0, 1000000));
-
                         $event = new Event();
                         $event->setCreneau($creneau['Creneau']);
                         $event->setActivite($creneau['Activite'] ?? 'Pas cours');
