@@ -1,12 +1,10 @@
-import 'package:app_student/components/header_title.dart';
 import 'package:app_student/login/cubit/login_cubit.dart';
-import 'package:app_student/login/views/widgets/form/form_login.dart';
+import 'package:app_student/login/views/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../components/header_logo.dart';
 import '../../users/cubit/user_cubit.dart';
 
 class LoginPage extends StatelessWidget {
@@ -25,16 +23,7 @@ class LoginPage extends StatelessWidget {
               });
               return Container();
             } else if (state is LoginInitial) {
-              return Scaffold(
-                body: Column(
-                  children: [
-                    const HeaderLogo(),
-                    HeaderTitle(
-                        AppLocalizations.of(context)!.loginWelcomeTitle),
-                    const Expanded(child: FormLogin()),
-                  ],
-                ),
-              );
+              return LoginView(AppLocalizations.of(context)!.loginWelcomeTitle);
             } else if (state is LoginAuthenticated) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 context.go('/schedule');
@@ -50,16 +39,8 @@ class LoginPage extends StatelessWidget {
                   ),
                 );
               });
-              return Scaffold(
-                body: Column(
-                  children: [
-                    const HeaderLogo(),
-                    HeaderTitle(
-                        AppLocalizations.of(context)!.loginWelcomeTitleError),
-                    const Expanded(child: FormLogin()),
-                  ],
-                ),
-              );
+              return LoginView(
+                  AppLocalizations.of(context)!.loginWelcomeTitleError);
             } else {
               return Container();
             }
