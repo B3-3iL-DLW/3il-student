@@ -94,8 +94,7 @@
   "profil": "Profil",
     "@profil": {
         "description": "Texte du bouton pour le profil"
-    }
-  },
+    },
   "profilMessageTitle": "Quel beau profil {firstName} !",
   "@profilMessageTitle": {
     "description": "Message d'accueil de la page de profil",

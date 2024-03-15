@@ -1,14 +1,14 @@
-import 'package:app_student/class_groups/views/widgets/header/header_text.dart';
 import 'package:app_student/menu/menu_view.dart';
 import 'package:app_student/profils/views/widgets/class_group_button.dart';
 import 'package:app_student/profils/views/widgets/user_class_card.dart';
 import 'package:app_student/profils/views/widgets/user_info_card.dart';
 import 'package:flutter/material.dart';
-import 'package:app_student/login/widgets/header/header_logo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
+import '../../shared_components/header_logo.dart';
+import '../../shared_components/header_subtitle.dart';
 import '../../users/cubit/user_cubit.dart';
 
 class ProfilPage extends StatelessWidget {
