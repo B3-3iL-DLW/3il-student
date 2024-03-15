@@ -1,15 +1,16 @@
 import 'package:app_student/api/class_groups/repositories/class_group_repository.dart';
 import 'package:app_student/class_groups/cubit/class_group_cubit.dart';
 import 'package:app_student/class_groups/views/widgets/card_list.dart';
-import 'package:app_student/class_groups/views/widgets/header/header_logo.dart';
-import 'package:app_student/class_groups/views/widgets/header/header_text.dart';
-import 'package:app_student/class_groups/views/widgets/header/header_title.dart';
+import 'package:app_student/components/header_subtitle.dart';
+import 'package:app_student/components/header_title.dart';
 import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../api/users/models/user_model.dart';
+import '../../components/app_bar.dart';
 
 class ClassGroupPage extends StatelessWidget {
   const ClassGroupPage({super.key});
@@ -49,9 +50,11 @@ class ClassGroupPage extends StatelessWidget {
                     } else if (state is ClassGroupLoaded) {
                       return Column(
                         children: [
-                          const HeaderLogo(),
-                          HeaderTitle('Bonjour, ${user?.name}'),
-                          const HeaderText('Choisis ta promotion :'),
+                          const CustomAppBar(),
+                          HeaderTitle(AppLocalizations.of(context)!
+                              .classSelectionTitle(user!.name)),
+                          HeaderSubtitle(AppLocalizations.of(context)!
+                              .classSelectionSubtitle),
                           Expanded(
                             child: CardList(classesList: state.classes),
                           ),

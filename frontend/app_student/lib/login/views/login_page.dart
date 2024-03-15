@@ -1,12 +1,12 @@
+import 'package:app_student/components/header_title.dart';
 import 'package:app_student/login/cubit/login_cubit.dart';
 import 'package:app_student/login/widgets/form/form_login.dart';
-import 'package:app_student/login/widgets/header/header_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
-import '../widgets/header/header_logo.dart';
+import '../../components/header_logo.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -25,7 +25,7 @@ class LoginPage extends StatelessWidget {
             body: Column(
               children: [
                 const HeaderLogo(),
-                HeaderText(AppLocalizations.of(context)!.loginWelcomeTitle),
+                HeaderTitle(AppLocalizations.of(context)!.loginWelcomeTitle),
                 const Expanded(child: FormLogin()),
               ],
             ),
@@ -48,7 +48,7 @@ class LoginPage extends StatelessWidget {
             body: Column(
               children: [
                 const HeaderLogo(),
-                HeaderText(
+                HeaderTitle(
                     AppLocalizations.of(context)!.loginWelcomeTitleError),
                 const Expanded(child: FormLogin()),
               ],

@@ -31,7 +31,12 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<bool> checkUserAuthentication() async {
     try {
-      await userRepository.getUser();
+      var user = await userRepository.getUser();
+      // Si la classe est vide
+      if (user.className == '') {
+        emit(LoginInitial());
+        return false;
+      }
       emit(LoginAuthenticated());
       return true;
     } catch (e) {

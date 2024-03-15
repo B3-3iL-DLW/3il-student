@@ -8,5 +8,5 @@ class UserEntity {
       {required this.ine,
       required this.firstName,
       required this.birthDate,
-      this.className = ''});
+      this.className});
 }
