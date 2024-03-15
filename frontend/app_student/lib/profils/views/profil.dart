@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 import '../../shared_components/header_logo.dart';
-import '../../shared_components/header_subtitle.dart';
+import '../../shared_components/header_title.dart';
 import '../../users/cubit/user_cubit.dart';
 
 class ProfilPage extends StatelessWidget {
@@ -38,8 +38,8 @@ class ProfilPage extends StatelessWidget {
         children: <Widget>[
           const HeaderLogo(),
           Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: HeaderSubtitle(
+            padding: const EdgeInsets.all(10.0),
+            child: HeaderTitle(
               AppLocalizations.of(context)!.profilMessageTitle(firstName),
             ),
           ),
