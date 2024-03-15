@@ -1,12 +1,13 @@
 import 'package:app_student/config/dev_config.dart';
 import 'package:app_student/routes.dart';
+import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'config/config.dart';
 
@@ -48,7 +49,11 @@ class MyApp extends StatelessWidget {
       title: '3iL Student App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        focusColor: const Color(0xffE84E0F),
+        // Orange 3IL
+        focusColor: CustomTheme.secondaryColor,
+        primaryColor: CustomTheme.primaryColor,
+        // Bleu 3IL
+        secondaryHeaderColor: CustomTheme.primaryColor,
         fontFamily: 'Arial',
       ),
       localizationsDelegates: const [

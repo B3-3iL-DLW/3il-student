@@ -17,7 +17,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       className = userState.user.className ?? '';
     }
     return AppBar(
-      backgroundColor: const Color(0xFF005067),
+      backgroundColor: Theme.of(context).secondaryHeaderColor,
       title: title != null ? Text(title!) : const SizedBox.shrink(),
       flexibleSpace: Stack(
         children: [
