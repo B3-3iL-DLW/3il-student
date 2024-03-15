@@ -96,10 +96,19 @@ class AppRoutes {
               ),
             ))),
     GoRoute(
-        path: profilPage,
-        pageBuilder: (context, state) => MaterialPage<void>(
-              key: state.pageKey,
-              child: const ProfilPage(),
-            )),
+      path: profilPage,
+      pageBuilder: (context, state) => MaterialPage<void>(
+        key: state.pageKey,
+        child: RepositoryProvider(
+          create: (context) => UserRepository(),
+          child: BlocProvider(
+            create: (context) =>
+                UserCubit(userRepository: context.read<UserRepository>())
+                  ..fetchUser(),
+            child: const ProfilPage(),
+          ),
+        ),
+      ),
+    ),
   ];
 }
