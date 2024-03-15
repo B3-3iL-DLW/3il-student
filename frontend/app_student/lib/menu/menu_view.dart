@@ -11,7 +11,24 @@ class MenuBarView extends StatefulWidget {
 }
 
 class MenuBarViewState extends State<MenuBarView> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _setSelectedIndex();
+  }
+
+  void _setSelectedIndex() {
+    final route = GoRouter.of(context).overridePlatformDefaultLocation;
+    if(route == AppRoutes.loginPage){
+      _selectedIndex = 0;
+    } else if(route == AppRoutes.schedulePage){
+      _selectedIndex = 1;
+    } else if(route == AppRoutes.profilPage){
+      _selectedIndex = 2;
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
