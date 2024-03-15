@@ -1,4 +1,5 @@
 import 'package:app_student/class_groups/views/widgets/header/header_text.dart';
+import 'package:app_student/menu/menu_view.dart';
 import 'package:app_student/profils/views/widgets/class_group_button.dart';
 import 'package:flutter/material.dart';
 import 'package:app_student/login/widgets/header/header_logo.dart';
@@ -62,6 +63,7 @@ class ProfilPage extends StatelessWidget {
           const ClassGroupButton(),
         ],
       ),
+      bottomNavigationBar: const MenuBarView(),
     );
   }
 }
