@@ -40,7 +40,9 @@ class EventCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(event.activite, style: CustomTheme.textXl.toBold),
+                  Flexible(
+                      child: Text(event.activite,
+                          style: CustomTheme.textXl.toBold)),
                   ColorFiltered(
                     colorFilter:
                         const ColorFilter.mode(Colors.white, BlendMode.srcIn),
@@ -54,8 +56,11 @@ class EventCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Text('${AppLocalizations.of(context)!.roomLabel} ${event.salle}',
-                  style: CustomTheme.text.toBold),
+              Flexible(
+                child: Text(
+                    '${AppLocalizations.of(context)!.roomLabel} ${event.salle}',
+                    style: CustomTheme.text.toBold),
+              ),
             ],
           ),
         ),

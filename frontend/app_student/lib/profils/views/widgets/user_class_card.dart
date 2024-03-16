@@ -18,8 +18,8 @@ class UserClassCard extends StatelessWidget {
           leading: SizedBox(
             width: 50,
             child: ColorFiltered(
-              colorFilter:
-              const ColorFilter.mode(CustomTheme.primaryColor, BlendMode.srcIn),
+              colorFilter: const ColorFilter.mode(
+                  CustomTheme.primaryColor, BlendMode.srcIn),
               child: SvgPicture.asset(
                 'assets/images/user.svg',
                 width: 30,

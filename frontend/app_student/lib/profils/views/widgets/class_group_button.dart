@@ -22,8 +22,8 @@ class ClassGroupButton extends StatelessWidget {
                 textStyle: MaterialStateProperty.all<TextStyle>(
                   CustomTheme.text.toBold,
                 ),
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(CustomTheme.secondaryColor),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    CustomTheme.secondaryColor),
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
