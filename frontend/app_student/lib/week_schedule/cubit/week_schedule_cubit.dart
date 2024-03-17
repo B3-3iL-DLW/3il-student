@@ -33,12 +33,10 @@ class WeekScheduleCubit extends Cubit<WeekScheduleState> {
       final allEvents =
           weekSchedule.expand((week) => week.daySchedules).toList();
 
-      initialDate ??= DateTime.now();
+      // Only find the closest date if initialDate has not been set
+      initialDate ??= findClosestDate(allEvents);
 
-      final todayIndex = allEvents.indexWhere((daySchedule) =>
-          daySchedule.date.day == initialDate!.day &&
-          daySchedule.date.month == initialDate!.month &&
-          daySchedule.date.year == initialDate!.year);
+      final todayIndex = findTodayIndex(allEvents);
 
       if (isClosed) {
         return;
@@ -50,6 +48,28 @@ class WeekScheduleCubit extends Cubit<WeekScheduleState> {
       }
       emit(WeekScheduleError(e.toString()));
     }
+  }
+
+  DateTime findClosestDate(List<DayScheduleModel> allEvents) {
+    // Sort the schedules by date
+    allEvents.sort((a, b) => a.date.compareTo(b.date));
+
+    // Find the schedule with the date closest to today
+    for (var schedule in allEvents) {
+      if (schedule.date.isAfter(DateTime.now()) ||
+          schedule.date.isAtSameMomentAs(DateTime.now())) {
+        return schedule.date;
+      }
+    }
+
+    return DateTime.now();
+  }
+
+  int findTodayIndex(List<DayScheduleModel> allEvents) {
+    return allEvents.indexWhere((daySchedule) =>
+        daySchedule.date.day == initialDate!.day &&
+        daySchedule.date.month == initialDate!.month &&
+        daySchedule.date.year == initialDate!.year);
   }
 
   void fetchUserAndSchedule() async {

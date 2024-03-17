@@ -1,4 +1,5 @@
 import 'package:app_student/api/day_schedule/models/day_schedule_model.dart';
+import 'package:app_student/utils/custom_theme.dart';
 import 'package:app_student/week_schedule/views/widgets/events/event_details.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -20,10 +21,7 @@ class DayScheduleWidget extends StatelessWidget {
           Center(
             child: Text(
               capitalizedDate,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: CustomTheme.subtitle.toBold,
             ),
           ),
           const SizedBox(height: 30),

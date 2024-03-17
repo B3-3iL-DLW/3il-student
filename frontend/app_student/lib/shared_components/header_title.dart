@@ -1,3 +1,4 @@
+import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/cupertino.dart';
 
 class HeaderTitle extends StatelessWidget {
@@ -13,11 +14,7 @@ class HeaderTitle extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           content,
-          style: const TextStyle(
-            fontSize: 34.0,
-            fontFamily: 'Arial',
-            fontWeight: FontWeight.bold,
-          ),
+          style: CustomTheme.title.toBold,
         ),
       ),
     );
