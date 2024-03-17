@@ -1,3 +1,4 @@
+import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,8 +18,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       className = userState.user.className ?? '';
     }
     return AppBar(
-      backgroundColor: Theme.of(context).secondaryHeaderColor,
-      title: title != null ? Text(title!) : const SizedBox.shrink(),
+      backgroundColor: CustomTheme.primaryColor,
+      title: title != null
+          ? Text(title!, style: CustomTheme.text.toColorWhite)
+          : const SizedBox.shrink(),
       flexibleSpace: Stack(
         children: [
           ClipRect(
@@ -42,11 +45,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Center(
                   child: Text(
                     className,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: CustomTheme.subtitle.toBold.toColorWhite,
                   ),
                 ),
                 if (widget != null)

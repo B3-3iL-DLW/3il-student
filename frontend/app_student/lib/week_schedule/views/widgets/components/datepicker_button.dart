@@ -20,14 +20,10 @@ class DatePickerButton extends StatelessWidget {
   }
 
   Future<DateTime?> selectDate(
-      BuildContext context, WeekScheduleCubit cubit, DateTime today) async {
+      BuildContext context, WeekScheduleCubit cubit) async {
     return await showDatePicker(
       context: context,
-      initialDate: cubit.state is WeekScheduleLoaded
-          ? (cubit.state as WeekScheduleLoaded)
-              .allDaySchedules[(cubit.state as WeekScheduleLoaded).todayIndex]
-              .date
-          : today,
+      initialDate: cubit.initialDate ?? DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
       selectableDayPredicate: (date) {
@@ -49,8 +45,7 @@ class DatePickerButton extends StatelessWidget {
         size: 30,
       ),
       onPressed: () async {
-        final today = DateTime.now();
-        final date = await selectDate(context, cubit, today);
+        final date = await selectDate(context, cubit);
         if (date != null) {
           if (context.mounted) {
             await navigateToDate(context, cubit, date); // Await the navigation

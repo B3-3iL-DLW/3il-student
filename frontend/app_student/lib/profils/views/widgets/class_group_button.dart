@@ -1,4 +1,5 @@
 import 'package:app_student/routes.dart';
+import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,13 +20,10 @@ class ClassGroupButton extends StatelessWidget {
             child: ElevatedButton(
               style: ButtonStyle(
                 textStyle: MaterialStateProperty.all<TextStyle>(
-                  const TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  CustomTheme.text.toBold,
                 ),
                 backgroundColor: MaterialStateProperty.all<Color>(
-                    Theme.of(context).focusColor),
+                    CustomTheme.secondaryColor),
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
@@ -36,8 +34,8 @@ class ClassGroupButton extends StatelessWidget {
               onPressed: () {
                 GoRouter.of(context).go(AppRoutes.classListPage);
               },
-              child:
-                  Text(AppLocalizations.of(context)!.profilChangeClassButton),
+              child: Text(AppLocalizations.of(context)!.profilChangeClassButton,
+                  style: CustomTheme.textSmall.toColorWhite),
             ),
           ),
         ],

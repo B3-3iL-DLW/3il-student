@@ -1,3 +1,4 @@
+import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/cupertino.dart';
 
 class HeaderLogo extends StatelessWidget {
@@ -6,8 +7,8 @@ class HeaderLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300.0, // Hauteur du Container
-      color: const Color(0xFF005067),
+      height: 300.0,
+      color: CustomTheme.primaryColor,
       child: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 50.0),

@@ -36,13 +36,13 @@ class EventCard extends StatelessWidget {
                 : MainAxisAlignment.spaceEvenly,
             children: [
               Text(AppLocalizations.of(context)!.eventDuration,
-                  style: const TextStyle(color: Colors.white, fontSize: 12)),
+                  style: CustomTheme.textSmall.toBold.toColorWhite),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(event.activite,
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold)),
+                  Flexible(
+                      child: Text(event.activite,
+                          style: CustomTheme.textXl.toBold)),
                   ColorFiltered(
                     colorFilter:
                         const ColorFilter.mode(Colors.white, BlendMode.srcIn),
@@ -56,9 +56,11 @@ class EventCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Text('${AppLocalizations.of(context)!.roomLabel} ${event.salle}',
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold)),
+              Flexible(
+                child: Text(
+                    '${AppLocalizations.of(context)!.roomLabel} ${event.salle}',
+                    style: CustomTheme.text.toBold),
+              ),
             ],
           ),
         ),

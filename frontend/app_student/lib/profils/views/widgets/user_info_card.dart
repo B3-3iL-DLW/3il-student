@@ -1,3 +1,4 @@
+import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -25,8 +26,8 @@ class UserInfoCard extends StatelessWidget {
               ),
             ),
           ),
-          title: Text(ine),
-          subtitle: Text(birthDate),
+          title: Text(ine, style: CustomTheme.textXl),
+          subtitle: Text(birthDate, style: CustomTheme.text),
         ),
       ),
     );

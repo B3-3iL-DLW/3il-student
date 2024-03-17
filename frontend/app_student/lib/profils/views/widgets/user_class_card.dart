@@ -1,3 +1,4 @@
+import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -17,8 +18,8 @@ class UserClassCard extends StatelessWidget {
           leading: SizedBox(
             width: 50,
             child: ColorFiltered(
-              colorFilter:
-                  const ColorFilter.mode(Color(0xFF005067), BlendMode.srcIn),
+              colorFilter: const ColorFilter.mode(
+                  CustomTheme.primaryColor, BlendMode.srcIn),
               child: SvgPicture.asset(
                 'assets/images/user.svg',
                 width: 30,
@@ -26,8 +27,8 @@ class UserClassCard extends StatelessWidget {
               ),
             ),
           ),
-          title: Text(className),
-          subtitle: Text(firstName),
+          title: Text(className, style: CustomTheme.textXl),
+          subtitle: Text(firstName, style: CustomTheme.text),
         ),
       ),
     );
