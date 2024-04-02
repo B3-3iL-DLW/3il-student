@@ -37,14 +37,20 @@ class ProfilPage extends StatelessWidget {
       body: Column(
         children: <Widget>[
           const HeaderLogo(),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: HeaderTitle(
-              AppLocalizations.of(context)!.profilMessageTitle(firstName),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: HeaderTitle(
+                    AppLocalizations.of(context)!.profilMessageTitle(firstName),
+                  ),
+                ),
+                UserClassCard(className: className, firstName: firstName),
+                UserInfoCard(ine: ine, birthDate: birthDateString),
+              ],
             ),
           ),
-          UserClassCard(className: className, firstName: firstName),
-          UserInfoCard(ine: ine, birthDate: birthDateString),
           const ClassGroupButton(),
         ],
       ),
