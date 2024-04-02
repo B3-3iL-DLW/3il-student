@@ -1,8 +1,8 @@
 import 'package:app_student/routes.dart';
 import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class ClassGroupButton extends StatelessWidget {
   const ClassGroupButton({super.key});
@@ -10,7 +10,8 @@ class ClassGroupButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 25.0, top: 80.0, right: 25.0),
+      padding: const EdgeInsets.only(
+          left: 25.0, top: 50.0, right: 25.0, bottom: 25.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

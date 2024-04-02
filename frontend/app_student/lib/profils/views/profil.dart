@@ -34,25 +34,29 @@ class ProfilPage extends StatelessWidget {
         : 'error';
 
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          const HeaderLogo(),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: HeaderTitle(
-                    AppLocalizations.of(context)!.profilMessageTitle(firstName),
+      body: SingleChildScrollView(
+        // Ajout du widget SingleChildScrollView
+        child: Column(
+          children: <Widget>[
+            const HeaderLogo(),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: HeaderTitle(
+                      AppLocalizations.of(context)!
+                          .profilMessageTitle(firstName),
+                    ),
                   ),
-                ),
-                UserClassCard(className: className, firstName: firstName),
-                UserInfoCard(ine: ine, birthDate: birthDateString),
-              ],
+                  UserClassCard(className: className, firstName: firstName),
+                  UserInfoCard(ine: ine, birthDate: birthDateString),
+                ],
+              ),
             ),
-          ),
-          const ClassGroupButton(),
-        ],
+            const ClassGroupButton(),
+          ],
+        ),
       ),
       bottomNavigationBar: const MenuBarView(),
     );
