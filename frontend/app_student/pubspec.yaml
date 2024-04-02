@@ -81,6 +81,43 @@ flutter:
   assets:
     - assets/images/
     - .env
+    - android/
+    - android/app/
+    - android/app/src/
+    - android/app/src/main/
+    - android/app/src/main/res/
+    - android/app/src/main/res/values/
+    - android/app/src/main/res/drawable/
+    - android/app/src/main/res/mipmap-hdpi/
+    - android/app/src/main/res/mipmap-mdpi/
+    - android/app/src/main/res/drawable-v21/
+    - android/app/src/main/res/mipmap-xhdpi/
+    - android/app/src/main/res/values-night/
+    - android/app/src/main/res/mipmap-xxhdpi/
+    - android/app/src/main/res/mipmap-xxxhdpi/
+    - android/app/src/main/java/
+    - android/app/src/main/java/io/
+    - android/app/src/main/java/io/flutter/
+    - android/app/src/main/java/io/flutter/plugins/
+    - android/app/src/main/kotlin/
+    - android/app/src/main/kotlin/com/
+    - android/app/src/main/kotlin/com/example/
+    - android/app/src/main/kotlin/com/example/app_student/
+    - android/app/src/debug/
+    - android/app/src/profile/
+    - android/.idea/
+    - android/gradle/
+    - android/gradle/wrapper/
+    - android/.gradle/
+    - android/.gradle/7.6.3/
+    - android/.gradle/7.6.3/checksums/
+    - android/.gradle/7.6.3/fileHashes/
+    - android/.gradle/7.6.3/fileChanges/
+    - android/.gradle/7.6.3/vcsMetadata/
+    - android/.gradle/7.6.3/executionHistory/
+    - android/.gradle/7.6.3/dependencies-accessors/
+    - android/.gradle/vcs-1/
+    - android/.gradle/buildOutputCleanup/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
