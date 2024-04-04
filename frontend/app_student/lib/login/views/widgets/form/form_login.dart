@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'button_submit.dart';
-import 'inputs/input_birthdate.dart';
-import 'inputs/input_ine.dart';
 import 'inputs/input_prenom.dart';
 
 class FormLogin extends StatefulWidget {
@@ -13,9 +11,11 @@ class FormLogin extends StatefulWidget {
 }
 
 class FormLoginState extends State<FormLogin> {
-  final TextEditingController ineController = TextEditingController();
+  final TextEditingController ineController =
+      TextEditingController(text: '999999999');
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController birthDateController = TextEditingController();
+  final TextEditingController birthDateController =
+      TextEditingController(text: '2000-01-01');
   DateTime birthDate = DateTime.now();
 
   @override
@@ -24,15 +24,15 @@ class FormLoginState extends State<FormLogin> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            INETextField(controller: ineController),
-            BirthDateField(
-              controller: birthDateController,
-              onDateChanged: (newDate) {
-                setState(() {
-                  birthDate = newDate;
-                });
-              },
-            ),
+            // INETextField(controller: ineController),
+            // BirthDateField(
+            //   controller: birthDateController,
+            //   onDateChanged: (newDate) {
+            //     setState(() {
+            //       birthDate = newDate;
+            //     });
+            //   },
+            // ),
             FirstnameTextField(controller: nameController),
             SubmitButton(
               ineController: ineController,
