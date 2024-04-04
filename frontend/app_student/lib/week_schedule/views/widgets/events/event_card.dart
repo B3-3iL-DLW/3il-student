@@ -15,9 +15,9 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: CustomTheme.primaryColor.withOpacity(0.1),
       child: Container(
         decoration: const BoxDecoration(
+          color: Color(0xFF007A8D),
           border: Border(
             left: BorderSide(
               color: CustomTheme.primaryColor,
@@ -28,21 +28,24 @@ class EventCard extends StatelessWidget {
         height: 110,
         child: Padding(
           padding:
-              const EdgeInsets.only(left: 20.0, right: 20, bottom: 3, top: 3),
+              const EdgeInsets.only(left: 20.0, right: 20, bottom: 3, top: 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: event.creneau == 3
                 ? MainAxisAlignment.center
                 : MainAxisAlignment.spaceEvenly,
             children: [
-              Text(AppLocalizations.of(context)!.eventDuration,
-                  style: CustomTheme.textSmall.toBold.toColorWhite),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Text(AppLocalizations.of(context)!.eventDuration,
+                    style: CustomTheme.textSmall.toColorWhite),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
                       child: Text(event.activite,
-                          style: CustomTheme.textXl.toBold)),
+                          style: CustomTheme.textXl.toBold.toColorWhite)),
                   ColorFiltered(
                     colorFilter:
                         const ColorFilter.mode(Colors.white, BlendMode.srcIn),
@@ -50,16 +53,19 @@ class EventCard extends StatelessWidget {
                       event.visio
                           ? 'assets/images/teams.svg'
                           : 'assets/images/school.svg',
-                      width: 50,
-                      height: 50,
+                      width: 40,
+                      height: 40,
                     ),
                   ),
                 ],
               ),
               Flexible(
-                child: Text(
-                    '${AppLocalizations.of(context)!.roomLabel} ${event.salle}',
-                    style: CustomTheme.text.toBold),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: Text(
+                      '${AppLocalizations.of(context)!.roomLabel} ${event.salle}',
+                      style: CustomTheme.text.toColorWhite),
+                ),
               ),
             ],
           ),

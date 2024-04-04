@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../utils/custom_theme.dart';
+
 class EventMealCard extends StatelessWidget {
   const EventMealCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color(0xFF007A8D),
+      color: CustomTheme.primaryColor,
       child: Container(
         decoration: const BoxDecoration(
           border: Border(
             left: BorderSide(
-              color: Color(0xFF005067),
+              color: CustomTheme.primaryColor,
               width: 10.0,
             ),
           ),
