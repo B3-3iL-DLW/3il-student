@@ -15,7 +15,7 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: CustomTheme.primaryColor.withOpacity(0.5),
+      color: CustomTheme.primaryColor.withOpacity(0.1),
       child: Container(
         decoration: const BoxDecoration(
           border: Border(

@@ -16,8 +16,12 @@ class EventHours extends StatelessWidget {
       width: 50,
       child: Column(
         children: [
-          Text(event.horaires.startAt, style: CustomTheme.text.toBold),
-          Text(event.horaires.endAt, style: CustomTheme.text.toBold),
+          FittedBox(
+            child: Text(event.horaires.startAt, style: CustomTheme.text.toBold),
+          ),
+          FittedBox(
+            child: Text(event.horaires.endAt, style: CustomTheme.text.toBold),
+          ),
         ],
       ),
     );
