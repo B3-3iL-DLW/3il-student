@@ -80,21 +80,21 @@
     "example": "Salle"
   },
   "disconnectedMessage": "Vous avez été déconnecté",
-    "@disconnectedMessage": {
-        "description": "Message d'erreur pour une déconnexion"
-    },
+  "@disconnectedMessage": {
+    "description": "Message d'erreur pour une déconnexion"
+  },
   "disconnect": "Déconnexion",
-    "@disconnect": {
-        "description": "Texte du bouton de déconnexion"
-    },
+  "@disconnect": {
+    "description": "Texte du bouton de déconnexion"
+  },
   "schedule": "Emploi du temps",
-    "@schedule": {
-        "description": "Texte du bouton pour l'emploi du temps"
-    },
+  "@schedule": {
+    "description": "Texte du bouton pour l'emploi du temps"
+  },
   "profil": "Profil",
-    "@profil": {
-        "description": "Texte du bouton pour le profil"
-    },
+  "@profil": {
+    "description": "Texte du bouton pour le profil"
+  },
   "profilMessageTitle": "Quel beau profil {firstName} !",
   "@profilMessageTitle": {
     "description": "Message d'accueil de la page de profil",
@@ -108,5 +108,9 @@
   "profilChangeClassButton": "Changer de classe",
   "@profilChangeClassButton": {
     "description": "Texte du bouton pour changer de classe"
+  },
+  "noConnectionMessage": "Pas de connexion",
+  "@noConnectionMessage": {
+    "description": "Message d'erreur pour une absence de connexion"
   }
 }

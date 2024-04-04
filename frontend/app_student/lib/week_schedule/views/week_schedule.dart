@@ -1,4 +1,5 @@
 import 'package:app_student/api/week_schedule/repositories/week_schedule_repository.dart';
+import 'package:app_student/shared_components/network_error.dart';
 import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
 import 'package:app_student/week_schedule/views/widgets/components/datepicker_button.dart';
@@ -59,7 +60,7 @@ class WeekSchedulePage extends StatelessWidget {
                   ),
                 );
               } else if (state is WeekScheduleError) {
-                return Center(child: Text(state.message));
+                return const NetworkError();
               } else {
                 return const SizedBox.shrink();
               }

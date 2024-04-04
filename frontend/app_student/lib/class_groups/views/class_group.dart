@@ -11,6 +11,7 @@ import '../../api/users/repositories/user_repository.dart';
 import '../../shared_components/app_bar.dart';
 import '../../shared_components/header_subtitle.dart';
 import '../../shared_components/header_title.dart';
+import '../../shared_components/network_error.dart';
 
 class ClassGroupPage extends StatelessWidget {
   const ClassGroupPage({super.key});
@@ -59,7 +60,7 @@ class ClassGroupPage extends StatelessWidget {
                       ],
                     );
                   } else if (classState is ClassGroupError) {
-                    return Center(child: Text(classState.message));
+                    return const NetworkError();
                   } else {
                     return const Center(child: CircularProgressIndicator());
                   }
