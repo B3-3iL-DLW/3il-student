@@ -1,5 +1,5 @@
 import 'package:app_student/utils/custom_theme.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class HeaderTitle extends StatelessWidget {
   final String content;
@@ -9,13 +9,18 @@ class HeaderTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 35.0, left: 25.0, bottom: 40),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          content,
-          style: CustomTheme.title.toBold,
-        ),
+      padding: const EdgeInsets.only(left: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: Text(
+              content,
+              style: CustomTheme.subtitle.toBold,
+            ),
+          ),
+        ],
       ),
     );
   }

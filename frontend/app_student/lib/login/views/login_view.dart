@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../shared_components/header_logo.dart';
 import '../../shared_components/header_title.dart';
+import '../../utils/global.dart';
 
 class LoginView extends StatelessWidget {
   final String title;
@@ -13,7 +14,7 @@ class LoginView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const HeaderLogo(),
+          HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
           HeaderTitle(title),
           const Expanded(child: FormLogin()),
           const Padding(
