@@ -16,6 +16,17 @@ class LoginView extends StatelessWidget {
           const HeaderLogo(),
           HeaderTitle(title),
           const Expanded(child: FormLogin()),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              'En utilisant le service, vous acceptez nos conditions d\'utilisation et notre politique de confidentialité.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 12,
+              ),
+            ),
+          ),
         ],
       ),
     );
