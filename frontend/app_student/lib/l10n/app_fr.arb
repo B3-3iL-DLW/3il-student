@@ -112,5 +112,7 @@
   "noConnectionMessage": "Pas de connexion",
   "@noConnectionMessage": {
     "description": "Message d'erreur pour une absence de connexion"
-  }
+  },
+
+  "termsAndPrivacy": "En utilisant le service, vous acceptez nos conditions d'utilisation et notre politique de confidentialité."
 }

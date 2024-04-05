@@ -14,7 +14,7 @@ class CardList extends StatelessWidget {
       itemCount: classesList.length,
       itemBuilder: (context, index) {
         return Card(
-          margin: const EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+          margin: const EdgeInsets.only(top: 10.0),
           child: ListTile(
             title: Text(
               classesList[index].name,

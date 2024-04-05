@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../users/cubit/user_cubit.dart';
+import '../utils/global.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
@@ -38,30 +39,24 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 45.0),
-            child: Stack(
-              children: [
-                Center(
-                  child: Text(
-                    className,
-                    style: CustomTheme.subtitle.toBold.toColorWhite,
-                  ),
-                ),
-                if (widget != null)
-                  Positioned(
-                    right: 0.0,
-                    top: 10.0,
-                    child: widget!,
-                  ),
-              ],
+          Center(
+            child: Text(
+              className,
+              style: CustomTheme.subtitle.toBold.toColorWhite,
             ),
           ),
+          if (widget != null)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Center(child: widget!),
+              ],
+            ),
         ],
       ),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(65.0);
+  Size get preferredSize => Size.fromHeight(Global.screenHeight * 0.1);
 }

@@ -10,6 +10,7 @@ class CustomTheme {
   static const TextStyle textXl = TextStyle(fontSize: 18);
   static const TextStyle text = TextStyle(fontSize: 16);
   static const TextStyle textSmall = TextStyle(fontSize: 14);
+  static const TextStyle textXs = TextStyle(fontSize: 12);
 }
 
 extension TextStyleHelpers on TextStyle {

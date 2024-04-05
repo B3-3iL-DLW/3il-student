@@ -4,34 +4,35 @@ class CustomLayout extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final Widget body;
   final Widget? bottomContent;
-  final Widget? bottomNavigationBar;
+  final Widget? bottomBar;
 
   const CustomLayout({
     super.key,
     this.appBar,
     required this.body,
     this.bottomContent,
-    this.bottomNavigationBar,
+    this.bottomBar,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: appBar,
       body: Padding(
         padding: const EdgeInsets.only(left: 10.0, right: 10.0),
         child: LayoutBuilder(
           builder: (context, constraints) {
-            return ListView(
+            return Column(
               children: [
                 const SizedBox(height: 10),
-                SizedBox(
-                  height: constraints.maxHeight * 0.8, // 80% of screen height
+                Expanded(
                   child: body,
                 ),
                 if (bottomContent != null)
                   SizedBox(
-                    height: constraints.maxHeight * 0.2, // 20% of screen height
+                    height: constraints.maxHeight * 0.2,
+                    // 20% of screen height
                     child: bottomContent,
                   ),
               ],
@@ -39,7 +40,7 @@ class CustomLayout extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: bottomNavigationBar,
+      bottomNavigationBar: bottomBar,
     );
   }
 }

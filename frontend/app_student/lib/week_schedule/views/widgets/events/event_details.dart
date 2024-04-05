@@ -1,4 +1,5 @@
 import 'package:app_student/api/events/models/event_model.dart';
+import 'package:app_student/utils/global.dart';
 import 'package:app_student/week_schedule/views/widgets/events/event_hours.dart';
 import 'package:app_student/week_schedule/views/widgets/events/event_info.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,7 @@ class EventDetails extends StatelessWidget {
           children: [
             EventHours(event: event),
             SizedBox(
-              width:
-                  constraints.maxWidth - 80, // Subtract the width of EventHours
+              width: Global.screenWidth * 0.75,
               child: EventInfo(event: event),
             ),
           ],

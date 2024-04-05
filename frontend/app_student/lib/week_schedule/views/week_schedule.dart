@@ -2,7 +2,7 @@ import 'package:app_student/api/week_schedule/repositories/week_schedule_reposit
 import 'package:app_student/shared_components/network_error.dart';
 import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
-import 'package:app_student/week_schedule/views/widgets/components/datepicker_button.dart';
+import 'package:app_student/week_schedule/views/widgets/datepicker_button.dart';
 import 'package:app_student/week_schedule/views/widgets/day_schedule_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../api/users/repositories/user_repository.dart';
 import '../../menu/menu_view.dart';
 import '../../shared_components/app_bar.dart';
+import '../../utils/custom_layout.dart';
 
 class WeekSchedulePage extends StatelessWidget {
   final DateTime? initialDate;
@@ -31,7 +32,7 @@ class WeekSchedulePage extends StatelessWidget {
       child: BlocProvider<UserCubit>(
         create: (context) =>
             UserCubit(userRepository: userRepository)..fetchUser(),
-        child: Scaffold(
+        child: CustomLayout(
           appBar: const CustomAppBar(widget: DatePickerButton()),
           body: BlocBuilder<WeekScheduleCubit, WeekScheduleState>(
             builder: (context, state) {
@@ -66,7 +67,7 @@ class WeekSchedulePage extends StatelessWidget {
               }
             },
           ),
-          bottomNavigationBar: const MenuBarView(),
+          bottomBar: const MenuBarView(),
         ),
       ),
     );

@@ -12,6 +12,7 @@ import '../../shared_components/app_bar.dart';
 import '../../shared_components/header_subtitle.dart';
 import '../../shared_components/header_title.dart';
 import '../../shared_components/network_error.dart';
+import '../../utils/custom_layout.dart';
 
 class ClassGroupPage extends StatelessWidget {
   const ClassGroupPage({super.key});
@@ -30,7 +31,7 @@ class ClassGroupPage extends StatelessWidget {
         BlocProvider<ClassGroupCubit>(create: (context) => classCubit),
         BlocProvider<UserCubit>(create: (context) => userCubit),
       ],
-      child: Scaffold(
+      child: CustomLayout(
         appBar: const CustomAppBar(),
         body: BlocBuilder<UserCubit, UserState>(
           builder: (context, userState) {
