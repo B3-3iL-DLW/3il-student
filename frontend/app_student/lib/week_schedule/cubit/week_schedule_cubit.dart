@@ -53,18 +53,12 @@ class WeekScheduleCubit extends Cubit<WeekScheduleState> {
   DateTime findClosestDate(List<DayScheduleModel> allEvents) {
     DateTime currentDate = DateTime.now();
 
-    // If today is monday, return today date
-    if (currentDate.weekday == DateTime.monday) {
-      return currentDate;
-    }
-
-    // Sort the schedules by date
-    allEvents.sort((a, b) => a.date.compareTo(b.date));
-
-    // Find the schedule with the date closest to today
+    // si la date d'aujourd'hui n'est pas dans la liste des événements, on retourne la date suivante qui à un evènement
     for (var schedule in allEvents) {
-      if (schedule.date.isAfter(currentDate) ||
-          schedule.date.isAtSameMomentAs(currentDate)) {
+      if (schedule.date.isAfter(currentDate) &&
+          schedule.events.any((event) =>
+              event.entity.activite != "Pas cours" &&
+              event.entity.activite != "FERIE")) {
         return schedule.date;
       }
     }
