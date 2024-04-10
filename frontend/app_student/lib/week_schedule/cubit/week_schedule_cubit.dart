@@ -34,7 +34,7 @@ class WeekScheduleCubit extends Cubit<WeekScheduleState> {
           weekSchedule.expand((week) => week.daySchedules).toList();
 
       // Only find the closest date if initialDate has not been set
-      initialDate ??= findClosestDate(allEvents);
+      initialDate = findClosestDate(allEvents);
 
       final todayIndex = findTodayIndex(allEvents);
 
@@ -52,10 +52,13 @@ class WeekScheduleCubit extends Cubit<WeekScheduleState> {
 
   DateTime findClosestDate(List<DayScheduleModel> daySchedules) {
     DateTime currentDate = DateTime.now();
+    currentDate =
+        DateTime(currentDate.year, currentDate.month, currentDate.day);
 
     for (var day in daySchedules) {
-      if (day.date == currentDate) {
-        currentDate = day.date;
+      DateTime dayDate = DateTime(day.date.year, day.date.month, day.date.day);
+      if (dayDate == currentDate) {
+        currentDate = dayDate;
         return currentDate;
       } else {
         try {
