@@ -1,5 +1,4 @@
 import 'package:app_student/routes.dart';
-import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 
+import '../users/cubit/user_cubit.dart';
 import 'menu_item.dart';
 
 class MenuBarView extends StatefulWidget {
@@ -44,39 +44,16 @@ class MenuBarViewState extends State<MenuBarView> {
 
     switch (index) {
       case 0:
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(AppLocalizations.of(context)!.confirmLogout),
-              content: Text(AppLocalizations.of(context)!.confirmLogoutMessage),
-              actions: <Widget>[
-                TextButton(
-                  child: Text(AppLocalizations.of(context)!.cancel),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: Text(AppLocalizations.of(context)!.confirm),
-                  onPressed: () {
-                    context.read<UserCubit>().deleteUserClass();
-                    GoRouter.of(context).go(AppRoutes.loginPage);
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      Fluttertoast.showToast(
-                        msg: AppLocalizations.of(context)!.disconnectedMessage,
-                        toastLength: Toast.LENGTH_LONG,
-                        gravity: ToastGravity.BOTTOM,
-                        textColor: Colors.white,
-                      );
-                    });
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
+        context.read<UserCubit>().deleteUserClass();
+        GoRouter.of(context).go(AppRoutes.loginPage);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Fluttertoast.showToast(
+            msg: AppLocalizations.of(context)!.disconnectedMessage,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            textColor: Colors.white,
+          );
+        });
         break;
       case 1:
         GoRouter.of(context).go(AppRoutes.schedulePage);
