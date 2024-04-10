@@ -1,8 +1,14 @@
 api_controllers:
-    resource:
-        path: ../src/Controller/Api/
-        namespace: App\Controller\Api
-    type: attribute
+  resource:
+    path: ../src/Controller/Api/
+    namespace: App\Controller\Api
+  type: attribute
+
+controllers:
+  resource:
+    path: ../src/Controller/
+    namespace: App\Controller
+  type: annotation
 
 
     
