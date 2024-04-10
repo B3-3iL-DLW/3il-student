@@ -50,16 +50,23 @@ class WeekScheduleCubit extends Cubit<WeekScheduleState> {
     }
   }
 
-  DateTime findClosestDate(List<DayScheduleModel> allEvents) {
+  DateTime findClosestDate(List<DayScheduleModel> daySchedules) {
     DateTime currentDate = DateTime.now();
 
-    // si la date d'aujourd'hui n'est pas dans la liste des événements, on retourne la date suivante qui à un evènement
-    for (var schedule in allEvents) {
-      if (schedule.date.isAfter(currentDate) &&
-          schedule.events.any((event) =>
-              event.entity.activite != "Pas cours" &&
-              event.entity.activite != "FERIE")) {
-        return schedule.date;
+    for (var day in daySchedules) {
+      if (day.date == currentDate) {
+        currentDate = day.date;
+        return currentDate;
+      } else {
+        try {
+          var nextDayWithEvent = daySchedules.firstWhere(
+              (daySchedule) => daySchedule.date.isAfter(currentDate));
+          currentDate = nextDayWithEvent.date;
+          return currentDate;
+        } catch (e) {
+          // No next day with an event found, continue to the next day
+          continue;
+        }
       }
     }
 
