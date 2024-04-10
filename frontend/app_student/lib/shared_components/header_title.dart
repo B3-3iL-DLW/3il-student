@@ -12,7 +12,7 @@ class HeaderTitle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 20.0),
+          padding: const EdgeInsets.only(bottom: 25.0, top: 35.0),
           child: Text(
             content,
             style: CustomTheme.title.toBold,
