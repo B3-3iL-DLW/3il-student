@@ -30,7 +30,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Opacity(
                 opacity: 0.5,
                 child: Transform.scale(
-                  scale: 3.0,
+                  scale: 2.0,
                   child: Image.asset(
                     'assets/images/3il-icon-white.png',
                     fit: BoxFit.cover,
@@ -39,18 +39,22 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           ),
-          Center(
-            child: Text(
-              className,
-              style: CustomTheme.subtitle.toBold.toColorWhite,
+          SafeArea(
+            child: Center(
+              child: Text(
+                className,
+                style: CustomTheme.subtitle.toBold.toColorWhite,
+              ),
             ),
           ),
           if (widget != null)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Center(child: widget!),
-              ],
+            SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Center(child: widget!),
+                ],
+              ),
             ),
         ],
       ),
@@ -58,5 +62,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(Global.screenHeight * 0.1);
+  Size get preferredSize => Size.fromHeight(Global.screenHeight * 0.07);
 }

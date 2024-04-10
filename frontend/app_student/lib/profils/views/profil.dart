@@ -39,8 +39,11 @@ class ProfilPage extends StatelessWidget {
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
       body: Column(
         children: [
-          HeaderTitle(
-            AppLocalizations.of(context)!.profilMessageTitle(firstName),
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: HeaderTitle(
+              AppLocalizations.of(context)!.profilMessageTitle(firstName),
+            ),
           ),
           UserClassCard(className: className, firstName: firstName),
           UserInfoCard(ine: ine, birthDate: birthDateString),
