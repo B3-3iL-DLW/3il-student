@@ -34,7 +34,7 @@ class WeekScheduleCubit extends Cubit<WeekScheduleState> {
           weekSchedule.expand((week) => week.daySchedules).toList();
 
       // Only find the closest date if initialDate has not been set
-      initialDate = findClosestDate(allEvents);
+      initialDate ??= findClosestDate(allEvents);
 
       final todayIndex = findTodayIndex(allEvents);
 
