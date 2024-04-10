@@ -10,6 +10,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
 import 'config/config.dart';
+import 'utils/global.dart';
 
 void main() async {
   await dotenv.load();
@@ -66,6 +67,14 @@ class MyApp extends StatelessWidget {
         Locale('fr'),
       ],
       routerConfig: router,
+      builder: (context, child) {
+        Global.init(context);
+        return MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: const TextScaler.linear(1.0)),
+          child: child!,
+        );
+      },
     );
   }
 }

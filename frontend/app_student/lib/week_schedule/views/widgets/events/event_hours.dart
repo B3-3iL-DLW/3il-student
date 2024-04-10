@@ -2,6 +2,8 @@ import 'package:app_student/api/events/models/event_model.dart';
 import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../utils/global.dart';
+
 class EventHours extends StatelessWidget {
   const EventHours({
     super.key,
@@ -13,14 +15,16 @@ class EventHours extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 50,
+      width: Global.screenWidth * 0.15,
       child: Column(
         children: [
-          FittedBox(
-            child: Text(event.horaires.startAt, style: CustomTheme.text.toBold),
+          SizedBox(
+            child: Text(event.horaires.startAt,
+                style: CustomTheme.textSmall.toBold),
           ),
-          FittedBox(
-            child: Text(event.horaires.endAt, style: CustomTheme.text.toBold),
+          SizedBox(
+            child:
+                Text(event.horaires.endAt, style: CustomTheme.textSmall.toBold),
           ),
         ],
       ),

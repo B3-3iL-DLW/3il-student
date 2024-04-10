@@ -1,10 +1,12 @@
 import 'package:app_student/routes.dart';
-import 'package:app_student/users/cubit/user_cubit.dart';
+import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 
+import '../users/cubit/user_cubit.dart';
 import 'menu_item.dart';
 
 class MenuBarView extends StatefulWidget {
@@ -44,11 +46,14 @@ class MenuBarViewState extends State<MenuBarView> {
       case 0:
         context.read<UserCubit>().deleteUserClass();
         GoRouter.of(context).go(AppRoutes.loginPage);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context)!.disconnectedMessage),
-          ),
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Fluttertoast.showToast(
+            msg: AppLocalizations.of(context)!.disconnectedMessage,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            textColor: Colors.white,
+          );
+        });
         break;
       case 1:
         GoRouter.of(context).go(AppRoutes.schedulePage);
@@ -84,6 +89,10 @@ class MenuBarViewState extends State<MenuBarView> {
       ],
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,
+      selectedLabelStyle: CustomTheme.textXs,
+      unselectedLabelStyle: CustomTheme.textXs,
+      selectedItemColor: CustomTheme.secondaryColor,
+      unselectedItemColor: Colors.grey,
     );
   }
 }

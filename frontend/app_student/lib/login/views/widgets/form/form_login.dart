@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'button_submit.dart';
 import 'inputs/input_prenom.dart';
 
@@ -20,29 +19,42 @@ class FormLoginState extends State<FormLogin> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // INETextField(controller: ineController),
-            // BirthDateField(
-            //   controller: birthDateController,
-            //   onDateChanged: (newDate) {
-            //     setState(() {
-            //       birthDate = newDate;
-            //     });
-            //   },
-            // ),
-            FirstnameTextField(controller: nameController),
-            SubmitButton(
-              ineController: ineController,
-              nameController: nameController,
-              birthDateController: birthDateController,
-              birthDate: birthDate,
-            )
-          ],
-        ),
-      ),
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints viewportConstraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: viewportConstraints.maxHeight,
+            ),
+            child: Stack(
+              children: <Widget>[
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
+                    // ceci est temporaire, le laisser tant qu'on ne remet pas les autres inputs
+                    FirstnameTextField(controller: nameController),
+                    const SizedBox(height: 10.0),
+                  ],
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: SubmitButton(
+                    ineController: ineController,
+                    nameController: nameController,
+                    birthDateController: birthDateController,
+                    birthDate: birthDate,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

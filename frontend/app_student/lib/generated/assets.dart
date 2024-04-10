@@ -2,26 +2,8 @@
 class Assets {
   Assets._();
 
-  static const String androidBuild = 'android/build.gradle';
-  static const String androidGradle = 'android/gradle.properties';
-  static const String androidGradlew = 'android/gradlew';
-  static const String androidKey = 'android/key.properties';
-  static const String androidLocal = 'android/local.properties';
-  static const String androidSettings = 'android/settings.gradle';
-  static const String appBuild = 'android/app/build.gradle';
   static const String appStudent = '.env';
-  static const String appStudentAndroidGradlew = 'android/gradlew.bat';
-  static const String appStudentMainActivity =
-      'android/app/src/main/kotlin/com/example/app_student/MainActivity.kt';
-  static const String debugAndroidManifest =
-      'android/app/src/debug/AndroidManifest.xml';
-  static const String drawableLaunchBackground =
-      'android/app/src/main/res/drawable/launch_background.xml';
-  static const String drawableV21LaunchBackground =
-      'android/app/src/main/res/drawable-v21/launch_background.xml';
   static const String fontsArial = 'assets/fonts/arial.ttf';
-  static const String gradleWrapperGradleWrapper =
-      'android/gradle/wrapper/gradle-wrapper.properties';
   static const String icon3ilIcon = 'assets/icon/3il-icon.png';
   static const String icon3ilLogoWhite = 'assets/icon/3il-logo-white.jpeg';
   static const String images3ilIcon = 'assets/images/3il-icon.png';
@@ -37,36 +19,4 @@ class Assets {
   static const String imagesStudentInfo = 'assets/images/student-info.svg';
   static const String imagesTeams = 'assets/images/teams.svg';
   static const String imagesUser = 'assets/images/user.svg';
-  static const String mainAndroidManifest =
-      'android/app/src/main/AndroidManifest.xml';
-  static const String mipmapHdpiIcLauncher =
-      'android/app/src/main/res/mipmap-hdpi/ic_launcher.png';
-  static const String mipmapHdpiLauncherIcon =
-      'android/app/src/main/res/mipmap-hdpi/launcher_icon.png';
-  static const String mipmapMdpiIcLauncher =
-      'android/app/src/main/res/mipmap-mdpi/ic_launcher.png';
-  static const String mipmapMdpiLauncherIcon =
-      'android/app/src/main/res/mipmap-mdpi/launcher_icon.png';
-  static const String mipmapXhdpiIcLauncher =
-      'android/app/src/main/res/mipmap-xhdpi/ic_launcher.png';
-  static const String mipmapXhdpiLauncherIcon =
-      'android/app/src/main/res/mipmap-xhdpi/launcher_icon.png';
-  static const String mipmapXxhdpiIcLauncher =
-      'android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png';
-  static const String mipmapXxhdpiLauncherIcon =
-      'android/app/src/main/res/mipmap-xxhdpi/launcher_icon.png';
-  static const String mipmapXxxhdpiIcLauncher =
-      'android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png';
-  static const String mipmapXxxhdpiLauncherIcon =
-      'android/app/src/main/res/mipmap-xxxhdpi/launcher_icon.png';
-  static const String pluginsGeneratedPluginRegistrant =
-      'android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java';
-  static const String profileAndroidManifest =
-      'android/app/src/profile/AndroidManifest.xml';
-  static const String valuesNightStyles =
-      'android/app/src/main/res/values-night/styles.xml';
-  static const String valuesStyles =
-      'android/app/src/main/res/values/styles.xml';
-  static const String wrapperGradleWrapper =
-      'android/gradle/wrapper/gradle-wrapper.jar';
 }

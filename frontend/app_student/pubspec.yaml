@@ -48,6 +48,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1
+  fluttertoast: ^8.2.4
 
 
 dev_dependencies:

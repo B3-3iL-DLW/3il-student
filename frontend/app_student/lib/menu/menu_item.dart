@@ -16,8 +16,8 @@ class MenuIcon extends BottomNavigationBarItem {
             width: 20,
             colorFilter: selectedIndex == itemIndex
                 ? const ColorFilter.mode(
-                    CustomTheme.primaryColor, BlendMode.srcIn)
-                : null,
+                    CustomTheme.secondaryColor, BlendMode.srcIn)
+                : const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
           ),
           label: label,
         );

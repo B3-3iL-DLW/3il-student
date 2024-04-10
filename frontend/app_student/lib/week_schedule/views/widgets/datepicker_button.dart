@@ -1,3 +1,4 @@
+import 'package:app_student/utils/custom_theme.dart';
 import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +16,7 @@ class DatePickerButton extends StatelessWidget {
             DateTime(date.year, date.month, date.day));
     if (index != -1) {
       cubit.changeDate(date);
-      context.go('/schedule'); // Replace with the appropriate navigation logic
+      context.go('/schedule');
     }
   }
 
@@ -31,6 +32,19 @@ class DatePickerButton extends StatelessWidget {
             (cubit.state as WeekScheduleLoaded).allDaySchedules.any((event) =>
                 DateTime(event.date.year, event.date.month, event.date.day) ==
                 DateTime(date.year, date.month, date.day));
+      },
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            primaryColor: CustomTheme.secondaryColor,
+            hintColor: CustomTheme.secondaryColor,
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+                  secondary:
+                      CustomTheme.secondaryColor, // This sets the accent color
+                ),
+          ),
+          child: child!,
+        );
       },
     );
   }

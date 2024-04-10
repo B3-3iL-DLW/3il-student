@@ -9,34 +9,30 @@ class INETextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 25.0, top: 10.0, right: 25.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            AppLocalizations.of(context)!.loginIneLabel,
-            style: CustomTheme.textSmall,
-          ),
-          const SizedBox(height: 10.0),
-          TextFormField(
-            controller: controller,
-            decoration: InputDecoration(
-              hintText: AppLocalizations.of(context)!.loginIneHint,
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-              border: OutlineInputBorder(
-                borderSide: const BorderSide(color: CustomTheme.primaryColor),
-                borderRadius: BorderRadius.circular(3.0),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: CustomTheme.secondaryColor),
-                borderRadius: BorderRadius.circular(3.0),
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          AppLocalizations.of(context)!.loginIneLabel,
+          style: CustomTheme.textSmall,
+        ),
+        TextFormField(
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: AppLocalizations.of(context)!.loginIneHint,
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+            border: OutlineInputBorder(
+              borderSide: const BorderSide(color: CustomTheme.primaryColor),
+              borderRadius: BorderRadius.circular(3.0),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: CustomTheme.secondaryColor),
+              borderRadius: BorderRadius.circular(3.0),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

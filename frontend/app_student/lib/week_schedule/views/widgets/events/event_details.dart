@@ -16,9 +16,7 @@ class EventDetails extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             EventHours(event: event),
-            SizedBox(
-              width:
-                  constraints.maxWidth - 80, // Subtract the width of EventHours
+            Expanded(
               child: EventInfo(event: event),
             ),
           ],
