@@ -95,7 +95,7 @@
   "@profil": {
     "description": "Texte du bouton pour le profil"
   },
-  "profilMessageTitle": "Quel beau profil {firstName} !",
+  "profilMessageTitle": "Coucou {firstName} !",
   "@profilMessageTitle": {
     "description": "Message d'accueil de la page de profil",
     "placeholders": {
@@ -113,6 +113,21 @@
   "@noConnectionMessage": {
     "description": "Message d'erreur pour une absence de connexion"
   },
-
-  "termsAndPrivacy": "En utilisant le service, vous acceptez nos conditions d'utilisation et notre politique de confidentialité."
+  "termsAndPrivacy": "En utilisant le service, vous acceptez nos conditions d'utilisation et notre politique de confidentialité.",
+  "confirmLogout": "Êtes-vous sûr de vouloir vous déconnecter ?",
+    "@confirmLogout": {
+        "description": "Message de confirmation de déconnexion"
+    },
+  "confirmLogoutMessage": "Vous serez déconnecté de votre session",
+    "@confirmLogoutMessage": {
+        "description": "Message de confirmation de déconnexion"
+    },
+    "cancel": "Annuler",
+    "@cancel": {
+        "description": "Texte du bouton pour annuler"
+    },
+    "confirm": "Confirmer",
+    "@confirm": {
+        "description": "Texte du bouton pour confirmer"
+    }
 }
