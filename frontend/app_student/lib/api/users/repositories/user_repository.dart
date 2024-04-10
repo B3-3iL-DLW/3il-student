@@ -62,4 +62,9 @@ class UserRepository {
     await prefs.remove('birthDate');
     await prefs.remove('className');
   }
+
+  Future<void> clearClass() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('className');
+  }
 }

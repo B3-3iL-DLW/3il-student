@@ -15,7 +15,6 @@ class ClassGroupCubit extends Cubit<ClassGroupState> {
     try {
       emit(ClassGroupLoading());
       final classes = await classRepository.getClasses();
-
       emit(ClassGroupLoaded(classes));
     } catch (e) {
       emit(ClassGroupError(e.toString()));

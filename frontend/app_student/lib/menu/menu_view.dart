@@ -44,7 +44,7 @@ class MenuBarViewState extends State<MenuBarView> {
 
     switch (index) {
       case 0:
-        context.read<UserCubit>().deleteUserClass();
+        context.read<UserCubit>().deleteUser();
         GoRouter.of(context).go(AppRoutes.loginPage);
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Fluttertoast.showToast(

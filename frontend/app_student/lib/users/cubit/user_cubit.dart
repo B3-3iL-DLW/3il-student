@@ -31,7 +31,11 @@ class UserCubit extends Cubit<UserState> {
     emit(UserClassesSelected());
   }
 
-  Future<void> deleteUserClass() async {
+  Future<void> deleteUser() async {
     await userRepository.delete();
+  }
+
+  Future<void> clearUserClass() async {
+    await userRepository.clearClass();
   }
 }
