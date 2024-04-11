@@ -50,7 +50,7 @@ class WeekSchedulePage extends StatelessWidget {
                     .toList();
 
                 return Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
+                  padding: const EdgeInsets.only(top: 20.0),
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height,
                     child: PageView.builder(

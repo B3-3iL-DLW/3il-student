@@ -52,7 +52,7 @@ class DayScheduleWidget extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           ...daySchedule.events.map((event) {
             return EventDetails(event: event);
           }),
