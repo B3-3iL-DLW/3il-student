@@ -65,7 +65,7 @@ class EventCard extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: Text(
-                        '${AppLocalizations.of(context)!.roomLabel} ${event.salle} ${event.eval}',
+                        '${AppLocalizations.of(context)!.roomLabel} ${event.salle}',
                         style: CustomTheme.text.toColorWhite),
                   ),
                 ),

@@ -98,4 +98,16 @@ class WeekScheduleCubit extends Cubit<WeekScheduleState> {
     emit(WeekScheduleDateChanged(newDate));
     fetchUserAndSchedule();
   }
+
+  void changeToNextOrPreviousDate(bool isNext) {
+    if (state is WeekScheduleLoaded) {
+      final currentIndex = (state as WeekScheduleLoaded).todayIndex;
+      final allDaySchedules = (state as WeekScheduleLoaded).allDaySchedules;
+      if (isNext && currentIndex < allDaySchedules.length - 1) {
+        changeDate(allDaySchedules[currentIndex + 1].date);
+      } else if (!isNext && currentIndex > 0) {
+        changeDate(allDaySchedules[currentIndex - 1].date);
+      }
+    }
+  }
 }
