@@ -8,20 +8,22 @@ class EventCard extends StatelessWidget {
   const EventCard({
     super.key,
     required this.event,
+    this.cardColor = CustomTheme.primaryColor,
   });
 
   final EventModel event;
+  final Color cardColor;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: IntrinsicHeight(
         child: Container(
-          decoration: const BoxDecoration(
-            color: Color(0xFF007A8D),
+          decoration: BoxDecoration(
+            color: CustomTheme.primaryColorLight,
             border: Border(
               left: BorderSide(
-                color: CustomTheme.primaryColor,
+                color: cardColor,
                 width: 10.0,
               ),
             ),
