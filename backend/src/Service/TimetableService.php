@@ -105,8 +105,7 @@ class TimetableService
                         $event->setSalle($creneau['Salles'] ?? '');
                         $event->setRepas('3' === $creneau['Creneau'] && empty($creneau['Activite']));
                         $event->setVisio(str_contains($creneau['Salles'] ?? null, 'Teams'));
-                        // Si le nom de l'activité contient "EI" entouré d'espaces on considère que c'est une evaluation
-                        $event->setEval(str_contains($creneau['Activite'] ?? null, ' EI '));
+                        $event->setEval(str_contains($creneau['Activite'] ?? null, ' EI'));
 
                         $daySchedule->addEvent($event);
                     }
