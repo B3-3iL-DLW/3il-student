@@ -6,8 +6,10 @@ import 'package:intl/intl.dart';
 
 class DayScheduleWidget extends StatelessWidget {
   final DayScheduleModel daySchedule;
+  final PageController pageController;
 
-  const DayScheduleWidget({super.key, required this.daySchedule});
+  const DayScheduleWidget(
+      {super.key, required this.daySchedule, required this.pageController});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +21,35 @@ class DayScheduleWidget extends StatelessWidget {
       child: Column(
         children: [
           Center(
-            child: Text(
-              capitalizedDate,
-              style: CustomTheme.subtitle.toBold,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    pageController.previousPage(
+                      duration: const Duration(milliseconds: 400),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 25, left: 25),
+                  child: Text(
+                    capitalizedDate,
+                    style: CustomTheme.subtitle.toBold,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.arrow_forward),
+                  onPressed: () {
+                    pageController.nextPage(
+                      duration: const Duration(milliseconds: 400),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 30),

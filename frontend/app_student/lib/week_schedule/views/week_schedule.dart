@@ -36,6 +36,12 @@ class WeekSchedulePage extends StatelessWidget {
           appBar: const CustomAppBar(widget: DatePickerButton()),
           body: BlocBuilder<WeekScheduleCubit, WeekScheduleState>(
             builder: (context, state) {
+              final pageController = PageController(
+                initialPage:
+                    state is WeekScheduleLoaded && state.todayIndex != -1
+                        ? state.todayIndex
+                        : 0,
+              );
               if (state is WeekScheduleLoading) {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is WeekScheduleLoaded) {
@@ -48,14 +54,14 @@ class WeekSchedulePage extends StatelessWidget {
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height,
                     child: PageView.builder(
-                      controller: PageController(
-                        initialPage:
-                            state.todayIndex != -1 ? state.todayIndex : 0,
-                      ),
+                      controller: pageController,
                       itemCount: allEvents.length,
                       itemBuilder: (context, index) {
                         final daySchedule = allEvents[index];
-                        return DayScheduleWidget(daySchedule: daySchedule);
+                        return DayScheduleWidget(
+                          daySchedule: daySchedule,
+                          pageController: pageController,
+                        );
                       },
                     ),
                   ),
