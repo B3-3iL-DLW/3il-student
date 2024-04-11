@@ -25,6 +25,9 @@ class EventInfo extends StatelessWidget {
             event: event,
             cardColor: event.eval
                 ? CustomTheme.secondaryColor
+                : CustomTheme.primaryColorLight,
+            borderColor: event.eval
+                ? CustomTheme.secondaryColor
                 : CustomTheme.primaryColor,
           );
   }

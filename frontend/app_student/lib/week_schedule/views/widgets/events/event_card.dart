@@ -8,22 +8,23 @@ class EventCard extends StatelessWidget {
   const EventCard({
     super.key,
     required this.event,
-    this.cardColor = CustomTheme.primaryColor,
+    this.cardColor = CustomTheme.primaryColorLight,
+    this.borderColor = CustomTheme.primaryColor,
   });
 
   final EventModel event;
   final Color cardColor;
-
+  final Color borderColor;
   @override
   Widget build(BuildContext context) {
     return Card(
       child: IntrinsicHeight(
         child: Container(
           decoration: BoxDecoration(
-            color: CustomTheme.primaryColorLight,
+            color: cardColor,
             border: Border(
               left: BorderSide(
-                color: cardColor,
+                color: borderColor,
                 width: 10.0,
               ),
             ),
@@ -65,7 +66,7 @@ class EventCard extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: Text(
-                        '${AppLocalizations.of(context)!.roomLabel} ${event.salle}',
+                        '${AppLocalizations.of(context)!.roomLabel} ${event.salle} ',
                         style: CustomTheme.text.toColorWhite),
                   ),
                 ),
