@@ -14,4 +14,5 @@ class EventModel {
   String get salle => entity.salle;
   bool get visio => entity.visio;
   bool get repas => entity.repas;
+  bool get eval => entity.eval;
 }

@@ -9,6 +9,9 @@ class EventMealCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero,
+      ),
       color: CustomTheme.primaryColor,
       child: Container(
         decoration: const BoxDecoration(

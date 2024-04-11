@@ -20,7 +20,7 @@ class CustomLayout extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: appBar,
       body: Padding(
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
         child: LayoutBuilder(
           builder: (context, constraints) {
             return Column(

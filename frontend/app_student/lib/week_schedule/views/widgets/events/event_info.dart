@@ -1,5 +1,7 @@
 import 'package:app_student/api/events/models/event_model.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../utils/custom_theme.dart';
 import 'event_card.dart';
 import 'event_empty_card.dart';
 import 'event_meal_card.dart';
@@ -19,6 +21,11 @@ class EventInfo extends StatelessWidget {
     }
     return event.repas == true
         ? const EventMealCard()
-        : EventCard(event: event);
+        : EventCard(
+            event: event,
+            cardColor: event.eval
+                ? CustomTheme.secondaryColor
+                : CustomTheme.primaryColor,
+          );
   }
 }

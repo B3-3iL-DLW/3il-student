@@ -8,6 +8,9 @@ class EventEmptyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero,
+      ),
       color: Colors.grey.shade200,
       child: Container(
         decoration: const BoxDecoration(

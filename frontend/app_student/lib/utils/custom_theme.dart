@@ -4,6 +4,8 @@ class CustomTheme {
   static const Color primaryColor = Color(0xFF005067);
   static const Color secondaryColor = Color(0xffE84E0F);
 
+  static const Color primaryColorLight = Color(0xFF007A8D);
+
   static const TextStyle title = TextStyle(fontSize: 32);
   static const TextStyle subtitle = TextStyle(fontSize: 22);
 
