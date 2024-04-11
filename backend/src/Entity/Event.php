@@ -38,6 +38,8 @@ class Event
 
     #[ORM\Column]
     private ?bool $repas = null;
+    #[ORM\Column]
+    private ?bool $eval = null;
 
     public function getId(): ?int
     {
@@ -146,4 +148,16 @@ class Event
 
         return $this;
     }
+
+    public function getEval(): ?bool
+    {
+        return $this->eval;
+    }
+
+    public function setEval(?bool $eval): void
+    {
+        $this->eval = $eval;
+    }
+
+
 }
