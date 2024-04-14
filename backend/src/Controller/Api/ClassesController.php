@@ -4,8 +4,8 @@
 
 namespace App\Controller\Api;
 
-use App\Service\ClassesScraperService;
 use App\Service\JsonService;
+use App\Service\Scrapper\ClassesScraperService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
