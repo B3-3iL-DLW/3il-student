@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Scrapper;
 
 use App\Entity\ClassGroups;
 use Symfony\Component\DomCrawler\Crawler;
