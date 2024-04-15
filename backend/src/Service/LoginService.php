@@ -36,10 +36,11 @@ class LoginService
 
         $htmlContent = $response->getBody()->getContents();
 
-        # check if user logged in
+        // check if user logged in
         if (str_contains($htmlContent, 'Voici la liste des relevés disponibles')) {
             $pattern = '/\[NoteEleveId\] => (\d+)/';
             preg_match($pattern, $htmlContent, $matches);
+
             return $matches[1] ?? false;
         }
 
