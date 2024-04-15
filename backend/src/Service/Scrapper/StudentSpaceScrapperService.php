@@ -4,6 +4,7 @@ namespace App\Service\Scrapper;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
+use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -20,10 +21,9 @@ class StudentSpaceScrapperService
     }
 
     /**
-     * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
-     * @throws ClientExceptionInterface
+     * @throws ClientExceptionInterface|GuzzleException
      */
     private function getHtmlContent(): string
     {
@@ -52,6 +52,12 @@ class StudentSpaceScrapperService
         return '';
     }
 
+    /**
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws GuzzleException
+     * @throws ClientExceptionInterface
+     */
     public function getLoginToken(): string
     {
         $htmlContent = $this->getHtmlContent();
@@ -59,13 +65,6 @@ class StudentSpaceScrapperService
         return $this->parseLoginToken($htmlContent);
     }
 
-    public function getMarksPDF(int $studentId): string
-    {
-        $client = new Client();
-        $response = $client->request('GET', 'https://eleves.groupe3il.fr/pdf/'.$studentId.'_2024_RN.pdf');
-
-        return $response->getBody()->getContents();
-    }
 
     public function getCookies(): CookieJar
     {

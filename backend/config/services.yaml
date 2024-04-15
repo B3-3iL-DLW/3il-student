@@ -4,27 +4,41 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    app.schedule_url: '%env(APP_3IL_SCHEDULE_URL)%'
+  app.schedule_url: '%env(APP_3IL_SCHEDULE_URL)%'
 services:
-    # default configuration for services in *this* file
-    _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    App\:
-        resource: '../src/'
-        exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+  App\:
+    resource: '../src/'
+    exclude:
+      - '../src/DependencyInjection/'
+      - '../src/Entity/'
+      - '../src/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
-    App\Service\Scrapper\ClassesScraperService:
-        arguments:
-            $schedule_url: '%app.schedule_url%'
-    App\Service\TimetableService:
-        arguments:
-            $schedule_url: '%app.schedule_url%'
+  # add more service definitions when explicit configuration is needed
+  # please note that last definitions always *replace* previous ones
+  App\Service\Scrapper\ClassesScraperService:
+    arguments:
+      $schedule_url: '%app.schedule_url%'
+
+  App\Service\TimetableService:
+    arguments:
+      $schedule_url: '%app.schedule_url%'
+
+  App\Service\Scrapper\StudentSpaceScrapperService:
+    arguments:
+      $url: '%env(APP_3IL_LOGIN_URL)%'
+
+  App\Service\StudentService:
+    arguments:
+      $marksSheetUrl: '%env(APP_3IL_MARKS_SHEET_URL)%'
+      $absencesSheetUrl: '%env(APP_3IL_ABSENCES_SHEET_URL)%'
+
+  App\Service\LoginService:
+    arguments:
+      $loginUrl: '%env(APP_3IL_POST_LOGIN_URL)%'
