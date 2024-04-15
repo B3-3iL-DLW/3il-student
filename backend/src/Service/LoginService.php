@@ -4,13 +4,24 @@ namespace App\Service;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
+use GuzzleHttp\Exception\GuzzleException;
 
-class StudentLoginService
+class LoginService
 {
+    private string $loginUrl;
+
+    public function __construct(string $loginUrl)
+    {
+        $this->loginUrl = $loginUrl;
+    }
+
+    /**
+     * @throws GuzzleException
+     */
     public function login(string $username, string $password, string $token, CookieJar $cookieJar): int|bool|null
     {
         $client = new Client(['cookies' => $cookieJar, 'allow_redirects' => true]);
-        $response = $client->request('POST', 'https://eleves.groupe3il.fr/index.php/component/users/?task=user.login&Itemid=435', [
+        $response = $client->request('POST', $this->loginUrl, [
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
             ],
@@ -25,6 +36,7 @@ class StudentLoginService
 
         $htmlContent = $response->getBody()->getContents();
 
+        # check if user logged in
         if (str_contains($htmlContent, 'Voici la liste des relevés disponibles')) {
             $pattern = '/\[NoteEleveId\] => (\d+)/';
             preg_match($pattern, $htmlContent, $matches);
