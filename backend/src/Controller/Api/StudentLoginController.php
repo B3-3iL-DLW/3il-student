@@ -19,7 +19,7 @@ class StudentLoginController extends AbstractController
         if (null === $username || null === $password) {
             return $this->json(['message' => 'Veuillez renseigner un nom d\'utilisateur et un mot de passe'], 400);
         }
-        $studentScrapper = new StudentSpaceScrapperService(getenv('APP_3IL_LOGIN_URL'));
+        $studentScrapper = new StudentSpaceScrapperService('https://eleves.groupe3il.fr/index.php');
         $htmlContent = $studentScrapper->getLoginToken();
         $cookieJar = $studentScrapper->getCookies();
         $studentLoginService = new StudentLoginService();
@@ -34,7 +34,7 @@ class StudentLoginController extends AbstractController
     #[Route('/api/student/marks/{studentId}', name: 'app_api_student_marks')]
     public function marksPdf(int $studentId): Response
     {
-        $studentScrapper = new StudentSpaceScrapperService(getenv('APP_3IL_LOGIN_URL'));
+        $studentScrapper = new StudentSpaceScrapperService('https://eleves.groupe3il.fr/index.php');
         $pdfContent = $studentScrapper->getMarksPDF($studentId);
         if (!$pdfContent) {
             return $this->json(['message' => 'Erreur de récupération du PDF'], 500);
