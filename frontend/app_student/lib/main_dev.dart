@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final router = GoRouter(
       routes: AppRoutes.routes,
-      initialLocation: '/login',
+      initialLocation: '/account',
       errorPageBuilder: (context, state) {
         return MaterialPage<void>(
           child: Scaffold(
