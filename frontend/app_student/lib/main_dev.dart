@@ -50,6 +50,9 @@ class MyApp extends StatelessWidget {
       title: '3iL Student App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        appBarTheme: const AppBarTheme(
+          iconTheme: IconThemeData(color: Colors.white),
+        ),
         // Orange 3IL
         focusColor: CustomTheme.secondaryColor,
         primaryColor: CustomTheme.primaryColor,

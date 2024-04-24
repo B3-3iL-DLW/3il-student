@@ -1,6 +1,9 @@
+import 'package:app_student/account/views/forms/account_link_form.dart';
+import 'package:app_student/account/views/widgets/pdf_card.dart';
+import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../menu/menu_view.dart';
 import '../../shared_components/header_logo.dart';
@@ -8,7 +11,6 @@ import '../../shared_components/header_title.dart';
 import '../../utils/custom_layout.dart';
 import '../../utils/global.dart';
 import '../account_cubit.dart';
-import 'widgets/account_dialog.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -35,68 +37,84 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AccountCubit, AccountState>(
-      builder: (context, state) {
-        print("caca");
-        print(state);
-        if (state is AccountLoading) {
-          return const CircularProgressIndicator();
-        }
-
-        if (state is AccountLoaded) {
-          return CustomLayout(
-            appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
-            body: Column(
+    return CustomLayout(
+      appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
+      body: BlocBuilder<AccountCubit, AccountState>(
+        builder: (context, state) {
+          if (state is AccountLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is AccountLoaded) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 10.0),
-                  child: HeaderTitle('coucou'),
-                ),
-                Expanded(
-                  child: PDFView(
-                    filePath: state.marksFile.path,
+                HeaderTitle(AppLocalizations.of(context)!.my3il),
+                Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    color: CustomTheme.primaryColorLight.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: const Text(
+                    'Votre espace est relié ! Vous pouvez désormais consulter vos notes et absences :).',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                Expanded(
-                  child: PDFView(
+                const SizedBox(height: 40),
+                PdfCard(
+                    filePath: state.marksFile.path, title: 'Relevé de notes'),
+                const SizedBox(height: 20),
+                PdfCard(
                     filePath: state.absencesFile.path,
-                  ),
-                ),
+                    title: "Relevé d'absences"),
               ],
-            ),
-            bottomBar: const MenuBarView(),
-          );
-        }
-
-        if (state is AccountInitial) {
-          return CustomLayout(
-            appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
-            body: Column(
+            );
+          } else if (state is AccountInitial) {
+            return Column(
               children: [
                 const Padding(
                   padding: EdgeInsets.only(left: 10.0),
-                  child: HeaderTitle('coucou'),
+                  child: HeaderTitle('My3iL'),
                 ),
+                Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    color: CustomTheme.primaryColorLight.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: const Text(
+                    'Cet espace vous permet de relier votre compte My3iL à l\'application pour consulter vos notes et absences.',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) =>
-                            AccountDialog(accountCubit: accountCubit),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              LoginFormPage(accountCubit: accountCubit),
+                        ),
                       );
                     },
                     child: const Text('Relier mon compte'),
                   ),
                 ),
               ],
-            ),
-            bottomBar: const MenuBarView(),
-          );
-        }
-
-        return const SizedBox.shrink();
-      },
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
+        },
+      ),
+      bottomBar: const MenuBarView(),
     );
   }
 }

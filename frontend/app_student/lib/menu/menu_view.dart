@@ -44,16 +44,7 @@ class MenuBarViewState extends State<MenuBarView> {
 
     switch (index) {
       case 0:
-        context.read<UserCubit>().deleteUser();
-        GoRouter.of(context).go(AppRoutes.loginPage);
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Fluttertoast.showToast(
-            msg: AppLocalizations.of(context)!.disconnectedMessage,
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.BOTTOM,
-            textColor: Colors.white,
-          );
-        });
+        GoRouter.of(context).go(AppRoutes.accountPage);
         break;
       case 1:
         GoRouter.of(context).go(AppRoutes.schedulePage);
@@ -69,10 +60,10 @@ class MenuBarViewState extends State<MenuBarView> {
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         MenuIcon(
-          iconPath: 'assets/images/disconnect.svg',
+          iconPath: 'assets/images/school.svg',
           selectedIndex: _selectedIndex,
           itemIndex: 0,
-          label: AppLocalizations.of(context)!.disconnect,
+          label: AppLocalizations.of(context)!.my3il,
         ),
         MenuIcon(
           iconPath: 'assets/images/calendar.svg',

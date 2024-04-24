@@ -3,13 +3,18 @@ import 'package:flutter/material.dart';
 
 class HeaderLogo extends StatelessWidget implements PreferredSizeWidget {
   final double appBarHeight;
+  final bool showBackButton;
 
-  const HeaderLogo({super.key, required this.appBarHeight});
+  const HeaderLogo({super.key, required this.appBarHeight, this.showBackButton = false});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: CustomTheme.primaryColor,
+      leading: showBackButton ? IconButton(
+        icon: const Icon(Icons.arrow_back, color: Colors.white),
+        onPressed: () => Navigator.of(context).pop(),
+      ) : null,
       flexibleSpace: Center(
         child: SizedBox(
           width: 200.0,

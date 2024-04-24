@@ -61,6 +61,7 @@ class UserRepository {
     await prefs.remove('name');
     await prefs.remove('birthDate');
     await prefs.remove('className');
+    await prefs.remove('studentId');
   }
 
   Future<void> clearClass() async {
