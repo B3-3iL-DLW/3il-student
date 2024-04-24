@@ -7,10 +7,18 @@ class UserInitial extends UserState {}
 
 class UserLoading extends UserState {}
 
+
+
 class UserLoaded extends UserState {
   final UserModel user;
 
   UserLoaded(this.user);
+}
+
+class UserPartialLoaded extends UserState {
+  final UserModel user;
+
+  UserPartialLoaded(this.user);
 }
 
 class UserClassesSelected extends UserState {}

@@ -1,8 +1,9 @@
 class UserEntity {
-  final String ine;
+  final String? ine;
   final String firstName;
-  final DateTime birthDate;
+  final DateTime? birthDate;
   final String? className;
+
 
   UserEntity(
       {required this.ine,

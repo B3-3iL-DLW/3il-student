@@ -85,7 +85,7 @@ class _AccountPageState extends State<AccountPage> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: const Text(
-                    'Cet espace vous permet de relier votre compte My3iL à l\'application pour consulter vos notes et absences.',
+                    'Cet espace vous permet de relier votre compte Exnet 3il à l\'application pour consulter vos notes et absences.',
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,

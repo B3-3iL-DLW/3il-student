@@ -16,7 +16,11 @@ class UserCubit extends Cubit<UserState> {
     try {
       emit(UserLoading());
       final user = await userRepository.getUser();
-      emit(UserLoaded(user));
+      if (user.ine == null && user.birthDate == null) {
+        emit(UserPartialLoaded(user));
+      } else {
+        emit(UserLoaded(user));
+      }
     } catch (e) {
       emit(UserError(e.toString()));
     }

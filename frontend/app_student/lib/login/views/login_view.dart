@@ -18,7 +18,7 @@ class LoginView extends StatelessWidget {
       body: Column(
         children: [
           HeaderTitle(title),
-          const Expanded(child: FormLogin()),
+          FormLogin(),
         ],
       ),
       bottomBar: Padding(

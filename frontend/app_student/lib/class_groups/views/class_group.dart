@@ -35,6 +35,7 @@ class ClassGroupPage extends StatelessWidget {
         appBar: const CustomAppBar(),
         body: BlocBuilder<UserCubit, UserState>(
           builder: (context, userState) {
+            print(userState);
             if (userState is UserClassesSelected) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 context.go('/schedule');
@@ -55,9 +56,7 @@ class ClassGroupPage extends StatelessWidget {
                             .classSelectionTitle(user.name)),
                         HeaderSubtitle(AppLocalizations.of(context)!
                             .classSelectionSubtitle),
-                        Expanded(
-                          child: CardList(classesList: classState.classes),
-                        ),
+                        CardList(classesList: classState.classes),
                       ],
                     );
                   } else if (classState is ClassGroupError) {

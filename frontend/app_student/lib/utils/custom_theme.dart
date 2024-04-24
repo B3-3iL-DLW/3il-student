@@ -13,6 +13,18 @@ class CustomTheme {
   static const TextStyle text = TextStyle(fontSize: 16);
   static const TextStyle textSmall = TextStyle(fontSize: 14);
   static const TextStyle textXs = TextStyle(fontSize: 12);
+
+  static ThemeData get theme {
+    return ThemeData(
+      appBarTheme: const AppBarTheme(
+        iconTheme: IconThemeData(color: Colors.white),
+      ),
+      focusColor: secondaryColor,
+      primaryColor: primaryColor,
+      secondaryHeaderColor: primaryColor,
+      fontFamily: 'Arial',
+    );
+  }
 }
 
 extension TextStyleHelpers on TextStyle {

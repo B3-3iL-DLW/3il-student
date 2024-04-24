@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final router = GoRouter(
       routes: AppRoutes.routes,
-      initialLocation: '/account',
+      initialLocation: '/login',
       errorPageBuilder: (context, state) {
         return MaterialPage<void>(
           child: Scaffold(
@@ -48,18 +48,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: '3iL Student App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        appBarTheme: const AppBarTheme(
-          iconTheme: IconThemeData(color: Colors.white),
-        ),
-        // Orange 3IL
-        focusColor: CustomTheme.secondaryColor,
-        primaryColor: CustomTheme.primaryColor,
-        // Bleu 3IL
-        secondaryHeaderColor: CustomTheme.primaryColor,
-        fontFamily: 'Arial',
-      ),
+      theme: CustomTheme.theme,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

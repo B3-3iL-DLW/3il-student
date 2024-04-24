@@ -7,39 +7,47 @@ class UserRepository {
   Future<UserModel> getUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    String? ine = prefs.getString('ine');
     String? name = prefs.getString('name');
-    String? birthDate = prefs.getString('birthDate');
     String? className = prefs.getString('className');
-    if (ine != null && name != null && birthDate != null) {
-      return UserModel(
-        entity: UserEntity(
-          ine: ine,
-          firstName: name,
-          birthDate: DateTime.parse(birthDate),
-          className: className,
-        ),
-      );
-    } else {
-      throw Exception('Utilisateur non trouvé');
+    String? ine = prefs.getString('ine');
+    String? birthDate = prefs.getString('birthDate');
+
+    if (name == null) {
+      throw Exception('User name not found');
     }
+
+    print('UserRepository.getUser: name: $name, className: $className, ine: $ine, birthDate: $birthDate');
+    return UserModel(
+      entity: UserEntity(
+        firstName: name,
+        className: className,
+        ine: ine,
+        birthDate: birthDate != null ? DateTime.parse(birthDate) : null,
+      ),
+    );
   }
 
-  Future<void> saveUserDetails(
-      String ine, String name, String birthDate, String className) async {
+  Future<void> saveUserDetails(String name, String? className,
+      {String? ine, String? birthDate}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     UserModel(
       entity: UserEntity(
-        ine: ine,
         firstName: name,
-        birthDate: DateTime.parse(birthDate),
         className: className,
+        ine: ine,
+        birthDate: birthDate != null ? DateTime.parse(birthDate) : null,
       ),
     );
-    await prefs.setString('ine', ine);
     await prefs.setString('name', name);
-    await prefs.setString('birthDate', birthDate);
-    await prefs.setString('className', className);
+    if (className != null) {
+      await prefs.setString('className', className);
+    }
+    if (ine != null) {
+      await prefs.setString('ine', ine);
+    }
+    if (birthDate != null) {
+      await prefs.setString('birthDate', birthDate);
+    }
   }
 
   Future<void> deleteUser() async {

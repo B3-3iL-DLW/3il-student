@@ -5,17 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SubmitButton extends StatelessWidget {
-  final TextEditingController ineController;
   final TextEditingController nameController;
-  final TextEditingController birthDateController;
-  final DateTime birthDate;
 
-  const SubmitButton(
-      {super.key,
-      required this.ineController,
-      required this.nameController,
-      required this.birthDateController,
-      required this.birthDate});
+  const SubmitButton({
+    super.key,
+    required this.nameController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +35,9 @@ class SubmitButton extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              final String ine = ineController.text.trim();
               final String name = nameController.text.trim();
-              final String birthDate = birthDateController.text.trim();
 
-              context.read<LoginCubit>().saveLoginDetails(ine, name, birthDate);
+              context.read<LoginCubit>().saveLoginDetails(name);
             },
             child: Text(
               AppLocalizations.of(context)!.loginButton,

@@ -11,21 +11,19 @@ class LoginCubit extends Cubit<LoginState> {
     checkUserAuthentication();
   }
 
-  Future<bool> areFieldsFilled(
-      String ine, String name, String birthDate) async {
-    if (ine.isEmpty || name.isEmpty || birthDate.isEmpty) {
+  Future<bool> areFieldsFilled(String name) async {
+    if (name.isEmpty) {
       return false;
     }
     return true;
   }
 
-  Future<void> saveLoginDetails(
-      String ine, String name, String birthDate) async {
-    if (!(await areFieldsFilled(ine, name, birthDate))) {
+  Future<void> saveLoginDetails(String name) async {
+    if (!(await areFieldsFilled(name))) {
       emit(LoginFieldError());
       return;
     }
-    await userRepository.saveUserDetails(ine, name, birthDate, '');
+    await userRepository.saveUserDetails(name, '', ine: null, birthDate: null);
     emit(RedirectToClassSelection());
   }
 
