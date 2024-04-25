@@ -4,7 +4,6 @@ class UserEntity {
   final DateTime? birthDate;
   final String? className;
 
-
   UserEntity(
       {required this.ine,
       required this.firstName,

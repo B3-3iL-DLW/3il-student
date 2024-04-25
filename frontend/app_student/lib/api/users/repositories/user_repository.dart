@@ -16,7 +16,6 @@ class UserRepository {
       throw Exception('User name not found');
     }
 
-    print('UserRepository.getUser: name: $name, className: $className, ine: $ine, birthDate: $birthDate');
     return UserModel(
       entity: UserEntity(
         firstName: name,

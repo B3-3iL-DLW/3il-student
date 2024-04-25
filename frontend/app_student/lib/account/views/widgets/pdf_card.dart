@@ -6,7 +6,7 @@ class PdfCard extends StatelessWidget {
   final String filePath;
   final String title;
 
-  const PdfCard({required this.filePath, required this.title});
+  const PdfCard({super.key, required this.filePath, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class PdfCard extends StatelessWidget {
             color: Colors.black.withOpacity(0.2),
             spreadRadius: 1,
             blurRadius: 2,
-            offset: Offset(0, 1),
+            offset: const Offset(0, 1),
           ),
         ],
       ),

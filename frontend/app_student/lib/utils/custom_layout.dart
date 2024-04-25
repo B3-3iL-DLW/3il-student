@@ -23,14 +23,27 @@ class CustomLayout extends StatelessWidget {
         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
         child: LayoutBuilder(
           builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  body,
-                  if (bottomContent != null) bottomContent!,
-                ],
-              ),
+            return Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      body,
+                      if (bottomContent != null)
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.3),
+                    ],
+                  ),
+                ),
+                if (bottomContent != null)
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: bottomContent!,
+                  ),
+              ],
             );
           },
         ),

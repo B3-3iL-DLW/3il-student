@@ -35,7 +35,6 @@ class ClassGroupPage extends StatelessWidget {
         appBar: const CustomAppBar(),
         body: BlocBuilder<UserCubit, UserState>(
           builder: (context, userState) {
-            print(userState);
             if (userState is UserClassesSelected) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 context.go('/schedule');
@@ -43,7 +42,7 @@ class ClassGroupPage extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else if (userState is UserLoading) {
               return const Center(child: CircularProgressIndicator());
-            } else if (userState is UserLoaded) {
+            } else if (userState is UserPartialLoaded) {
               final user = userState.user;
               return BlocBuilder<ClassGroupCubit, ClassGroupState>(
                 builder: (context, classState) {

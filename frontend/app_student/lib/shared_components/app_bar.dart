@@ -15,7 +15,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final userState = context.watch<UserCubit>().state;
     String className = '';
-    if (userState is UserLoaded) {
+    if (userState is UserPartialLoaded) {
       className = userState.user.className ?? '';
     }
     return AppBar(

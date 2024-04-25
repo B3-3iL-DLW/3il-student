@@ -1,11 +1,8 @@
-
 import 'dart:io';
-
 import 'package:app_student/utils/global.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:app_student/api/account/repositories/account_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'account_state.dart';
 
@@ -49,6 +46,4 @@ class AccountCubit extends Cubit<AccountState> {
       emit(AccountInitial());
     }
   }
-
-
 }
