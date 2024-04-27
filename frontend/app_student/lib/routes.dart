@@ -38,7 +38,10 @@ class AppRoutes {
                 create: (context) => ClassGroupRepository(
                     apiService:
                         ApiService(apiUrl: context.read<Config>().apiUrl))),
-            RepositoryProvider(create: (context) => UserRepository()),
+            RepositoryProvider(
+                create: (context) => UserRepository(
+                    apiService:
+                        ApiService(apiUrl: context.read<Config>().apiUrl))),
           ],
           child: MultiBlocProvider(providers: [
             BlocProvider(
@@ -61,7 +64,10 @@ class AppRoutes {
         key: state.pageKey,
         child: MultiRepositoryProvider(
           providers: [
-            RepositoryProvider(create: (context) => UserRepository()),
+            RepositoryProvider(
+                create: (context) => UserRepository(
+                    apiService:
+                        ApiService(apiUrl: context.read<Config>().apiUrl))),
           ],
           child: MultiBlocProvider(
             providers: [
@@ -89,7 +95,10 @@ class AppRoutes {
                     create: (context) => WeekScheduleRepository(
                         apiService:
                             ApiService(apiUrl: context.read<Config>().apiUrl))),
-                RepositoryProvider(create: (context) => UserRepository()),
+                RepositoryProvider(
+                    create: (context) => UserRepository(
+                        apiService:
+                            ApiService(apiUrl: context.read<Config>().apiUrl))),
               ],
               child: MultiBlocProvider(
                 providers: [
@@ -116,7 +125,10 @@ class AppRoutes {
         key: state.pageKey,
         child: MultiRepositoryProvider(
           providers: [
-            RepositoryProvider(create: (context) => UserRepository()),
+            RepositoryProvider(
+                create: (context) => UserRepository(
+                    apiService:
+                        ApiService(apiUrl: context.read<Config>().apiUrl))),
           ],
           child: MultiBlocProvider(
             providers: [

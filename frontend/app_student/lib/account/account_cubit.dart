@@ -14,6 +14,8 @@ class AccountCubit extends Cubit<AccountState> {
   Future<void> loginAndSaveId(String username, String password) async {
     emit(AccountLoading());
     try {
+      Global.setIne(username);
+      Global.setBirthDate(password);
       final studentId = await accountRepository.login(username, password);
       emit(AccountLoggedIn(studentId: studentId));
     } catch (e) {

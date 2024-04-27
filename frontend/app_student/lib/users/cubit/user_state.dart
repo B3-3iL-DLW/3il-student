@@ -13,16 +13,28 @@ class UserLoaded extends UserState {
   UserLoaded(this.user);
 }
 
-class UserPartialLoaded extends UserState {
+class UserNameLoaded extends UserState {
   final UserModel user;
 
-  UserPartialLoaded(this.user);
+  UserNameLoaded(this.user);
 }
 
 class UserClassesSelected extends UserState {}
+
+class UserWithoutClass extends UserState {
+  final UserModel user;
+
+  UserWithoutClass(this.user);
+}
 
 class UserError extends UserState {
   final String message;
 
   UserError(this.message);
+}
+
+class UserLoggedIn extends UserState {
+  final int studentId;
+
+  UserLoggedIn({required this.studentId});
 }

@@ -1,13 +1,14 @@
 import 'package:app_student/account/account_cubit.dart';
 import 'package:app_student/shared_components/header_logo.dart';
+import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:app_student/utils/custom_layout.dart';
 import 'package:app_student/utils/global.dart';
 import 'package:flutter/material.dart';
 
 class LoginFormPage extends StatelessWidget {
-  final AccountCubit accountCubit;
+  final UserCubit userCubit;
 
-  const LoginFormPage({super.key, required this.accountCubit});
+  const LoginFormPage({super.key, required this.userCubit});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class LoginFormPage extends StatelessWidget {
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
-                    accountCubit.loginAndSaveId(ine, birthDate);
+                    userCubit.loginAndSaveId(ine, birthDate);
                     Navigator.of(context).pop();
                   }
                 },

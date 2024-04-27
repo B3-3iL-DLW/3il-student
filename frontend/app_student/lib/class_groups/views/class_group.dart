@@ -42,7 +42,7 @@ class ClassGroupPage extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else if (userState is UserLoading) {
               return const Center(child: CircularProgressIndicator());
-            } else if (userState is UserPartialLoaded) {
+            } else if (userState is UserWithoutClass) {
               final user = userState.user;
               return BlocBuilder<ClassGroupCubit, ClassGroupState>(
                 builder: (context, classState) {

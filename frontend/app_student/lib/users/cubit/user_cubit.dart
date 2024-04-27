@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:app_student/api/class_groups/models/class_group_model.dart';
 import 'package:app_student/api/users/models/user_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../api/users/repositories/user_repository.dart';
+import '../../utils/global.dart';
 
 part 'user_state.dart';
 
@@ -16,10 +19,15 @@ class UserCubit extends Cubit<UserState> {
     try {
       emit(UserLoading());
       final user = await userRepository.getUser();
-      if (user.ine == null && user.birthDate == null) {
-        emit(UserPartialLoaded(user));
-      } else {
+
+      if (user.className == null || user.className!.isEmpty) {
+        emit(UserWithoutClass(user));
+      } else if (user.ine != null && user.ine!.isNotEmpty &&
+          user.birthDate != null &&
+          user.studentId != null) {
         emit(UserLoaded(user));
+      } else if (user.ine == null || (user.ine != null && user.ine!.isEmpty) || user.birthDate == null) {
+        emit(UserNameLoaded(user));
       }
     } catch (e) {
       emit(UserError(e.toString()));
@@ -41,5 +49,43 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> clearUserClass() async {
     await userRepository.clearClass();
+  }
+
+  Future<void> loginAndSaveId(String username, String password) async {
+    emit(UserLoading());
+    try {
+      Global.setIne(username);
+      Global.setBirthDate(password);
+      final studentId = await userRepository.login(username, password);
+      emit(UserLoggedIn(studentId: studentId));
+    } catch (e) {
+      emit(UserError(e.toString()));
+    }
+  }
+
+  Future<void> fetchMarks() async {
+    emit(UserLoading());
+    try {
+      final user = await userRepository.getUser();
+      if (user.studentId != null) {
+        final File marks = await userRepository.getMarks(user.studentId!);
+        final File absences = await userRepository.getAbsences(user.studentId!);
+        emit(UserLoaded(user));
+      } else {
+        throw Exception('No student ID found in SharedPreferences');
+      }
+    } catch (e) {
+      emit(UserError(e.toString()));
+    }
+  }
+
+  Future<void> checkStudentId() async {
+    int? id = await Global.studentId;
+
+    if (id != null) {
+      emit(UserLoggedIn(studentId: id));
+    } else {
+      emit(UserInitial());
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:app_student/account/views/forms/account_link_form.dart';
 import 'package:app_student/account/views/widgets/pdf_card.dart';
+import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,17 +21,17 @@ class AccountPage extends StatefulWidget {
 }
 
 class AccountPageState extends State<AccountPage> {
-  late final AccountCubit accountCubit;
+  late final UserCubit userCubit;
 
   @override
   void initState() {
     super.initState();
-    accountCubit = BlocProvider.of<AccountCubit>(context);
-    accountCubit.checkStudentId();
+    userCubit = BlocProvider.of<UserCubit>(context);
+    userCubit.checkStudentId();
 
-    accountCubit.stream.listen((state) {
+    userCubit.stream.listen((state) {
       if (state is AccountLoggedIn) {
-        accountCubit.fetchMarks();
+        userCubit.fetchMarks();
       }
     });
   }
@@ -39,11 +40,11 @@ class AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     return CustomLayout(
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
-      body: BlocBuilder<AccountCubit, AccountState>(
+      body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
-          if (state is AccountLoading) {
+          if (state is UserLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is AccountLoaded) {
+          } else if (state is UserLoaded) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -64,14 +65,14 @@ class AccountPageState extends State<AccountPage> {
                 ),
                 const SizedBox(height: 40),
                 PdfCard(
-                    filePath: state.marksFile.path, title: 'Relevé de notes'),
+                    filePath: state.user.marksFile!.path, title: 'Relevé de notes'),
                 const SizedBox(height: 20),
                 PdfCard(
-                    filePath: state.absencesFile.path,
+                    filePath: state.user.absencesFile!.path,
                     title: "Relevé d'absences"),
               ],
             );
-          } else if (state is AccountInitial) {
+          } else if (state is UserInitial) {
             return Column(
               children: [
                 const Padding(
@@ -100,7 +101,7 @@ class AccountPageState extends State<AccountPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              LoginFormPage(accountCubit: accountCubit),
+                              LoginFormPage(userCubit: userCubit),
                         ),
                       );
                     },

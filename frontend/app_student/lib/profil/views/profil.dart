@@ -25,9 +25,10 @@ class ProfilPage extends StatelessWidget {
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
+
           if (state is UserLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is UserPartialLoaded) {
+          } else if (state is UserNameLoaded) {
             final user = state.user;
             return Column(
               children: [
@@ -81,9 +82,10 @@ class ProfilPage extends StatelessWidget {
       ),
       bottomContent: CustomButton(
         text: AppLocalizations.of(context)!.disconnect,
-        onPressed: () {
-          context.read<UserCubit>().deleteUser();
-          GoRouter.of(context).go(AppRoutes.loginPage);
+        onPressed: () async {
+          final goRouter = GoRouter.of(context);
+          await context.read<UserCubit>().deleteUser();
+          goRouter.go(AppRoutes.loginPage);
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Fluttertoast.showToast(
               msg: AppLocalizations.of(context)!.disconnectedMessage,
