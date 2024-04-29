@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:app_student/account/views/widgets/pdf_view.dart';
 import 'package:app_student/utils/custom_theme.dart';
+
+import 'pdf_view.dart';
 
 class PdfCard extends StatelessWidget {
   final String filePath;

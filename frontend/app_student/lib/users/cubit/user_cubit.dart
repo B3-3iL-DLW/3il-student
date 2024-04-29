@@ -22,15 +22,20 @@ class UserCubit extends Cubit<UserState> {
 
       if (user.className == null || user.className!.isEmpty) {
         emit(UserWithoutClass(user));
-      } else if (user.ine != null && user.ine!.isNotEmpty &&
+      } else if (user.ine != null &&
+          user.ine!.isNotEmpty &&
           user.birthDate != null &&
           user.studentId != null) {
         emit(UserLoaded(user));
-      } else if (user.ine == null || (user.ine != null && user.ine!.isEmpty) || user.birthDate == null) {
+      } else if (user.ine == null ||
+          (user.ine != null && user.ine!.isEmpty) ||
+          user.birthDate == null) {
         emit(UserNameLoaded(user));
       }
     } catch (e) {
-      emit(UserError(e.toString()));
+      if (!isClosed) {
+        emit(UserError(e.toString()));
+      }
     }
   }
 
@@ -54,10 +59,12 @@ class UserCubit extends Cubit<UserState> {
   Future<void> loginAndSaveId(String username, String password) async {
     emit(UserLoading());
     try {
+      final studentId = await userRepository.login(username, password);
       Global.setIne(username);
       Global.setBirthDate(password);
-      final studentId = await userRepository.login(username, password);
-      emit(UserLoggedIn(studentId: studentId));
+      Global.setStudentId(studentId);
+      final user = await userRepository.getUser();
+      emit(UserLoggedIn(user));
     } catch (e) {
       emit(UserError(e.toString()));
     }
@@ -80,10 +87,10 @@ class UserCubit extends Cubit<UserState> {
   }
 
   Future<void> checkStudentId() async {
-    int? id = await Global.studentId;
+    final user = await getCurrentUser();
 
-    if (id != null) {
-      emit(UserLoggedIn(studentId: id));
+    if (user.studentId != null) {
+      emit(UserLoggedIn(user));
     } else {
       emit(UserInitial());
     }

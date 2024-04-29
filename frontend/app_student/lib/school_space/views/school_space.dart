@@ -1,6 +1,5 @@
-import 'package:app_student/account/views/forms/account_link_form.dart';
-import 'package:app_student/account/views/widgets/pdf_card.dart';
 import 'package:app_student/users/cubit/user_cubit.dart';
+import 'package:app_student/utils/custom_button.dart';
 import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,29 +10,23 @@ import '../../shared_components/header_logo.dart';
 import '../../shared_components/header_title.dart';
 import '../../utils/custom_layout.dart';
 import '../../utils/global.dart';
-import '../account_cubit.dart';
+import 'forms/link_account_form.dart';
+import 'widgets/pdf_card.dart';
 
-class AccountPage extends StatefulWidget {
-  const AccountPage({super.key});
+class SchoolSpacePage extends StatefulWidget {
+  const SchoolSpacePage({super.key});
 
   @override
-  AccountPageState createState() => AccountPageState();
+  SchoolSpacePageState createState() => SchoolSpacePageState();
 }
 
-class AccountPageState extends State<AccountPage> {
+class SchoolSpacePageState extends State<SchoolSpacePage> {
   late final UserCubit userCubit;
 
   @override
   void initState() {
     super.initState();
-    userCubit = BlocProvider.of<UserCubit>(context);
-    userCubit.checkStudentId();
-
-    userCubit.stream.listen((state) {
-      if (state is AccountLoggedIn) {
-        userCubit.fetchMarks();
-      }
-    });
+    userCubit = context.read<UserCubit>();
   }
 
   @override
@@ -44,7 +37,7 @@ class AccountPageState extends State<AccountPage> {
         builder: (context, state) {
           if (state is UserLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is UserLoaded) {
+          } else if (state is UserLoggedIn) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -65,7 +58,8 @@ class AccountPageState extends State<AccountPage> {
                 ),
                 const SizedBox(height: 40),
                 PdfCard(
-                    filePath: state.user.marksFile!.path, title: 'Relevé de notes'),
+                    filePath: state.user.marksFile!.path,
+                    title: 'Relevé de notes'),
                 const SizedBox(height: 20),
                 PdfCard(
                     filePath: state.user.absencesFile!.path,
@@ -93,20 +87,18 @@ class AccountPageState extends State<AccountPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              LoginFormPage(userCubit: userCubit),
-                        ),
-                      );
-                    },
-                    child: const Text('Relier mon compte'),
-                  ),
+                SizedBox(height: Global.screenHeight * 0.2),
+                CustomButton(
+                  text: 'Relier mon compte',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            LinkAccountForm(userCubit: userCubit),
+                      ),
+                    );
+                  },
                 ),
               ],
             );

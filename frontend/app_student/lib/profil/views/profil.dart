@@ -25,9 +25,8 @@ class ProfilPage extends StatelessWidget {
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
-
-          if (state is UserLoading) {
-            return const Center(child: CircularProgressIndicator());
+          if (state is UserLoading){
+            return Container();
           } else if (state is UserNameLoaded) {
             final user = state.user;
             return Column(
@@ -80,20 +79,28 @@ class ProfilPage extends StatelessWidget {
           }
         },
       ),
-      bottomContent: CustomButton(
-        text: AppLocalizations.of(context)!.disconnect,
-        onPressed: () async {
-          final goRouter = GoRouter.of(context);
-          await context.read<UserCubit>().deleteUser();
-          goRouter.go(AppRoutes.loginPage);
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Fluttertoast.showToast(
-              msg: AppLocalizations.of(context)!.disconnectedMessage,
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.BOTTOM,
-              textColor: Colors.white,
+      bottomContent: BlocBuilder<UserCubit, UserState>(
+        builder: (context, state) {
+          if (state is UserLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return CustomButton(
+              text: AppLocalizations.of(context)!.disconnect,
+              onPressed: () async {
+                final goRouter = GoRouter.of(context);
+                await context.read<UserCubit>().deleteUser();
+                goRouter.go(AppRoutes.loginPage);
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Fluttertoast.showToast(
+                    msg: AppLocalizations.of(context)!.disconnectedMessage,
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    textColor: Colors.white,
+                  );
+                });
+              },
             );
-          });
+          }
         },
       ),
       bottomBar: const MenuBarView(),

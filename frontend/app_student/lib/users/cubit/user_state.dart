@@ -34,7 +34,7 @@ class UserError extends UserState {
 }
 
 class UserLoggedIn extends UserState {
-  final int studentId;
+  final UserModel user;
 
-  UserLoggedIn({required this.studentId});
+  UserLoggedIn(this.user);
 }
