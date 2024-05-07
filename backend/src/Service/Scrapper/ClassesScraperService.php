@@ -40,7 +40,7 @@ class ClassesScraperService
 
     private function removeUslessClasses(array $classes): array
     {
-        $uselessClasses = ['TSST -', 'CPI2 Groupe 3 INT', 'CQPM -'];
+        $uselessClasses = ['TSST -', 'CPI2 Groupe 3 INT', 'CQPM -', 'CPI2 Groupe 2'];
         foreach ($classes as $key => $class) {
             if (in_array($class->getName(), $uselessClasses)) {
                 unset($classes[$key]);
