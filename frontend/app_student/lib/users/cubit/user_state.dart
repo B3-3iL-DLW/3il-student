@@ -38,3 +38,17 @@ class UserLoggedIn extends UserState {
 
   UserLoggedIn(this.user);
 }
+
+class UserMarksLoaded extends UserState {
+  final UserModel user;
+  final File marks;
+
+  UserMarksLoaded(this.user, this.marks);
+}
+
+class UserAbsencesLoaded extends UserState {
+  final UserModel user;
+  final File absences;
+
+  UserAbsencesLoaded(this.user, this.absences);
+}

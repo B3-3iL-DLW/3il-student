@@ -17,7 +17,7 @@ class UserRepository {
   Future<UserModel> getUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    String? name = prefs.getString('name');
+    String name = prefs.getString('name')!;
     String? className = prefs.getString('className');
     String? ine = prefs.getString('ine');
     String? birthDate = prefs.getString('birthDate');
@@ -29,10 +29,6 @@ class UserRepository {
     if (studentId != null) {
       marksFile = await getMarks(studentId);
       absencesFile = await getAbsences(studentId);
-    }
-
-    if (name == null) {
-      throw Exception('User name not found');
     }
 
     DateTime bd = DateTime.now();

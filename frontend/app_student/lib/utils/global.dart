@@ -14,7 +14,7 @@ class Global {
     return await SharedPreferences.getInstance();
   }
 
-  static Future<int?> get studentId async {
+  static Future<int?> get getStudentId async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getInt('studentId');
   }
@@ -24,7 +24,7 @@ class Global {
     prefs.setInt('studentId', value);
   }
 
-  static Future<String> get ine async {
+  static Future<String> get getIne async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('ine') ?? '';
   }
@@ -34,7 +34,7 @@ class Global {
     prefs.setString('ine', value);
   }
 
-  static Future<String> get birthDate async {
+  static Future<String> get getBirthdate async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('birthDate') ?? '';
   }

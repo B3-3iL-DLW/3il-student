@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../api/users/models/user_model.dart';
 import '../../menu/menu_view.dart';
 import '../../shared_components/header_logo.dart';
 import '../../shared_components/header_title.dart';
@@ -22,11 +23,13 @@ class SchoolSpacePage extends StatefulWidget {
 
 class SchoolSpacePageState extends State<SchoolSpacePage> {
   late final UserCubit userCubit;
+  late final UserModel user;
 
   @override
   void initState() {
     super.initState();
     userCubit = context.read<UserCubit>();
+    userCubit.fetchUser();
   }
 
   @override
@@ -35,6 +38,7 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
+          print(state);
           if (state is UserLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is UserLoggedIn) {

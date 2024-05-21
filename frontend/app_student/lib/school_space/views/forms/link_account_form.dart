@@ -15,9 +15,10 @@ class LinkAccountForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-    String ine = '';
-    String birthDate = '';
-    final birthDateController = TextEditingController();
+    String ine = '050223219JD';
+    String birthDate = '07/12/2002'; // Set your default birth date here
+    final birthDateController = TextEditingController(text: birthDate);
+    final ineController = TextEditingController(text: ine);
 
     return CustomLayout(
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
@@ -29,6 +30,7 @@ class LinkAccountForm extends StatelessWidget {
             child: Column(
               children: [
                 TextFormField(
+                  controller: ineController,
                   decoration: const InputDecoration(labelText: 'INE'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -41,6 +43,7 @@ class LinkAccountForm extends StatelessWidget {
                   },
                 ),
                 TextFormField(
+                  controller: birthDateController,
                   decoration: InputDecoration(
                     labelText: 'Birth Date',
                     suffixIcon: IconButton(
@@ -70,7 +73,6 @@ class LinkAccountForm extends StatelessWidget {
                   onSaved: (value) {
                     birthDate = value!;
                   },
-                  controller: birthDateController,
                 ),
               ],
             ),
@@ -87,8 +89,6 @@ class LinkAccountForm extends StatelessWidget {
           }
         },
       ),
-      // Add your bottomBar here if you have one
-      // bottomBar: YourBottomBar(),
     );
   }
 }

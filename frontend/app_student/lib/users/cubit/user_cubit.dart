@@ -4,6 +4,7 @@ import 'package:app_student/api/class_groups/models/class_group_model.dart';
 import 'package:app_student/api/users/models/user_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../api/users/repositories/user_repository.dart';
 import '../../utils/global.dart';
@@ -26,7 +27,7 @@ class UserCubit extends Cubit<UserState> {
           user.ine!.isNotEmpty &&
           user.birthDate != null &&
           user.studentId != null) {
-        emit(UserLoaded(user));
+        emit(UserLoggedIn(user));
       } else if (user.ine == null ||
           (user.ine != null && user.ine!.isEmpty) ||
           user.birthDate == null) {
@@ -60,9 +61,10 @@ class UserCubit extends Cubit<UserState> {
     emit(UserLoading());
     try {
       final studentId = await userRepository.login(username, password);
-      Global.setIne(username);
-      Global.setBirthDate(password);
-      Global.setStudentId(studentId);
+
+      await Global.setStudentId(studentId);
+      await Global.setIne(username);
+      await Global.setBirthDate(password);
       final user = await userRepository.getUser();
       emit(UserLoggedIn(user));
     } catch (e) {
@@ -79,11 +81,25 @@ class UserCubit extends Cubit<UserState> {
         if (kDebugMode) {
           print(marks.path);
         }
+        emit(UserMarksLoaded(user, marks));
+      } else {
+        throw Exception('No student ID found in SharedPreferences');
+      }
+    } catch (e) {
+      emit(UserError(e.toString()));
+    }
+  }
+
+  Future<void> fetchAbsences() async {
+    emit(UserLoading());
+    try {
+      final user = await userRepository.getUser();
+      if (user.studentId != null) {
         final File absences = await userRepository.getAbsences(user.studentId!);
         if (kDebugMode) {
           print(absences.path);
         }
-        emit(UserLoaded(user));
+        emit(UserAbsencesLoaded(user, absences));
       } else {
         throw Exception('No student ID found in SharedPreferences');
       }
