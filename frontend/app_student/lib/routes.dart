@@ -5,14 +5,14 @@ import 'package:app_student/api/users/repositories/user_repository.dart';
 import 'package:app_student/api/week_schedule/repositories/week_schedule_repository.dart';
 import 'package:app_student/class_groups/cubit/class_group_cubit.dart';
 import 'package:app_student/config/config.dart';
-import 'package:app_student/profils/views/profil.dart';
+import 'package:app_student/profil/views/profil.dart';
+import 'package:app_student/school_space/views/school_space.dart';
 import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
 import 'package:app_student/week_schedule/views/week_schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
 import 'class_groups/views/class_group.dart';
 import 'login/cubit/login_cubit.dart';
 import 'login/views/login.dart';
@@ -22,6 +22,7 @@ class AppRoutes {
   static const loginPage = '/login';
   static const schedulePage = '/schedule';
   static const profilPage = '/profil';
+  static const accountPage = '/account';
 
   static final routes = [
     GoRoute(
@@ -34,7 +35,10 @@ class AppRoutes {
                 create: (context) => ClassGroupRepository(
                     apiService:
                         ApiService(apiUrl: context.read<Config>().apiUrl))),
-            RepositoryProvider(create: (context) => UserRepository()),
+            RepositoryProvider(
+                create: (context) => UserRepository(
+                    apiService:
+                        ApiService(apiUrl: context.read<Config>().apiUrl))),
           ],
           child: MultiBlocProvider(providers: [
             BlocProvider(
@@ -57,7 +61,10 @@ class AppRoutes {
         key: state.pageKey,
         child: MultiRepositoryProvider(
           providers: [
-            RepositoryProvider(create: (context) => UserRepository()),
+            RepositoryProvider(
+                create: (context) => UserRepository(
+                    apiService:
+                        ApiService(apiUrl: context.read<Config>().apiUrl))),
           ],
           child: MultiBlocProvider(
             providers: [
@@ -85,7 +92,10 @@ class AppRoutes {
                     create: (context) => WeekScheduleRepository(
                         apiService:
                             ApiService(apiUrl: context.read<Config>().apiUrl))),
-                RepositoryProvider(create: (context) => UserRepository()),
+                RepositoryProvider(
+                    create: (context) => UserRepository(
+                        apiService:
+                            ApiService(apiUrl: context.read<Config>().apiUrl))),
               ],
               child: MultiBlocProvider(
                 providers: [
@@ -112,7 +122,10 @@ class AppRoutes {
         key: state.pageKey,
         child: MultiRepositoryProvider(
           providers: [
-            RepositoryProvider(create: (context) => UserRepository()),
+            RepositoryProvider(
+                create: (context) => UserRepository(
+                    apiService:
+                        ApiService(apiUrl: context.read<Config>().apiUrl))),
           ],
           child: MultiBlocProvider(
             providers: [
@@ -123,6 +136,29 @@ class AppRoutes {
               ),
             ],
             child: const ProfilPage(),
+          ),
+        ),
+      ),
+    ),
+    GoRoute(
+      path: accountPage,
+      pageBuilder: (context, state) => MaterialPage<void>(
+        key: state.pageKey,
+        child: MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider(
+                create: (context) => UserRepository(
+                    apiService:
+                        ApiService(apiUrl: context.read<Config>().apiUrl))),
+          ],
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) =>
+                    UserCubit(userRepository: context.read<UserRepository>()),
+              ),
+            ],
+            child: const SchoolSpacePage(),
           ),
         ),
       ),

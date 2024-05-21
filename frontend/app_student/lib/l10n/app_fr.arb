@@ -129,5 +129,9 @@
     "confirm": "Confirmer",
     "@confirm": {
         "description": "Texte du bouton pour confirmer"
+    },
+    "my3il": "My3il",
+    "@my3il": {
+        "description": "Texte du menu"
     }
 }

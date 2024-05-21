@@ -1,12 +1,8 @@
 import 'package:app_student/routes.dart';
 import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
-
-import '../users/cubit/user_cubit.dart';
 import 'menu_item.dart';
 
 class MenuBarView extends StatefulWidget {
@@ -44,16 +40,7 @@ class MenuBarViewState extends State<MenuBarView> {
 
     switch (index) {
       case 0:
-        context.read<UserCubit>().deleteUser();
-        GoRouter.of(context).go(AppRoutes.loginPage);
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Fluttertoast.showToast(
-            msg: AppLocalizations.of(context)!.disconnectedMessage,
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.BOTTOM,
-            textColor: Colors.white,
-          );
-        });
+        GoRouter.of(context).go(AppRoutes.accountPage);
         break;
       case 1:
         GoRouter.of(context).go(AppRoutes.schedulePage);
@@ -69,10 +56,10 @@ class MenuBarViewState extends State<MenuBarView> {
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         MenuIcon(
-          iconPath: 'assets/images/disconnect.svg',
+          iconPath: 'assets/images/school.svg',
           selectedIndex: _selectedIndex,
           itemIndex: 0,
-          label: AppLocalizations.of(context)!.disconnect,
+          label: AppLocalizations.of(context)!.my3il,
         ),
         MenuIcon(
           iconPath: 'assets/images/calendar.svg',

@@ -42,7 +42,7 @@ class ClassGroupPage extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else if (userState is UserLoading) {
               return const Center(child: CircularProgressIndicator());
-            } else if (userState is UserLoaded) {
+            } else if (userState is UserWithoutClass) {
               final user = userState.user;
               return BlocBuilder<ClassGroupCubit, ClassGroupState>(
                 builder: (context, classState) {
@@ -55,9 +55,7 @@ class ClassGroupPage extends StatelessWidget {
                             .classSelectionTitle(user.name)),
                         HeaderSubtitle(AppLocalizations.of(context)!
                             .classSelectionSubtitle),
-                        Expanded(
-                          child: CardList(classesList: classState.classes),
-                        ),
+                        CardList(classesList: classState.classes),
                       ],
                     );
                   } else if (classState is ClassGroupError) {

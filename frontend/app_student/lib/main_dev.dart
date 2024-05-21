@@ -48,15 +48,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: '3iL Student App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        // Orange 3IL
-        focusColor: CustomTheme.secondaryColor,
-        primaryColor: CustomTheme.primaryColor,
-        // Bleu 3IL
-        secondaryHeaderColor: CustomTheme.primaryColor,
-        fontFamily: 'Arial',
-      ),
+      theme: CustomTheme.theme,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

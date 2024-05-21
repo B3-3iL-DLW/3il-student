@@ -16,7 +16,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final userState = context.watch<UserCubit>().state;
     String className = '';
     if (userState is UserLoaded) {
-      className = userState.user.className ?? '';
+      className = (userState).user.className ?? '';
+    } else if (userState is UserNameLoaded) {
+      className = (userState).user.className ?? '';
     }
     return AppBar(
       backgroundColor: CustomTheme.primaryColor,
