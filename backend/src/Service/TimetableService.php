@@ -7,6 +7,7 @@ use App\Entity\Event;
 use App\Entity\EventHours;
 use App\Entity\WeekSchedule;
 use App\Service\Scrapper\ClassesScraperService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -16,13 +17,15 @@ class TimetableService
 {
     private ClassesScraperService $classesScraperService;
     private string $schedule_url;
+    private EntityManagerInterface $entityManager; // Correct type hint
     private XMLService $xmlService;
 
-    public function __construct(ClassesScraperService $classesScraperService, string $schedule_url, XMLService $xmlService)
+    public function __construct(ClassesScraperService $classesScraperService, string $schedule_url, XMLService $xmlService, EntityManagerInterface $entityManager)
     {
         $this->classesScraperService = $classesScraperService;
         $this->schedule_url = $schedule_url;
         $this->xmlService = $xmlService;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -85,6 +88,8 @@ class TimetableService
                 $daySchedule->setJour($weekDayNumber);
                 $daySchedule->setId(random_int(0, 1000000));
 
+                $daySchedule->setWeekSchedule($weekSchedule);
+
                 foreach ($day['CRENEAU'] as $creneau) {
                     if (isset($creneaux[$creneau['Creneau']])) {
 
@@ -108,10 +113,25 @@ class TimetableService
                         $event->setVisio(str_contains($creneau['Salles'] ?? null, 'Teams'));
                         $event->setEval(str_contains($creneau['Activite'] ?? null, ' EI') || str_contains($creneau['Activite'] ?? null, ' DS'));
                         $daySchedule->addEvent($event);
+                        // Vérifiez si l'événement existe déjà
+                        $existingEvent = $this->entityManager->getRepository(Event::class)->findOneBy([
+                            'horaire' => $event->getHoraire(),
+                            'daySchedule' => $daySchedule->getId(),
+                        ]);
+
+                        if ($existingEvent) {
+                            // Si l'événement existe déjà, fusionnez les modifications
+                            $event = $this->entityManager->merge($event);
+                        }
+
+                        $this->entityManager->persist($event);
+                        $this->entityManager->flush();
+
                     }
                 }
 
                 $weekSchedule->addDaySchedule($daySchedule);
+                // On persiste les jours de la semaine en base de données
             }
             $weeks[] = $weekSchedule;
         }

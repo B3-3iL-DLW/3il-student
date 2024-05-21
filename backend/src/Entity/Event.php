@@ -32,7 +32,7 @@ class Event
     #[ORM\Column]
     private ?bool $visio = null;
 
-    #[ORM\ManyToOne(inversedBy: 'events')]
+    #[ORM\ManyToOne(targetEntity: DaySchedule::class, cascade: ["persist"])]
     #[ORM\JoinColumn(nullable: false)]
     private ?DaySchedule $daySchedule = null;
 

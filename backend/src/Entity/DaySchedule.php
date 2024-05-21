@@ -25,7 +25,7 @@ class DaySchedule
     #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'daySchedule')]
     private Collection $events;
 
-    #[ORM\ManyToOne(inversedBy: 'DaySchedule')]
+    #[ORM\ManyToOne(inversedBy: 'DaySchedule', cascade: ["persist"])]
     #[ORM\JoinColumn(nullable: false)]
     private ?WeekSchedule $weekSchedule = null;
 
