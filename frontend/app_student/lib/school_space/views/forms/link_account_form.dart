@@ -53,7 +53,8 @@ class LinkAccountForm extends StatelessWidget {
                           lastDate: DateTime.now(),
                         );
                         if (pickedDate != null) {
-                          birthDate = DateFormat('dd/MM/yyyy').format(pickedDate);
+                          birthDate =
+                              DateFormat('dd/MM/yyyy').format(pickedDate);
                           birthDateController.text = birthDate;
                           formKey.currentState!.validate();
                         }

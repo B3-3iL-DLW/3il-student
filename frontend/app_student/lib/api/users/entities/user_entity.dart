@@ -11,10 +11,10 @@ class UserEntity {
 
   UserEntity(
       {required this.ine,
-        required this.firstName,
-        required this.birthDate,
-        this.className,
-        this.studentId,
-        this.marksFile,
-        this.absencesFile});
+      required this.firstName,
+      required this.birthDate,
+      this.className,
+      this.studentId,
+      this.marksFile,
+      this.absencesFile});
 }

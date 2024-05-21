@@ -154,8 +154,8 @@ class AppRoutes {
           child: MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => UserCubit(
-                    userRepository: context.read<UserRepository>()),
+                create: (context) =>
+                    UserCubit(userRepository: context.read<UserRepository>()),
               ),
             ],
             child: const SchoolSpacePage(),

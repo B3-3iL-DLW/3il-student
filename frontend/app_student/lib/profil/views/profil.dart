@@ -25,7 +25,7 @@ class ProfilPage extends StatelessWidget {
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
-          if (state is UserLoading){
+          if (state is UserLoading) {
             return Container();
           } else if (state is UserNameLoaded) {
             final user = state.user;
