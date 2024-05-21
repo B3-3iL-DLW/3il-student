@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../shared_components/header_logo.dart';
 import '../../shared_components/header_title.dart';
 import '../../utils/global.dart';
-import 'widgets/form/button_submit.dart';
+import 'widgets/form/submit_button.dart';
 import 'widgets/form/inputs/input_prenom.dart';
 
 class LoginView extends StatelessWidget {
