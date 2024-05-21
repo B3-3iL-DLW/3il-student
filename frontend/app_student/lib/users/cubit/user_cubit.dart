@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:app_student/api/class_groups/models/class_group_model.dart';
 import 'package:app_student/api/users/models/user_model.dart';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../api/users/repositories/user_repository.dart';
 import '../../utils/global.dart';
@@ -76,7 +76,13 @@ class UserCubit extends Cubit<UserState> {
       final user = await userRepository.getUser();
       if (user.studentId != null) {
         final File marks = await userRepository.getMarks(user.studentId!);
+        if (kDebugMode) {
+          print(marks.path);
+        }
         final File absences = await userRepository.getAbsences(user.studentId!);
+        if (kDebugMode) {
+          print(absences.path);
+        }
         emit(UserLoaded(user));
       } else {
         throw Exception('No student ID found in SharedPreferences');
