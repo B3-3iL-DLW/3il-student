@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:app_student/api/day_schedule/models/day_schedule_model.dart';
 import 'package:app_student/api/users/models/user_model.dart';
 import 'package:app_student/api/week_schedule/models/week_schedule_model.dart';
@@ -42,6 +45,21 @@ class WeekScheduleCubit extends Cubit<WeekScheduleState> {
         return;
       }
       emit(WeekScheduleLoaded(weekSchedule, todayIndex, allEvents, user));
+    } on HttpException catch (he) {
+      if (isClosed) {
+        return;
+      }
+      emit(WeekScheduleError(he.message));
+    } on SocketException catch (se) {
+      if (isClosed) {
+        return;
+      }
+      emit(WeekScheduleError(se.message));
+    } on FormatException catch (fe) {
+      if (isClosed) {
+        return;
+      }
+      emit(WeekScheduleError(fe.message));
     } catch (e) {
       if (isClosed) {
         return;

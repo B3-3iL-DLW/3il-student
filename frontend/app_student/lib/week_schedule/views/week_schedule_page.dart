@@ -6,6 +6,7 @@ import 'package:app_student/week_schedule/views/widgets/datepicker_button.dart';
 import 'package:app_student/week_schedule/views/widgets/day_schedule_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../api/users/repositories/user_repository.dart';
 import '../../menu/menu_view.dart';
@@ -67,6 +68,15 @@ class WeekSchedulePage extends StatelessWidget {
                   ),
                 );
               } else if (state is WeekScheduleError) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Fluttertoast.showToast(
+                    msg: state.message,
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    textColor: Colors.white,
+                  );
+                  print(state.message);
+                });
                 return const NetworkError();
               } else {
                 return const SizedBox.shrink();

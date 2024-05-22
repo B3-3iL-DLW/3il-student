@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -29,12 +30,18 @@ class ApiService {
           }
         }).toList();
       } else {
-        throw Exception('ERROR ${response.statusCode} Failed to load data');
+        throw Exception('ERROR ${response.statusCode} Echec du chargement des données');
       }
-    } on TimeoutException catch (e) {
-      throw Exception('Request time out: $e');
+    } on TimeoutException catch (te) {
+      throw TimeoutException('Request timed out: $te');
+    } on SocketException catch (_) {
+      rethrow;
+    } on FormatException catch (_) {
+      rethrow;
+    } on HttpException catch (_) {
+      rethrow;
     } catch (e) {
-      throw Exception('Failed to load data: $e');
+      throw Exception(e.toString());
     }
   }
 }

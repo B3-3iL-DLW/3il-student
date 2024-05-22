@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:app_student/routes.dart';
 import 'package:app_student/utils/custom_theme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -14,6 +17,11 @@ import 'utils/global.dart';
 
 void main() async {
   await dotenv.load();
+
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    if (kReleaseMode) exit(1);
+  };
 
   initializeDateFormatting('fr_FR', null).then((_) {
     runApp(

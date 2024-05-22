@@ -5,6 +5,7 @@ import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../api/users/repositories/user_repository.dart';
@@ -59,6 +60,15 @@ class ClassGroupPage extends StatelessWidget {
                       ],
                     );
                   } else if (classState is ClassGroupError) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Fluttertoast.showToast(
+                        msg: classState.message,
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.BOTTOM,
+                        textColor: Colors.white,
+                      );
+                      print(classState.message);
+                    });
                     return const NetworkError();
                   } else {
                     return const Center(child: CircularProgressIndicator());
