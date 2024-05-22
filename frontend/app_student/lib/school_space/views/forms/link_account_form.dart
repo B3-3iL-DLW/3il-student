@@ -5,12 +5,11 @@ import 'package:app_student/utils/custom_button.dart';
 import 'package:app_student/utils/custom_layout.dart';
 import 'package:app_student/utils/global.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class LinkAccountForm extends StatelessWidget {
-  final UserCubit userCubit;
-
-  const LinkAccountForm({super.key, required this.userCubit});
+  const LinkAccountForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +83,7 @@ class LinkAccountForm extends StatelessWidget {
         onPressed: () {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
-            userCubit.loginAndSaveId(ine, birthDate);
+            context.read<UserCubit>().loginAndSaveId(ine, birthDate);
             Navigator.of(context).pop();
           }
         },

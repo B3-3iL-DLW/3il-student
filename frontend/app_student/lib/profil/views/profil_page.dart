@@ -25,7 +25,9 @@ class ProfilPage extends StatelessWidget {
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
+          print('profil state: $state');
           if (state is UserLoading) {
+            print('coucou');
             return Container();
           } else if (state is UserNameLoaded) {
             final user = state.user;
@@ -35,12 +37,12 @@ class ProfilPage extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 10.0),
                   child: HeaderTitle(
                     AppLocalizations.of(context)!
-                        .profilMessageTitle(user.firstName),
+                        .profilMessageTitle(user.firstName!),
                   ),
                 ),
                 UserClassCard(
                   className: user.className!,
-                  firstName: user.firstName,
+                  firstName: user.firstName!,
                   onTap: () {
                     context.read<UserCubit>().clearUserClass();
                     GoRouter.of(context).go(AppRoutes.classListPage);
@@ -48,7 +50,7 @@ class ProfilPage extends StatelessWidget {
                 ),
               ],
             );
-          } else if (state is UserLoaded) {
+          } else if (state is UserLoggedIn) {
             final user = state.user;
 
             final birthDateString =
@@ -60,12 +62,12 @@ class ProfilPage extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 10.0),
                   child: HeaderTitle(
                     AppLocalizations.of(context)!
-                        .profilMessageTitle(user.firstName),
+                        .profilMessageTitle(user.firstName!),
                   ),
                 ),
                 UserClassCard(
                   className: user.className!,
-                  firstName: user.firstName,
+                  firstName: user.firstName!,
                   onTap: () {
                     context.read<UserCubit>().clearUserClass();
                     GoRouter.of(context).go(AppRoutes.classListPage);
@@ -82,7 +84,8 @@ class ProfilPage extends StatelessWidget {
       bottomContent: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
           if (state is UserLoading) {
-            return const Center(child: CircularProgressIndicator());
+            // return const Center(child: CircularProgressIndicator());
+            return const Text('Loading');
           } else {
             return CustomButton(
               text: AppLocalizations.of(context)!.disconnect,

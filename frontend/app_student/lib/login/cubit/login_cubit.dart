@@ -2,6 +2,9 @@ import 'package:app_student/api/users/repositories/user_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
+import '../../api/users/entities/user_entity.dart';
+import '../../api/users/models/user_model.dart';
+
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
@@ -23,7 +26,19 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginFieldError());
       return;
     }
-    await userRepository.saveUserDetails(name, '', ine: null, birthDate: null);
+
+    UserModel user = UserModel(
+      entity: UserEntity(
+        firstName: name,
+        className: '',
+        ine: null,
+        birthDate: null,
+        studentId: null,
+        documents: null,
+      ),
+    );
+
+    await userRepository.saveUserDetails(user);
     emit(RedirectToClassSelection());
   }
 

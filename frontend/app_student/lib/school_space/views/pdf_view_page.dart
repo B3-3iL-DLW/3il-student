@@ -21,7 +21,9 @@ class PdfViewPage extends StatelessWidget {
           ),
         ],
       ),
-      body: PDFView(filePath: filePath),
+      body: Expanded(
+        child: PDFView(filePath: filePath),
+      ),
     );
   }
 }

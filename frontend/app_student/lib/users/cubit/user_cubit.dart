@@ -1,10 +1,8 @@
-import 'dart:io';
 
 import 'package:app_student/api/class_groups/models/class_group_model.dart';
 import 'package:app_student/api/users/models/user_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../api/users/repositories/user_repository.dart';
 import '../../utils/global.dart';
@@ -19,21 +17,26 @@ class UserCubit extends Cubit<UserState> {
   Future<void> fetchUser() async {
     try {
       emit(UserLoading());
+      print('fetchUser');
       final user = await userRepository.getUser();
+      print('fetchUser completed');
 
-      if (user.className == null || user.className!.isEmpty) {
+      // print all user data to console
+      print(user.toString());
+
+      //user avec className et firstname uniquement et tout le reste vide ou null
+      if (user.firstName != null && user.className != null) {
+        emit(UserWihtoutLink(user));
+      } else if (user.className == null || user.className!.isEmpty) {
         emit(UserWithoutClass(user));
       } else if (user.ine != null &&
           user.ine!.isNotEmpty &&
           user.birthDate != null &&
           user.studentId != null) {
         emit(UserLoggedIn(user));
-      } else if (user.ine == null ||
-          (user.ine != null && user.ine!.isEmpty) ||
-          user.birthDate == null) {
-        emit(UserNameLoaded(user));
       }
     } catch (e) {
+      print('fetchUser failed: $e');
       if (!isClosed) {
         emit(UserError(e.toString()));
       }
@@ -45,7 +48,11 @@ class UserCubit extends Cubit<UserState> {
   }
 
   Future<void> saveUserClass(ClassGroupModel classGroup) async {
-    await userRepository.saveUserClass(classGroup.name.toString());
+    UserModel user = await userRepository.getUser();
+    user.entity.className = classGroup.name;
+
+    await userRepository.saveUserDetails(user);
+
     emit(UserClassesSelected());
   }
 
@@ -59,51 +66,15 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> loginAndSaveId(String username, String password) async {
     emit(UserLoading());
+    print('loginAndSaveId started');
     try {
-      final studentId = await userRepository.login(username, password);
+      final user = await userRepository.login(username, password);
+      print('loginAndSaveId completed');
+      await Global.setUser(user);
 
-      await Global.setStudentId(studentId);
-      await Global.setIne(username);
-      await Global.setBirthDate(password);
-      final user = await userRepository.getUser();
       emit(UserLoggedIn(user));
     } catch (e) {
-      emit(UserError(e.toString()));
-    }
-  }
-
-  Future<void> fetchMarks() async {
-    emit(UserLoading());
-    try {
-      final user = await userRepository.getUser();
-      if (user.studentId != null) {
-        final File marks = await userRepository.getMarks(user.studentId!);
-        if (kDebugMode) {
-          print(marks.path);
-        }
-        emit(UserMarksLoaded(user, marks));
-      } else {
-        throw Exception('No student ID found in SharedPreferences');
-      }
-    } catch (e) {
-      emit(UserError(e.toString()));
-    }
-  }
-
-  Future<void> fetchAbsences() async {
-    emit(UserLoading());
-    try {
-      final user = await userRepository.getUser();
-      if (user.studentId != null) {
-        final File absences = await userRepository.getAbsences(user.studentId!);
-        if (kDebugMode) {
-          print(absences.path);
-        }
-        emit(UserAbsencesLoaded(user, absences));
-      } else {
-        throw Exception('No student ID found in SharedPreferences');
-      }
-    } catch (e) {
+      print('loginAndSaveId failed: $e');
       emit(UserError(e.toString()));
     }
   }

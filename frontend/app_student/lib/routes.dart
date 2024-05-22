@@ -6,6 +6,7 @@ import 'package:app_student/api/week_schedule/repositories/week_schedule_reposit
 import 'package:app_student/class_groups/cubit/class_group_cubit.dart';
 import 'package:app_student/config/config.dart';
 import 'package:app_student/profil/views/profil_page.dart';
+import 'package:app_student/school_space/views/forms/link_account_form.dart';
 import 'package:app_student/school_space/views/school_space_page.dart';
 import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
@@ -22,7 +23,8 @@ class AppRoutes {
   static const loginPage = '/login';
   static const schedulePage = '/schedule';
   static const profilPage = '/profil';
-  static const accountPage = '/account';
+  static const school_space = '/school_space';
+  static const linkAccountFormPage = '/linkAccountForm';
 
   static final routes = [
     GoRoute(
@@ -35,21 +37,12 @@ class AppRoutes {
                 create: (context) => ClassGroupRepository(
                     apiService:
                         ApiService(apiUrl: context.read<Config>().apiUrl))),
-            RepositoryProvider(
-                create: (context) => UserRepository(
-                    apiService:
-                        ApiService(apiUrl: context.read<Config>().apiUrl))),
           ],
           child: MultiBlocProvider(providers: [
             BlocProvider(
               create: (context) => ClassGroupCubit(
                 classRepository: context.read<ClassGroupRepository>(),
               )..fetchClasses(),
-            ),
-            BlocProvider(
-              create: (context) =>
-                  UserCubit(userRepository: context.read<UserRepository>())
-                    ..fetchUser(),
             ),
           ], child: const ClassGroupPage()),
         ),
@@ -59,108 +52,63 @@ class AppRoutes {
       path: loginPage,
       pageBuilder: (context, state) => MaterialPage<void>(
         key: state.pageKey,
-        child: MultiRepositoryProvider(
+        child: MultiBlocProvider(
           providers: [
-            RepositoryProvider(
-                create: (context) => UserRepository(
-                    apiService:
-                        ApiService(apiUrl: context.read<Config>().apiUrl))),
+            BlocProvider(
+              create: (context) => LoginCubit(context.read<UserRepository>()),
+            ),
           ],
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => LoginCubit(context.read<UserRepository>()),
-              ),
-              BlocProvider(
-                create: (context) =>
-                    UserCubit(userRepository: context.read<UserRepository>())
-                      ..fetchUser(),
-              ),
-            ],
-            child: const LoginPage(),
-          ),
+          child: const LoginPage(),
         ),
       ),
     ),
     GoRoute(
-        path: schedulePage,
-        pageBuilder: (context, state) => MaterialPage<void>(
-            key: state.pageKey,
-            child: MultiRepositoryProvider(
-              providers: [
-                RepositoryProvider(
-                    create: (context) => WeekScheduleRepository(
-                        apiService:
-                            ApiService(apiUrl: context.read<Config>().apiUrl))),
-                RepositoryProvider(
-                    create: (context) => UserRepository(
-                        apiService:
-                            ApiService(apiUrl: context.read<Config>().apiUrl))),
-              ],
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider(
-                    create: (context) => WeekScheduleCubit(
-                        weekScheduleRepository: WeekScheduleRepository(
-                            apiService: ApiService(
-                                apiUrl: context.read<Config>().apiUrl)),
-                        initialDate: DateTime.now(),
-                        userCubit: context.read<UserCubit>()),
-                  ),
-                  BlocProvider(
-                    create: (context) => UserCubit(
-                        userRepository: context.read<UserRepository>())
-                      ..fetchUser(),
-                  ),
-                ],
-                child: const WeekSchedulePage(),
+      path: schedulePage,
+      pageBuilder: (context, state) => MaterialPage<void>(
+        key: state.pageKey,
+        child: MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider(
+              create: (context) => WeekScheduleRepository(
+                apiService: ApiService(apiUrl: context.read<Config>().apiUrl),
               ),
-            ))),
+            ),
+          ],
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => WeekScheduleCubit(
+                  weekScheduleRepository:
+                      context.read<WeekScheduleRepository>(),
+                  userCubit: context.read<UserCubit>(),
+                  initialDate: DateTime.now(),
+                )..fetchUserAndSchedule(),
+              ),
+            ],
+            child: const WeekSchedulePage(),
+          ),
+        ),
+      ),
+    ),
     GoRoute(
       path: profilPage,
       pageBuilder: (context, state) => MaterialPage<void>(
         key: state.pageKey,
-        child: MultiRepositoryProvider(
-          providers: [
-            RepositoryProvider(
-                create: (context) => UserRepository(
-                    apiService:
-                        ApiService(apiUrl: context.read<Config>().apiUrl))),
-          ],
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) =>
-                    UserCubit(userRepository: context.read<UserRepository>())
-                      ..fetchUser(),
-              ),
-            ],
-            child: const ProfilPage(),
-          ),
-        ),
+        child: const ProfilPage(),
       ),
     ),
     GoRoute(
-      path: accountPage,
+      path: school_space,
       pageBuilder: (context, state) => MaterialPage<void>(
         key: state.pageKey,
-        child: MultiRepositoryProvider(
-          providers: [
-            RepositoryProvider(
-                create: (context) => UserRepository(
-                    apiService:
-                        ApiService(apiUrl: context.read<Config>().apiUrl))),
-          ],
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) =>
-                    UserCubit(userRepository: context.read<UserRepository>()),
-              ),
-            ],
-            child: const SchoolSpacePage(),
-          ),
-        ),
+        child: const SchoolSpacePage(),
+      ),
+    ),
+    GoRoute(
+      path: linkAccountFormPage, // Use the new constant here
+      pageBuilder: (context, state) => MaterialPage<void>(
+        key: state.pageKey,
+        child: const LinkAccountForm(), // Use the LinkAccountForm here
       ),
     ),
   ];
