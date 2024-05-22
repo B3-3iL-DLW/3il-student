@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
@@ -40,6 +41,9 @@ class Event
     private ?bool $repas = null;
     #[ORM\Column]
     private ?bool $eval = null;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private ?\DateTimeInterface $event_date = null;
 
     public function getId(): ?int
     {
@@ -157,6 +161,18 @@ class Event
     public function setEval(?bool $eval): void
     {
         $this->eval = $eval;
+    }
+
+    public function getEventDate(): ?\DateTimeInterface
+    {
+        return $this->event_date;
+    }
+
+    public function setEventDate(\DateTimeInterface $event_date): static
+    {
+        $this->event_date = $event_date;
+
+        return $this;
     }
 
 

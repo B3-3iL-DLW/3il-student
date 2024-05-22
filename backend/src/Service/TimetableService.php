@@ -85,7 +85,7 @@ class TimetableService
                 }
 
                 $daySchedule = new DaySchedule();
-                $daySchedule->setDate(\DateTime::createFromFormat('d/m/Y', $day['Date']));
+                $daySchedule->setDate(\DateTime::createFromFormat('d/m/Y', $day['Date'])->setTime(0, 0));
                 $daySchedule->setJour($weekDayNumber);
                 $daySchedule->setId(random_int(0, 1000000));
 
@@ -104,6 +104,7 @@ class TimetableService
                         $eventHours->setId(random_int(0, 1000000));
                         $event = new Event();
                         $event->setCreneau($creneau['Creneau']);
+                        $event->setEventDate(\DateTimeImmutable::createFromFormat('d/m/Y', $day['Date'])->setTime(0, 0));
                         $event->setActivite($creneau['Activite'] ?? 'Pas cours');
                         $event->setId($creneau['Id'] ?? 0);
                         $event->setCouleur($creneau['Couleur'] ?? '#000000');
@@ -113,10 +114,10 @@ class TimetableService
                         $event->setVisio(str_contains($creneau['Salles'] ?? null, 'Teams'));
                         $event->setEval(str_contains($creneau['Activite'] ?? null, ' EI') || str_contains($creneau['Activite'] ?? null, ' DS'));
                         $daySchedule->addEvent($event);
-                        // Vérifiez si l'événement existe déjà
+                        // Vérifiez si l'événement existe déjà avec son creneau et sa date du jour
                         $existingEvent = $this->entityManager->getRepository(Event::class)->findOneBy([
-                            'horaire' => $event->getHoraire(),
-                            'daySchedule' => $daySchedule->getId(),
+                            'creneau' => $creneau['Creneau'],
+                            'event_date' => \DateTimeImmutable::createFromFormat('d/m/Y', $day['Date'])->setTime(0, 0),
                         ]);
 
                         if ($existingEvent) {
@@ -124,16 +125,24 @@ class TimetableService
                             if ($existingEvent->getActivite() !== $event->getActivite()
                                 || $existingEvent->getCouleur() !== $event->getCouleur()
                                 || $existingEvent->getSalle() !== $event->getSalle()
-                                || $existingEvent->getRepas() !== $event->getRepas()
-                                || $existingEvent->getVisio() !== $event->getVisio()
+                                || $existingEvent->isRepas() !== $event->isRepas()
+                                || $existingEvent->isVisio() !== $event->isVisio()
                                 || $existingEvent->getEval() !== $event->getEval()) {
+                                // On le met à jour avec les nouvelles valeurs
+                                $existingEvent->setActivite($event->getActivite());
+                                $existingEvent->setCouleur($event->getCouleur());
+                                $existingEvent->setSalle($event->getSalle());
+                                $existingEvent->setRepas($event->isRepas());
+                                $existingEvent->setVisio($event->isVisio());
+                                $existingEvent->setEval($event->getEval());
+                                $this->entityManager->persist($existingEvent);
                                 $changes = true;
                             }
-                            $event = $this->entityManager->merge($event);
+                        } else {
+                            $this->entityManager->persist($event);
+                            $this->entityManager->flush();
                         }
 
-                        $this->entityManager->persist($event);
-                        $this->entityManager->flush();
                     }
                 }
 
@@ -142,6 +151,7 @@ class TimetableService
             }
             $weeks[] = $weekSchedule;
         }
+        $this->entityManager->flush();
 
         return ['weeks' => $weeks, 'changes' => $changes];
     }

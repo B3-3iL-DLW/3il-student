@@ -1,6 +1,7 @@
 import 'package:app_student/routes.dart';
 import 'package:app_student/utils/custom_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -14,6 +15,13 @@ import 'config/prod_config.dart';
 import 'firebase_options.dart';
 import 'utils/global.dart';
 
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -22,6 +30,8 @@ void main() async {
   );
 
   await dotenv.load();
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   initializeDateFormatting('fr_FR', null).then((_) {
     runApp(

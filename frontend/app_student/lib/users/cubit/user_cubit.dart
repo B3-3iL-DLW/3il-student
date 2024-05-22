@@ -46,8 +46,8 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> saveUserClass(ClassGroupModel classGroup) async {
     await userRepository.saveUserClass(classGroup.name.toString());
-    await FirebaseMessaging.instance.subscribeToTopic(
-        classGroup.name.toString().replaceAll(' ', '').toLowerCase());
+    await FirebaseMessaging.instance
+        .subscribeToTopic(classGroup.name.toString().replaceAll(' ', ''));
     emit(UserClassesSelected());
   }
 
@@ -55,8 +55,8 @@ class UserCubit extends Cubit<UserState> {
     // On se désabonne de tous les topics
     final user = await userRepository.getUser();
     if (user.className != null) {
-      await FirebaseMessaging.instance.unsubscribeFromTopic(
-          user.className.toString().replaceAll(' ', '').toLowerCase());
+      await FirebaseMessaging.instance
+          .unsubscribeFromTopic(user.className.toString().replaceAll(' ', ''));
     }
     await userRepository.delete();
   }

@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Service\FirebaseService;
 use App\Service\Scrapper\ClassesScraperService;
 use App\Service\TimetableService;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -15,12 +16,14 @@ class CheckCourseChangesCommand extends Command
     private TimetableService $timetableService;
     private ClassesScraperService $classesScraperService;
     private string $schedule_url;
+    private FirebaseService $firebaseService;
 
-    public function __construct(TimetableService $timetableService, ClassesScraperService $classesScraperService, string $schedule_url)
+    public function __construct(TimetableService $timetableService, ClassesScraperService $classesScraperService, string $schedule_url, FirebaseService $firebaseService)
     {
         $this->timetableService = $timetableService;
         $this->classesScraperService = $classesScraperService;
         $this->schedule_url = $schedule_url;
+        $this->firebaseService = $firebaseService;
 
         parent::__construct();
     }
@@ -35,26 +38,28 @@ class CheckCourseChangesCommand extends Command
         $classes = $this->classesScraperService->scrapeClasses();
 
         foreach ($classes as $class) {
-
             $encodedClassFile = str_replace(' ', '%20', $class->getFile());
 
             $data = $this->timetableService->fetchAndParseData($this->schedule_url.$encodedClassFile);
-            $currentData = $data['weeks'];
             $changes = $data['changes'];
 
             if ($changes) {
-                $this->sendFirebaseNotification($changes);
+                $this->sendFirebaseNotification($changes, $class, $output);
                 $output->writeln('Changes detected pour la classe '.$class->getName());
             } else {
                 $output->writeln('No changes detected pour la classe '.$class->getName());
             }
+            // On attends 1 seconde pour éviter de spammer le serveur
+            sleep(1);
         }
 
         return Command::SUCCESS;
     }
 
-    private function sendFirebaseNotification($changes)
+    private function sendFirebaseNotification($changes, $class, $outpout): void
     {
-        // Implement this method to send a Firebase notification
+        $class = str_replace(' ', '', $class->getName());
+        $outpout->writeln('Sending notification to '.$class);
+        $this->firebaseService->sendNotification('Changement d\'emploi du temps', 'Il y a eu des changements dans votre emploi du temps', $class);
     }
 }
