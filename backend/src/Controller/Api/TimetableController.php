@@ -43,7 +43,7 @@ class TimetableController extends AbstractController
         $xmlUrl = $this->timetableService->getXmlFile($classParam);
 
         if ($xmlUrl) {
-            $timetable = $this->timetableService->fetchAndParseData($xmlUrl);
+            $timetable = $this->timetableService->fetchAndParseData($xmlUrl)['weeks'];
             $jsonTimeTable = $this->jsonService->EntityToJson($timetable);
 
             return new Response($jsonTimeTable, Response::HTTP_OK, ['Content-Type' => 'application/json']);

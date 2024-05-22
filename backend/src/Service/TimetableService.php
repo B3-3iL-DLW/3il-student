@@ -17,7 +17,7 @@ class TimetableService
 {
     private ClassesScraperService $classesScraperService;
     private string $schedule_url;
-    private EntityManagerInterface $entityManager; // Correct type hint
+    private EntityManagerInterface $entityManager;
     private XMLService $xmlService;
 
     public function __construct(ClassesScraperService $classesScraperService, string $schedule_url, XMLService $xmlService, EntityManagerInterface $entityManager)
@@ -70,6 +70,7 @@ class TimetableService
         $creneaux = $this->defineCreneaux();
         $weeks = [];
 
+        $changes = false;
 
         foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $week) {
             $weekSchedule = new WeekSchedule();
@@ -92,7 +93,6 @@ class TimetableService
 
                 foreach ($day['CRENEAU'] as $creneau) {
                     if (isset($creneaux[$creneau['Creneau']])) {
-
                         // Verification si la salle est un array vide car le XML de 3il est nul
                         if (is_array($creneau['Salles'] ?? '')) {
                             $creneau['Salles'] = '';
@@ -121,12 +121,19 @@ class TimetableService
 
                         if ($existingEvent) {
                             // Si l'événement existe déjà, fusionnez les modifications
+                            if ($existingEvent->getActivite() !== $event->getActivite()
+                                || $existingEvent->getCouleur() !== $event->getCouleur()
+                                || $existingEvent->getSalle() !== $event->getSalle()
+                                || $existingEvent->getRepas() !== $event->getRepas()
+                                || $existingEvent->getVisio() !== $event->getVisio()
+                                || $existingEvent->getEval() !== $event->getEval()) {
+                                $changes = true;
+                            }
                             $event = $this->entityManager->merge($event);
                         }
 
                         $this->entityManager->persist($event);
                         $this->entityManager->flush();
-
                     }
                 }
 
@@ -136,7 +143,7 @@ class TimetableService
             $weeks[] = $weekSchedule;
         }
 
-        return $weeks;
+        return ['weeks' => $weeks, 'changes' => $changes];
     }
 
     /**
