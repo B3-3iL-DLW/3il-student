@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: '3iL Student App',
+      title: 'my3iL',
       theme: CustomTheme.theme,
       localizationsDelegates: const [
         AppLocalizations.delegate,

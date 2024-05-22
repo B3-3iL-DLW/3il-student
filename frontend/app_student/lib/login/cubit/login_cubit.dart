@@ -1,5 +1,6 @@
 import 'package:app_student/api/users/repositories/user_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:meta/meta.dart';
 
 part 'login_state.dart';
@@ -23,6 +24,19 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginFieldError());
       return;
     }
+    final notificationSettings = await FirebaseMessaging.instance
+        .requestPermission(
+            provisional: true,
+            sound: true,
+            badge: true,
+            alert: true,
+            announcement: false);
+
+    if (notificationSettings.authorizationStatus ==
+        AuthorizationStatus.authorized) {
+      await FirebaseMessaging.instance.getToken();
+    }
+
     await userRepository.saveUserDetails(name, '', ine: null, birthDate: null);
     emit(RedirectToClassSelection());
   }

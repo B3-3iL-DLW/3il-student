@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app_student/api/class_groups/models/class_group_model.dart';
 import 'package:app_student/api/users/models/user_model.dart';
 import 'package:bloc/bloc.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../api/users/repositories/user_repository.dart';
@@ -45,10 +46,18 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> saveUserClass(ClassGroupModel classGroup) async {
     await userRepository.saveUserClass(classGroup.name.toString());
+    await FirebaseMessaging.instance.subscribeToTopic(
+        classGroup.name.toString().replaceAll(' ', '').toLowerCase());
     emit(UserClassesSelected());
   }
 
   Future<void> deleteUser() async {
+    // On se désabonne de tous les topics
+    final user = await userRepository.getUser();
+    if (user.className != null) {
+      await FirebaseMessaging.instance.unsubscribeFromTopic(
+          user.className.toString().replaceAll(' ', '').toLowerCase());
+    }
     await userRepository.delete();
   }
 

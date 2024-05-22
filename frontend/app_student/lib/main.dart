@@ -1,5 +1,6 @@
 import 'package:app_student/routes.dart';
 import 'package:app_student/utils/custom_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -10,9 +11,16 @@ import 'package:provider/provider.dart';
 
 import 'config/config.dart';
 import 'config/prod_config.dart';
+import 'firebase_options.dart';
 import 'utils/global.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   await dotenv.load();
 
   initializeDateFormatting('fr_FR', null).then((_) {
