@@ -7,6 +7,8 @@ use App\Entity\Event;
 use App\Entity\EventHours;
 use App\Entity\WeekSchedule;
 use App\Service\Scrapper\ClassesScraperService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpKernel\Log\Logger;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -16,13 +18,15 @@ class TimetableService
 {
     private ClassesScraperService $classesScraperService;
     private string $schedule_url;
+    private EntityManagerInterface $entityManager;
     private XMLService $xmlService;
 
-    public function __construct(ClassesScraperService $classesScraperService, string $schedule_url, XMLService $xmlService)
+    public function __construct(ClassesScraperService $classesScraperService, string $schedule_url, XMLService $xmlService, EntityManagerInterface $entityManager)
     {
         $this->classesScraperService = $classesScraperService;
         $this->schedule_url = $schedule_url;
         $this->xmlService = $xmlService;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -67,6 +71,7 @@ class TimetableService
         $creneaux = $this->defineCreneaux();
         $weeks = [];
 
+        $changes = false;
 
         foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $week) {
             $weekSchedule = new WeekSchedule();
@@ -81,13 +86,14 @@ class TimetableService
                 }
 
                 $daySchedule = new DaySchedule();
-                $daySchedule->setDate(\DateTime::createFromFormat('d/m/Y', $day['Date']));
+                $daySchedule->setDate(\DateTime::createFromFormat('d/m/Y', $day['Date'])->setTime(0, 0));
                 $daySchedule->setJour($weekDayNumber);
                 $daySchedule->setId(random_int(0, 1000000));
 
+                $daySchedule->setWeekSchedule($weekSchedule);
+
                 foreach ($day['CRENEAU'] as $creneau) {
                     if (isset($creneaux[$creneau['Creneau']])) {
-
                         // Verification si la salle est un array vide car le XML de 3il est nul
                         if (is_array($creneau['Salles'] ?? '')) {
                             $creneau['Salles'] = '';
@@ -99,6 +105,8 @@ class TimetableService
                         $eventHours->setId(random_int(0, 1000000));
                         $event = new Event();
                         $event->setCreneau($creneau['Creneau']);
+                        $event->setClass($parsedData['GROUPE']['Lib']);
+                        $event->setEventDate(\DateTimeImmutable::createFromFormat('d/m/Y', $day['Date'])->setTime(0, 0));
                         $event->setActivite($creneau['Activite'] ?? 'Pas cours');
                         $event->setId($creneau['Id'] ?? 0);
                         $event->setCouleur($creneau['Couleur'] ?? '#000000');
@@ -108,15 +116,60 @@ class TimetableService
                         $event->setVisio(str_contains($creneau['Salles'] ?? null, 'Teams'));
                         $event->setEval(str_contains($creneau['Activite'] ?? null, ' EI') || str_contains($creneau['Activite'] ?? null, ' DS'));
                         $daySchedule->addEvent($event);
+                        // Vérifiez si l'événement existe déjà avec son creneau et sa date du jour
+                        $existingEvent = $this->entityManager->getRepository(Event::class)->findOneBy([
+                            'creneau' => $creneau['Creneau'],
+                            'event_date' => \DateTimeImmutable::createFromFormat('d/m/Y', $day['Date'])->setTime(0, 0),
+                            'class' => $parsedData['GROUPE']['Lib'],
+                        ]);
+
+                        if ($existingEvent) {
+                            // Si l'événement existe déjà, fusionnez les modifications
+                            if ($existingEvent->getActivite() !== $event->getActivite()
+                                || $existingEvent->getCouleur() !== $event->getCouleur()
+                                || $existingEvent->getSalle() !== $event->getSalle()
+                                || $existingEvent->isRepas() !== $event->isRepas()
+                                || $existingEvent->isVisio() !== $event->isVisio()
+                                || $existingEvent->getEval() !== $event->getEval()) {
+
+
+                                (new Logger())->info('Existing event: '.$existingEvent->getActivite());
+                                (new Logger())->info('New event: '.$event->getActivite());
+                                (new Logger())->info('Existing event: '.$existingEvent->getCouleur());
+                                (new Logger())->info('New event: '.$event->getCouleur());
+                                (new Logger())->info('Existing event: '.$existingEvent->getSalle());
+                                (new Logger())->info('New event: '.$event->getSalle());
+                                (new Logger())->info('Existing event: '.$existingEvent->isRepas());
+                                (new Logger())->info('New event: '.$event->isRepas());
+                                (new Logger())->info('Existing event: '.$existingEvent->isVisio());
+                                (new Logger())->info('New event: '.$event->isVisio());
+                                (new Logger())->info('Existing event: '.$existingEvent->getEval());
+                                (new Logger())->info('New event: '.$event->getEval());
+
+                                $existingEvent->setActivite($event->getActivite());
+                                $existingEvent->setCouleur($event->getCouleur());
+                                $existingEvent->setSalle($event->getSalle());
+                                $existingEvent->setRepas($event->isRepas());
+                                $existingEvent->setVisio($event->isVisio());
+                                $existingEvent->setEval($event->getEval());
+                                $this->entityManager->persist($existingEvent);
+                                $changes = true;
+                            }
+                        } else {
+                            $this->entityManager->persist($event);
+                            $this->entityManager->flush();
+                        }
                     }
                 }
 
                 $weekSchedule->addDaySchedule($daySchedule);
+                // On persiste les jours de la semaine en base de données
             }
             $weeks[] = $weekSchedule;
         }
+        $this->entityManager->flush();
 
-        return $weeks;
+        return ['weeks' => $weeks, 'changes' => $changes];
     }
 
     /**

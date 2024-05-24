@@ -30,6 +30,10 @@ services:
     arguments:
       $schedule_url: '%app.schedule_url%'
 
+  App\Command\CheckCourseChangesCommand:
+    arguments:
+      $schedule_url: '%app.schedule_url%'
+
   App\Service\Scrapper\StudentSpaceScrapperService:
     arguments:
       $url: '%env(APP_3IL_LOGIN_URL)%'

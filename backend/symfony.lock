@@ -38,6 +38,9 @@
             "./.php-cs-fixer.dist.php"
         ]
     },
+    "kreait/firebase-bundle": {
+        "version": "5.2.0"
+    },
     "symfony/apache-pack": {
         "version": "1.0",
         "recipe": {
