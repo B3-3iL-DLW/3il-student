@@ -8,6 +8,7 @@ use App\Entity\EventHours;
 use App\Entity\WeekSchedule;
 use App\Service\Scrapper\ClassesScraperService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpKernel\Log\Logger;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -104,6 +105,7 @@ class TimetableService
                         $eventHours->setId(random_int(0, 1000000));
                         $event = new Event();
                         $event->setCreneau($creneau['Creneau']);
+                        $event->setClass($parsedData['GROUPE']['Lib']);
                         $event->setEventDate(\DateTimeImmutable::createFromFormat('d/m/Y', $day['Date'])->setTime(0, 0));
                         $event->setActivite($creneau['Activite'] ?? 'Pas cours');
                         $event->setId($creneau['Id'] ?? 0);
@@ -118,6 +120,7 @@ class TimetableService
                         $existingEvent = $this->entityManager->getRepository(Event::class)->findOneBy([
                             'creneau' => $creneau['Creneau'],
                             'event_date' => \DateTimeImmutable::createFromFormat('d/m/Y', $day['Date'])->setTime(0, 0),
+                            'class' => $parsedData['GROUPE']['Lib'],
                         ]);
 
                         if ($existingEvent) {
@@ -128,7 +131,21 @@ class TimetableService
                                 || $existingEvent->isRepas() !== $event->isRepas()
                                 || $existingEvent->isVisio() !== $event->isVisio()
                                 || $existingEvent->getEval() !== $event->getEval()) {
-                                // On le met à jour avec les nouvelles valeurs
+
+
+                                (new Logger())->info('Existing event: '.$existingEvent->getActivite());
+                                (new Logger())->info('New event: '.$event->getActivite());
+                                (new Logger())->info('Existing event: '.$existingEvent->getCouleur());
+                                (new Logger())->info('New event: '.$event->getCouleur());
+                                (new Logger())->info('Existing event: '.$existingEvent->getSalle());
+                                (new Logger())->info('New event: '.$event->getSalle());
+                                (new Logger())->info('Existing event: '.$existingEvent->isRepas());
+                                (new Logger())->info('New event: '.$event->isRepas());
+                                (new Logger())->info('Existing event: '.$existingEvent->isVisio());
+                                (new Logger())->info('New event: '.$event->isVisio());
+                                (new Logger())->info('Existing event: '.$existingEvent->getEval());
+                                (new Logger())->info('New event: '.$event->getEval());
+
                                 $existingEvent->setActivite($event->getActivite());
                                 $existingEvent->setCouleur($event->getCouleur());
                                 $existingEvent->setSalle($event->getSalle());
@@ -142,7 +159,6 @@ class TimetableService
                             $this->entityManager->persist($event);
                             $this->entityManager->flush();
                         }
-
                     }
                 }
 

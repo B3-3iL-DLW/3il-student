@@ -45,6 +45,9 @@ class Event
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeInterface $event_date = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $class = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -171,6 +174,18 @@ class Event
     public function setEventDate(\DateTimeInterface $event_date): static
     {
         $this->event_date = $event_date;
+
+        return $this;
+    }
+
+    public function getClass(): ?string
+    {
+        return $this->class;
+    }
+
+    public function setClass(string $class): static
+    {
+        $this->class = $class;
 
         return $this;
     }
