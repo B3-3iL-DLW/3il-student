@@ -47,9 +47,6 @@ class TimetableController extends AbstractController
             $timetable = $this->timetableService->fetchAndParseData($xmlUrl)['weeks'];
             $jsonTimeTable = $this->jsonService->EntityToJson($timetable);
 
-            // Envoie une notif de test
-            $firebase->sendNotification('Test', 'Test', 'B3GroupeDLW-FA');
-
             return new Response($jsonTimeTable, Response::HTTP_OK, ['Content-Type' => 'application/json']);
         } else {
             return $this->json(['error' => 'Invalid XML url'], Response::HTTP_BAD_REQUEST);
