@@ -44,9 +44,36 @@ class UserModel {
             : UserEntity(),
       );
 
-  // fait un tostring de user custom genre User : {firstName: 'toto', birthDate: '2022-01-01', className: '3A', ine: '123456789
   @override
   String toString() {
     return 'User : {firstName: $firstName, birthDate: $birthDate, className: $className, ine: $ine, studentId: $studentId, documents: $documents}';
+  }
+
+  bool get isEmpty {
+    return firstName == null || firstName!.isEmpty;
+  }
+
+  bool get hasFirstName {
+    return firstName != null && firstName!.isNotEmpty;
+  }
+
+  bool get hasBirthDate {
+    return birthDate != null;
+  }
+
+  bool get hasClassName {
+    return className != null && className!.isNotEmpty;
+  }
+
+  bool get hasIne {
+    return ine != null && ine!.isNotEmpty;
+  }
+
+  bool get hasStudentId {
+    return studentId != null;
+  }
+
+  bool get hasDocuments {
+    return documents != null && documents!.isNotEmpty;
   }
 }

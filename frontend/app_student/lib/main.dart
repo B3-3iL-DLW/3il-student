@@ -13,6 +13,7 @@ import 'api/api_service.dart';
 import 'api/users/repositories/user_repository.dart';
 import 'config/config.dart';
 import 'config/prod_config.dart';
+import 'login/cubit/login_cubit.dart';
 import 'utils/global.dart';
 
 void main() async {
@@ -35,7 +36,7 @@ void main() async {
           providers: [
             BlocProvider<UserCubit>(
                 create: (context) => UserCubit(
-                      userRepository: context.read<UserRepository>(),
+                      userRepository: context.read<UserRepository>(), loginCubit: context.read<LoginCubit>(),
                     )..fetchUser()),
           ],
           child: const MyApp(),

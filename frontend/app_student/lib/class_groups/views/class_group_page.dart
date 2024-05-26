@@ -21,8 +21,21 @@ class ClassGroupPage extends StatelessWidget {
       appBar: const CustomAppBar(),
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, userState) {
+          print("quoi");
           print(userState);
-          if (userState is UserClassesSelected) {
+          if (userState is UserInitial) {
+            return const Center(child: CircularProgressIndicator());
+          } else
+          if (userState is UserError) {
+            print(userState.message);
+            return const NetworkError();
+          } else if (userState is UserLoggedIn) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.go('/school_space');
+            });
+            return const Center(child: CircularProgressIndicator());
+          } else
+          if (userState is UserWihtoutLink) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               context.go('/schedule');
             });

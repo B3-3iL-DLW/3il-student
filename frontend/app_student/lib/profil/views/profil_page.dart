@@ -1,3 +1,4 @@
+import 'package:app_student/login/cubit/login_cubit.dart';
 import 'package:app_student/menu/menu_view.dart';
 import 'package:app_student/profil/views/widgets/user_class_card.dart';
 import 'package:app_student/routes.dart';
@@ -29,7 +30,7 @@ class ProfilPage extends StatelessWidget {
           if (state is UserLoading) {
             print('coucou');
             return Container();
-          } else if (state is UserNameLoaded) {
+          } else if (state is UserWihtoutLink) {
             final user = state.user;
             return Column(
               children: [
@@ -54,7 +55,7 @@ class ProfilPage extends StatelessWidget {
             final user = state.user;
 
             final birthDateString =
-                DateFormat('dd/MM/yyyy').format(user.birthDate!);
+                DateFormat('dd/MM/yyyy').format(user.birthDate ?? DateTime.now());
 
             return Column(
               children: [
@@ -91,7 +92,7 @@ class ProfilPage extends StatelessWidget {
               text: AppLocalizations.of(context)!.disconnect,
               onPressed: () async {
                 final goRouter = GoRouter.of(context);
-                await context.read<UserCubit>().deleteUser();
+                await context.read<UserCubit>().logout();
                 goRouter.go(AppRoutes.loginPage);
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   Fluttertoast.showToast(

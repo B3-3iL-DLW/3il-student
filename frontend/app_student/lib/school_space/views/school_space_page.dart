@@ -26,6 +26,7 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
+          print("cc");
           print(state);
           if (state is UserLoading) {
             print(state);

@@ -36,7 +36,7 @@ class AppRoutes {
             RepositoryProvider(
                 create: (context) => ClassGroupRepository(
                     apiService:
-                        ApiService(apiUrl: context.read<Config>().apiUrl))),
+                    ApiService(apiUrl: context.read<Config>().apiUrl))),
           ],
           child: MultiBlocProvider(providers: [
             BlocProvider(
@@ -47,6 +47,13 @@ class AppRoutes {
           ], child: const ClassGroupPage()),
         ),
       ),
+      redirect: (context, state) {
+        final loginCubit = context.read<LoginCubit>();
+        if (loginCubit.state is RedirectToClassSelection) {
+          return classListPage;
+        }
+        return null;
+      },
     ),
     GoRoute(
       path: loginPage,
@@ -55,7 +62,7 @@ class AppRoutes {
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => LoginCubit(context.read<UserRepository>()),
+              create: (context) => LoginCubit(context.read<UserRepository>(), context.read<UserCubit>()),
             ),
           ],
           child: const LoginPage(),
@@ -79,7 +86,7 @@ class AppRoutes {
               BlocProvider(
                 create: (context) => WeekScheduleCubit(
                   weekScheduleRepository:
-                      context.read<WeekScheduleRepository>(),
+                  context.read<WeekScheduleRepository>(),
                   userCubit: context.read<UserCubit>(),
                   initialDate: DateTime.now(),
                 )..fetchUserAndSchedule(),
@@ -89,6 +96,13 @@ class AppRoutes {
           ),
         ),
       ),
+      redirect: (context, state) {
+        final loginCubit = context.read<LoginCubit>();
+        if (loginCubit.state is LoginAuthenticated) {
+          return schedulePage;
+        }
+        return null;
+      },
     ),
     GoRoute(
       path: profilPage,

@@ -9,21 +9,8 @@ class PdfViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomLayout(
-      appBar: AppBar(
-        title: const Text('PDF View'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.download),
-            onPressed: () {
-              // Implement your download functionality here
-            },
-          ),
-        ],
-      ),
-      body: Expanded(
-        child: PDFView(filePath: filePath),
-      ),
+    return Scaffold(
+        body: PDFView(filePath: filePath),
     );
   }
 }

@@ -1,18 +1,20 @@
-
 import 'package:app_student/api/class_groups/models/class_group_model.dart';
 import 'package:app_student/api/users/models/user_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../api/users/repositories/user_repository.dart';
+import '../../login/cubit/login_cubit.dart';
 import '../../utils/global.dart';
 
 part 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
   final UserRepository userRepository;
+  final LoginCubit loginCubit;
 
-  UserCubit({required this.userRepository}) : super(UserInitial());
+  UserCubit({required this.userRepository, required this.loginCubit})
+      : super(UserInitial());
 
   Future<void> fetchUser() async {
     try {
@@ -24,21 +26,26 @@ class UserCubit extends Cubit<UserState> {
       // print all user data to console
       print(user.toString());
 
-      //user avec className et firstname uniquement et tout le reste vide ou null
-      if (user.firstName != null && user.className != null) {
-        emit(UserWihtoutLink(user));
-      } else if (user.className == null || user.className!.isEmpty) {
-        emit(UserWithoutClass(user));
-      } else if (user.ine != null &&
-          user.ine!.isNotEmpty &&
-          user.birthDate != null &&
-          user.studentId != null) {
-        emit(UserLoggedIn(user));
+      if (user.isEmpty) {
+        print(user.toString());
+        emit(UserInitial());
+      } else if (user.hasFirstName) {
+        if (user.hasClassName == false) {
+          emit(UserWithoutClass(user));
+        } else if (user.hasIne && user.hasBirthDate && user.hasStudentId) {
+          emit(UserLoggedIn(user));
+        } else {
+          emit(UserWihtoutLink(user));
+        }
       }
     } catch (e) {
       print('fetchUser failed: $e');
       if (!isClosed) {
-        emit(UserError(e.toString()));
+        if (e.toString() == 'Exception: No user found in cache') {
+          emit(UserInitial());
+        } else {
+          emit(UserError(e.toString()));
+        }
       }
     }
   }
@@ -53,11 +60,16 @@ class UserCubit extends Cubit<UserState> {
 
     await userRepository.saveUserDetails(user);
 
-    emit(UserClassesSelected());
+    emit(UserWihtoutLink(user));
   }
 
   Future<void> deleteUser() async {
     await userRepository.delete();
+  }
+
+  Future<void> logout() async {
+    await deleteUser();
+    await loginCubit.logout();
   }
 
   Future<void> clearUserClass() async {

@@ -17,6 +17,8 @@ class UserRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userJson = jsonEncode(user.toJson());
     await prefs.setString('user', userJson);
+    print('User saved in cache');
+    print(userJson);
 
   }
 
@@ -71,20 +73,25 @@ class UserRepository {
       final marksDocument = DocumentEntity(title: 'Marks', file: marksFile!);
       print(marksDocument);
       final absencesDocument =
-          DocumentEntity(title: 'Absences', file: absencesFile!);
+      DocumentEntity(title: 'Absences', file: absencesFile!);
 
-      final user = UserModel(
-        entity: UserEntity(
-          firstName: data['firstName'] ?? '',
-          ine: data['ine'] ?? '',
-          birthDate: data['birthDate'] != null
-              ? DateTime.parse(data['birthDate'])
-              : null,
-          className: data['className'] ?? '',
-          studentId: studentId ?? '',
-          documents: [marksDocument, absencesDocument],
-        ),
-      );
+      // Get the current user from the cache
+      UserModel user;
+      try {
+        user = await getUser();
+      } catch (e) {
+        user = UserModel(entity: UserEntity());
+      }
+
+      // Update the user data
+      user.entity.firstName = data['firstName'];
+      user.entity.ine = data['ine'];
+      user.entity.birthDate = data['birthDate'] != null
+          ? DateTime.parse(data['birthDate'])
+          : null;
+      user.entity.className = data['className'] ?? '';
+      user.entity.studentId = studentId ?? '';
+      user.entity.documents = [marksDocument, absencesDocument];
 
       // Save the user details in the cache
       await saveUserDetails(user);

@@ -4,13 +4,15 @@ import 'package:meta/meta.dart';
 
 import '../../api/users/entities/user_entity.dart';
 import '../../api/users/models/user_model.dart';
+import '../../users/cubit/user_cubit.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   final UserRepository userRepository;
+  final UserCubit userCubit;
 
-  LoginCubit(this.userRepository) : super(LoginInitial()) {
+  LoginCubit(this.userRepository, this.userCubit) : super(LoginInitial()) {
     checkUserAuthentication();
   }
 
@@ -30,7 +32,7 @@ class LoginCubit extends Cubit<LoginState> {
     UserModel user = UserModel(
       entity: UserEntity(
         firstName: name,
-        className: '',
+        className: null,
         ine: null,
         birthDate: null,
         studentId: null,
@@ -40,13 +42,15 @@ class LoginCubit extends Cubit<LoginState> {
 
     await userRepository.saveUserDetails(user);
     emit(RedirectToClassSelection());
+    userCubit.emit(UserWithoutClass(user));
   }
 
   Future<bool> checkUserAuthentication() async {
     try {
+      print('checkUserAuthentication');
       var user = await userRepository.getUser();
-      // Si la classe est vide
-      if (user.className == '') {
+      print(user.toString());
+      if (user.hasClassName == false || user.isEmpty) {
         emit(LoginInitial());
         return false;
       }
@@ -56,5 +60,10 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginInitial());
       return false;
     }
+  }
+
+  Future<void> logout() async {
+    await userCubit.logout();
+    emit(LoginInitial());
   }
 }
