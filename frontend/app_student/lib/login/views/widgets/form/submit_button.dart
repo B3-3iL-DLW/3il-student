@@ -22,7 +22,9 @@ class SubmitButton extends StatelessWidget {
       onPressed: () async {
         final String name = nameController.text.trim();
         await context.read<LoginCubit>().saveLoginDetails(name);
-        await context.read<UserCubit>().fetchUser();
+        if (context.mounted) {
+          await context.read<UserCubit>().fetchUser();
+        }
       },
       backgroundColor: CustomTheme.secondaryColor,
       textColor: Colors.white,

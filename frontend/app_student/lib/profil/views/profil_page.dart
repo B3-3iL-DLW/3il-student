@@ -89,8 +89,13 @@ class ProfilPage extends StatelessWidget {
               text: AppLocalizations.of(context)!.disconnect,
               onPressed: () async {
                 await context.read<UserCubit>().logout();
-                await context.read<LoginCubit>().logout();
-                context.pushReplacement(AppRoutes.loginPage);
+                if (context.mounted) {
+                  await context.read<LoginCubit>().logout();
+                }
+                if (context.mounted) {
+                  context.pushReplacement(AppRoutes.loginPage);
+                }
+
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   Fluttertoast.showToast(
                     msg: AppLocalizations.of(context)!.disconnectedMessage,
