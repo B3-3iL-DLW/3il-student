@@ -42,9 +42,11 @@ class ProfilPage extends StatelessWidget {
                 UserClassCard(
                   className: user.className!,
                   firstName: user.firstName!,
-                  onTap: () {
+                  onTap: () async {
                     context.read<UserCubit>().clearUserClass();
-                    GoRouter.of(context).go(AppRoutes.classListPage);
+                    if (context.mounted) {
+                      context.pushReplacement('/classList');
+                    }
                   },
                 ),
               ],
@@ -82,8 +84,7 @@ class ProfilPage extends StatelessWidget {
       bottomContent: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
           if (state is UserLoading) {
-            // return const Center(child: CircularProgressIndicator());
-            return const Text('Loading');
+            return const Center(child: CircularProgressIndicator());
           } else {
             return CustomButton(
               text: AppLocalizations.of(context)!.disconnect,

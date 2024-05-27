@@ -54,8 +54,8 @@ void main() async {
           providers: [
             BlocProvider<UserCubit>(
               create: (context) =>
-              UserCubit(userRepository: context.read<UserRepository>())
-                ..fetchUser(),
+                  UserCubit(userRepository: context.read<UserRepository>())
+                    ..fetchUser(),
             ),
             BlocProvider<LoginCubit>(
               create: (context) =>

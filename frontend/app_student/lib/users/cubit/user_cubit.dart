@@ -64,8 +64,7 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> clearUserClass() async {
     await userRepository.clearClass();
-    final user = await userRepository.getUser();
-    emit(UserWithoutClass(user));
+    emit(UserWithoutClass(await userRepository.getUser()));
   }
 
   Future<void> loginAndSaveId(String username, String password) async {
@@ -77,16 +76,6 @@ class UserCubit extends Cubit<UserState> {
       emit(UserLoggedIn(user));
     } catch (e) {
       emit(UserError(e.toString()));
-    }
-  }
-
-  Future<void> checkStudentId() async {
-    final user = await getCurrentUser();
-
-    if (user.studentId != null) {
-      emit(UserLoggedIn(user));
-    } else {
-      emit(UserInitial());
     }
   }
 }
