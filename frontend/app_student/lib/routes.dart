@@ -23,7 +23,7 @@ class AppRoutes {
   static const loginPage = '/login';
   static const schedulePage = '/schedule';
   static const profilPage = '/profil';
-  static const school_space = '/school_space';
+  static const schoolSpace = '/school_space';
   static const linkAccountFormPage = '/linkAccountForm';
 
   static final routes = [
@@ -36,7 +36,7 @@ class AppRoutes {
             RepositoryProvider(
                 create: (context) => ClassGroupRepository(
                     apiService:
-                    ApiService(apiUrl: context.read<Config>().apiUrl))),
+                        ApiService(apiUrl: context.read<Config>().apiUrl))),
           ],
           child: MultiBlocProvider(providers: [
             BlocProvider(
@@ -47,22 +47,34 @@ class AppRoutes {
           ], child: const ClassGroupPage()),
         ),
       ),
-      redirect: (context, state) {
-        final loginCubit = context.read<LoginCubit>();
-        if (loginCubit.state is RedirectToClassSelection) {
-          return classListPage;
-        }
-        return null;
-      },
+      // redirect: (context, state) {
+      //   final loginCubit = context.read<LoginCubit>();
+      //   if (loginCubit.state is RedirectToClassSelection) {
+      //     return classListPage;
+      //   }
+      //   return null;
+      // },
     ),
     GoRoute(
+      redirect: (BuildContext context, GoRouterState state) {
+        final loginCubit = context.read<LoginCubit>();
+        final userCubit = context.read<UserCubit>();
+        if (loginCubit.state is LoginAuthenticated) {
+          if (userCubit.state is UserWithoutClass) {
+            return classListPage;
+          }
+          return schedulePage;
+        }
+        return loginPage;
+      },
       path: loginPage,
       pageBuilder: (context, state) => MaterialPage<void>(
         key: state.pageKey,
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => LoginCubit(context.read<UserRepository>(), context.read<UserCubit>()),
+              create: (context) =>
+                  LoginCubit(userRepository: context.read<UserRepository>()),
             ),
           ],
           child: const LoginPage(),
@@ -86,7 +98,7 @@ class AppRoutes {
               BlocProvider(
                 create: (context) => WeekScheduleCubit(
                   weekScheduleRepository:
-                  context.read<WeekScheduleRepository>(),
+                      context.read<WeekScheduleRepository>(),
                   userCubit: context.read<UserCubit>(),
                   initialDate: DateTime.now(),
                 )..fetchUserAndSchedule(),
@@ -96,13 +108,13 @@ class AppRoutes {
           ),
         ),
       ),
-      redirect: (context, state) {
-        final loginCubit = context.read<LoginCubit>();
-        if (loginCubit.state is LoginAuthenticated) {
-          return schedulePage;
-        }
-        return null;
-      },
+      // redirect: (context, state) {
+      //   final loginCubit = context.read<LoginCubit>();
+      //   if (loginCubit.state is LoginAuthenticated) {
+      //     return schedulePage;
+      //   }
+      //   return null;
+      // },
     ),
     GoRoute(
       path: profilPage,
@@ -112,7 +124,7 @@ class AppRoutes {
       ),
     ),
     GoRoute(
-      path: school_space,
+      path: schoolSpace,
       pageBuilder: (context, state) => MaterialPage<void>(
         key: state.pageKey,
         child: const SchoolSpacePage(),

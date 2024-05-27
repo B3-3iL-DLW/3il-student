@@ -46,7 +46,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'User : {firstName: $firstName, birthDate: $birthDate, className: $className, ine: $ine, studentId: $studentId, documents: $documents}';
+    return 'User : {firstName: $firstName, birthDate: $birthDate, className: $className, ine: $ine, studentId: $studentId, documents: ${documents?.map((doc) => doc.toString()).join(', ')}}';
   }
 
   bool get isEmpty {

@@ -34,14 +34,14 @@ void main() async {
         ],
         child: MultiBlocProvider(
           providers: [
-            BlocProvider<LoginCubit>(
-              create: (context) => LoginCubit(
-                  context.read<UserRepository>(), context.read<UserCubit>()),
-            ),
             BlocProvider<UserCubit>(
-              create: (context) => UserCubit(
-                userRepository: context.read<UserRepository>(), loginCubit: context.read<LoginCubit>(),
-              )..fetchUser(),
+              create: (context) =>
+                  UserCubit(userRepository: context.read<UserRepository>())
+                    ..fetchUser(),
+            ),
+            BlocProvider<LoginCubit>(
+              create: (context) =>
+                  LoginCubit(userRepository: context.read<UserRepository>()),
             ),
           ],
           child: const MyApp(),

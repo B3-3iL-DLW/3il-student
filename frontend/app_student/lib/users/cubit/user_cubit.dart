@@ -4,30 +4,21 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../api/users/repositories/user_repository.dart';
-import '../../login/cubit/login_cubit.dart';
 import '../../utils/global.dart';
 
 part 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
   final UserRepository userRepository;
-  final LoginCubit loginCubit;
 
-  UserCubit({required this.userRepository, required this.loginCubit})
-      : super(UserInitial());
+  UserCubit({required this.userRepository}) : super(UserInitial());
 
   Future<void> fetchUser() async {
     try {
       emit(UserLoading());
-      print('fetchUser');
       final user = await userRepository.getUser();
-      print('fetchUser completed');
-
-      // print all user data to console
-      print(user.toString());
 
       if (user.isEmpty) {
-        print(user.toString());
         emit(UserInitial());
       } else if (user.hasFirstName) {
         if (user.hasClassName == false) {
@@ -39,7 +30,6 @@ class UserCubit extends Cubit<UserState> {
         }
       }
     } catch (e) {
-      print('fetchUser failed: $e');
       if (!isClosed) {
         if (e.toString() == 'Exception: No user found in cache') {
           emit(UserInitial());
@@ -69,24 +59,23 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> logout() async {
     await deleteUser();
-    await loginCubit.logout();
+    emit(UserInitial());
   }
 
   Future<void> clearUserClass() async {
     await userRepository.clearClass();
+    final user = await userRepository.getUser();
+    emit(UserWithoutClass(user));
   }
 
   Future<void> loginAndSaveId(String username, String password) async {
     emit(UserLoading());
-    print('loginAndSaveId started');
     try {
       final user = await userRepository.login(username, password);
-      print('loginAndSaveId completed');
       await Global.setUser(user);
 
       emit(UserLoggedIn(user));
     } catch (e) {
-      print('loginAndSaveId failed: $e');
       emit(UserError(e.toString()));
     }
   }

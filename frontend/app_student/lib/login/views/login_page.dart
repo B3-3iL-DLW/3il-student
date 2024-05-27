@@ -15,7 +15,6 @@ class LoginPage extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {},
       builder: (context, state) {
-        print('login state: $state');
         return BlocBuilder<UserCubit, UserState>(
           builder: (context, userState) {
             if (state is RedirectToClassSelection) {

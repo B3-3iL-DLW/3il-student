@@ -7,7 +7,6 @@ class UserInitial extends UserState {}
 
 class UserLoading extends UserState {}
 
-
 class UserLoaded extends UserState {
   final UserModel user;
 
@@ -46,4 +45,4 @@ class UserWihtoutLink extends UserState {
   UserWihtoutLink(this.user);
 }
 
-
+class UserLoggedOut extends UserState {}

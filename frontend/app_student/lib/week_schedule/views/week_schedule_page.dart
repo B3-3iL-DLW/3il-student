@@ -48,7 +48,6 @@ class WeekSchedulePage extends StatelessWidget {
               ),
             );
           } else if (state is WeekScheduleError) {
-            print(state.message);
             return const NetworkError();
           } else {
             return const SizedBox.shrink();

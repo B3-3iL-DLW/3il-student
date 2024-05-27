@@ -22,4 +22,9 @@ class DocumentModel {
       file: file,
     );
   }
+
+  @override
+  String toString() {
+    return 'DocumentModel: {title: $title, file: ${file?.path}}';
+  }
 }

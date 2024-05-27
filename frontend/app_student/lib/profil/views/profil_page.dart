@@ -26,9 +26,7 @@ class ProfilPage extends StatelessWidget {
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
-          print('profil state: $state');
           if (state is UserLoading) {
-            print('coucou');
             return Container();
           } else if (state is UserWihtoutLink) {
             final user = state.user;
@@ -55,7 +53,7 @@ class ProfilPage extends StatelessWidget {
             final user = state.user;
 
             final birthDateString =
-                DateFormat('dd/MM/yyyy').format(user.birthDate ?? DateTime.now());
+                DateFormat('dd/MM/yyyy').format(user.birthDate!);
 
             return Column(
               children: [
@@ -71,7 +69,6 @@ class ProfilPage extends StatelessWidget {
                   firstName: user.firstName!,
                   onTap: () {
                     context.read<UserCubit>().clearUserClass();
-                    GoRouter.of(context).go(AppRoutes.classListPage);
                   },
                 ),
                 UserInfoCard(ine: user.ine!, birthDate: birthDateString),
@@ -91,9 +88,9 @@ class ProfilPage extends StatelessWidget {
             return CustomButton(
               text: AppLocalizations.of(context)!.disconnect,
               onPressed: () async {
-                final goRouter = GoRouter.of(context);
                 await context.read<UserCubit>().logout();
-                goRouter.go(AppRoutes.loginPage);
+                await context.read<LoginCubit>().logout();
+                context.pushReplacement(AppRoutes.loginPage);
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   Fluttertoast.showToast(
                     msg: AppLocalizations.of(context)!.disconnectedMessage,

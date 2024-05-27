@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:app_student/api/users/models/user_model.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../api_service.dart';
@@ -17,9 +18,6 @@ class UserRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userJson = jsonEncode(user.toJson());
     await prefs.setString('user', userJson);
-    print('User saved in cache');
-    print(userJson);
-
   }
 
   Future<UserModel> getUser() async {
@@ -58,22 +56,19 @@ class UserRepository {
       File? marksFile;
       File? absencesFile;
 
-      print('studentId');
-      print(studentId);
       if (studentId != null) {
         marksFile = await downloadFile(
             'https://api-dev.lukasvalois.com/api/student/marks/$studentId',
             'marks.pdf');
-        print(marksFile);
         absencesFile = await downloadFile(
             'https://api-dev.lukasvalois.com/api/student/absences/$studentId',
             'absences.pdf');
       }
 
       final marksDocument = DocumentEntity(title: 'Marks', file: marksFile!);
-      print(marksDocument);
+
       final absencesDocument =
-      DocumentEntity(title: 'Absences', file: absencesFile!);
+          DocumentEntity(title: 'Absences', file: absencesFile!);
 
       // Get the current user from the cache
       UserModel user;
@@ -84,12 +79,11 @@ class UserRepository {
       }
 
       // Update the user data
-      user.entity.firstName = data['firstName'];
-      user.entity.ine = data['ine'];
-      user.entity.birthDate = data['birthDate'] != null
-          ? DateTime.parse(data['birthDate'])
-          : null;
-      user.entity.className = data['className'] ?? '';
+      user.entity.firstName = user.entity.firstName;
+      user.entity.ine = username;
+      DateFormat format = DateFormat('dd/MM/yyyy');
+      user.entity.birthDate = format.parse(password);
+      user.entity.className = user.entity.className;
       user.entity.studentId = studentId ?? '';
       user.entity.documents = [marksDocument, absencesDocument];
 
@@ -103,12 +97,9 @@ class UserRepository {
   }
 
   Future<File> downloadFile(String url, String filename) async {
-    print('URL: $url');
-    print('Filename: $filename');
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
-      print('Response body bytes: ${response.bodyBytes}');
       final directory = await getTemporaryDirectory();
       final file = File('${directory.path}/$filename');
 

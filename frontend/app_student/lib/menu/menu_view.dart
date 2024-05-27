@@ -40,7 +40,7 @@ class MenuBarViewState extends State<MenuBarView> {
 
     switch (index) {
       case 0:
-        GoRouter.of(context).go(AppRoutes.school_space);
+        GoRouter.of(context).go(AppRoutes.schoolSpace);
         break;
       case 1:
         GoRouter.of(context).go(AppRoutes.schedulePage);
