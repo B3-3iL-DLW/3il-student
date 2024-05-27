@@ -41,7 +41,7 @@ class TimetableService
             if ($class->getName() === $classParam) {
                 $encodedClassFile = str_replace(' ', '%20', $class->getFile());
 
-                return $this->schedule_url.$encodedClassFile;
+                return $this->schedule_url . $encodedClassFile;
             }
         }
 
@@ -72,6 +72,13 @@ class TimetableService
         $weeks = [];
 
         $changes = false;
+
+        $weeksTest = $parsedData['GROUPE']['PLAGES']['SEMAINE'];
+        // Si 'weeksTest' contient une seule semaine, convertissez-la en tableau multidimensionnel
+
+        if (!isset($weeksTest[0])) {
+            $parsedData['GROUPE']['PLAGES']['SEMAINE'] = [$weeksTest];
+        }
 
         foreach ($parsedData['GROUPE']['PLAGES']['SEMAINE'] as $week) {
             $weekSchedule = new WeekSchedule();
@@ -125,26 +132,28 @@ class TimetableService
 
                         if ($existingEvent) {
                             // Si l'événement existe déjà, fusionnez les modifications
-                            if ($existingEvent->getActivite() !== $event->getActivite()
+                            if (
+                                $existingEvent->getActivite() !== $event->getActivite()
                                 || $existingEvent->getCouleur() !== $event->getCouleur()
                                 || $existingEvent->getSalle() !== $event->getSalle()
                                 || $existingEvent->isRepas() !== $event->isRepas()
                                 || $existingEvent->isVisio() !== $event->isVisio()
-                                || $existingEvent->getEval() !== $event->getEval()) {
+                                || $existingEvent->getEval() !== $event->getEval()
+                            ) {
 
 
-                                (new Logger())->info('Existing event: '.$existingEvent->getActivite());
-                                (new Logger())->info('New event: '.$event->getActivite());
-                                (new Logger())->info('Existing event: '.$existingEvent->getCouleur());
-                                (new Logger())->info('New event: '.$event->getCouleur());
-                                (new Logger())->info('Existing event: '.$existingEvent->getSalle());
-                                (new Logger())->info('New event: '.$event->getSalle());
-                                (new Logger())->info('Existing event: '.$existingEvent->isRepas());
-                                (new Logger())->info('New event: '.$event->isRepas());
-                                (new Logger())->info('Existing event: '.$existingEvent->isVisio());
-                                (new Logger())->info('New event: '.$event->isVisio());
-                                (new Logger())->info('Existing event: '.$existingEvent->getEval());
-                                (new Logger())->info('New event: '.$event->getEval());
+                                (new Logger())->info('Existing event: ' . $existingEvent->getActivite());
+                                (new Logger())->info('New event: ' . $event->getActivite());
+                                (new Logger())->info('Existing event: ' . $existingEvent->getCouleur());
+                                (new Logger())->info('New event: ' . $event->getCouleur());
+                                (new Logger())->info('Existing event: ' . $existingEvent->getSalle());
+                                (new Logger())->info('New event: ' . $event->getSalle());
+                                (new Logger())->info('Existing event: ' . $existingEvent->isRepas());
+                                (new Logger())->info('New event: ' . $event->isRepas());
+                                (new Logger())->info('Existing event: ' . $existingEvent->isVisio());
+                                (new Logger())->info('New event: ' . $event->isVisio());
+                                (new Logger())->info('Existing event: ' . $existingEvent->getEval());
+                                (new Logger())->info('New event: ' . $event->getEval());
 
                                 $existingEvent->setActivite($event->getActivite());
                                 $existingEvent->setCouleur($event->getCouleur());
