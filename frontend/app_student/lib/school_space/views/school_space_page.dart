@@ -27,7 +27,9 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
           if (state is UserLoading) {
-            return const Text('Loading');
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           } else if (state is UserLoggedIn) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +42,7 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: const Text(
-                    'Votre espace est relié ! Vous pouvez désormais consulter vos notes et absences :).',
+                    'Votre espace est relié ! Vous pouvez désormais consulter vos notes et absences :)',
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,

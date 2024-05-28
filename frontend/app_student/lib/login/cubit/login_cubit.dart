@@ -1,7 +1,7 @@
 import 'package:app_student/api/users/repositories/user_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:meta/meta.dart';
-import '../../api/users/entities/user_entity.dart';
 import '../../api/users/models/user_model.dart';
 
 part 'login_state.dart';
@@ -26,18 +26,22 @@ class LoginCubit extends Cubit<LoginState> {
       return;
     }
 
-    UserModel user = UserModel(
-      entity: UserEntity(
-        firstName: name,
-        className: null,
-        ine: null,
-        birthDate: null,
-        studentId: null,
-        documents: null,
-      ),
-    );
+    final notificationSettings = await FirebaseMessaging.instance
+        .requestPermission(
+            provisional: true,
+            sound: true,
+            badge: true,
+            alert: true,
+            announcement: false);
 
-    await userRepository.saveUserDetails(user);
+    if (notificationSettings.authorizationStatus ==
+        AuthorizationStatus.authorized) {
+      await FirebaseMessaging.instance.getToken();
+    }
+
+    UserModel user = UserModel.create(name, null, null, null, null, null);
+
+    await userRepository.createUser(user);
     emit(RedirectToClassSelection());
   }
 

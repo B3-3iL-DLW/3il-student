@@ -68,10 +68,10 @@ class ProfilPage extends StatelessWidget {
                 ),
                 UserClassCard(
                   className: user.className!,
-                  firstName: user.firstName!,
-                  onTap: () {
-                    context.read<UserCubit>().clearUserClass();
-                  },
+                  firstName: user.firstName!, onTap: () {},
+                  // onTap: () {
+                  //   context.read<UserCubit>().clearUserClass();
+                  // },
                 ),
                 UserInfoCard(ine: user.ine!, birthDate: birthDateString),
               ],

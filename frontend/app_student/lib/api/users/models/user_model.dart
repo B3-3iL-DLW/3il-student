@@ -76,4 +76,18 @@ class UserModel {
   bool get hasDocuments {
     return documents != null && documents!.isNotEmpty;
   }
+
+  static UserModel create(String firstName, String? className, String? ine,
+      DateTime? birthDate, int? studentId, List<DocumentModel>? documents) {
+    return UserModel(
+      entity: UserEntity(
+        firstName: firstName,
+        className: className,
+        ine: ine,
+        birthDate: birthDate,
+        studentId: studentId,
+        documents: documents?.map((doc) => doc.toEntity()).toList(),
+      ),
+    );
+  }
 }

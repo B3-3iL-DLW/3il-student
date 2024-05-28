@@ -1,6 +1,7 @@
 import 'package:app_student/api/class_groups/models/class_group_model.dart';
 import 'package:app_student/api/users/models/user_model.dart';
 import 'package:bloc/bloc.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../api/users/repositories/user_repository.dart';
@@ -47,13 +48,20 @@ class UserCubit extends Cubit<UserState> {
   Future<void> saveUserClass(ClassGroupModel classGroup) async {
     UserModel user = await userRepository.getUser();
     user.entity.className = classGroup.name;
+    await FirebaseMessaging.instance
+        .subscribeToTopic(classGroup.name.toString().replaceAll(' ', ''));
 
-    await userRepository.saveUserDetails(user);
+    await userRepository.createUser(user);
 
     emit(UserWihtoutLink(user));
   }
 
   Future<void> deleteUser() async {
+    final user = await userRepository.getUser();
+    if (user.className != null) {
+      await FirebaseMessaging.instance
+          .unsubscribeFromTopic(user.className.toString().replaceAll(' ', ''));
+    }
     await userRepository.delete();
   }
 
