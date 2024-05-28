@@ -38,3 +38,11 @@ class UserLoggedIn extends UserState {
 
   UserLoggedIn(this.user);
 }
+
+class UserWihtoutLink extends UserState {
+  final UserModel user;
+
+  UserWihtoutLink(this.user);
+}
+
+class UserLoggedOut extends UserState {}

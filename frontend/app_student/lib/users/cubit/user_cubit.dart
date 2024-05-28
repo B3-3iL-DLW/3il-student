@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:app_student/api/class_groups/models/class_group_model.dart';
 import 'package:app_student/api/users/models/user_model.dart';
 import 'package:bloc/bloc.dart';
@@ -21,21 +19,24 @@ class UserCubit extends Cubit<UserState> {
       emit(UserLoading());
       final user = await userRepository.getUser();
 
-      if (user.className == null || user.className!.isEmpty) {
-        emit(UserWithoutClass(user));
-      } else if (user.ine != null &&
-          user.ine!.isNotEmpty &&
-          user.birthDate != null &&
-          user.studentId != null) {
-        emit(UserLoaded(user));
-      } else if (user.ine == null ||
-          (user.ine != null && user.ine!.isEmpty) ||
-          user.birthDate == null) {
-        emit(UserNameLoaded(user));
+      if (user.isEmpty) {
+        emit(UserInitial());
+      } else if (user.hasFirstName) {
+        if (user.hasClassName == false) {
+          emit(UserWithoutClass(user));
+        } else if (user.hasIne && user.hasBirthDate && user.hasStudentId) {
+          emit(UserLoggedIn(user));
+        } else {
+          emit(UserWihtoutLink(user));
+        }
       }
     } catch (e) {
       if (!isClosed) {
-        emit(UserError(e.toString()));
+        if (e.toString() == 'Exception: No user found in cache') {
+          emit(UserInitial());
+        } else {
+          emit(UserError(e.toString()));
+        }
       }
     }
   }
@@ -45,14 +46,17 @@ class UserCubit extends Cubit<UserState> {
   }
 
   Future<void> saveUserClass(ClassGroupModel classGroup) async {
-    await userRepository.saveUserClass(classGroup.name.toString());
+    UserModel user = await userRepository.getUser();
+    user.entity.className = classGroup.name;
     await FirebaseMessaging.instance
         .subscribeToTopic(classGroup.name.toString().replaceAll(' ', ''));
-    emit(UserClassesSelected());
+
+    await userRepository.createUser(user);
+
+    emit(UserWihtoutLink(user));
   }
 
   Future<void> deleteUser() async {
-    // On se désabonne de tous les topics
     final user = await userRepository.getUser();
     if (user.className != null) {
       await FirebaseMessaging.instance
@@ -61,53 +65,25 @@ class UserCubit extends Cubit<UserState> {
     await userRepository.delete();
   }
 
+  Future<void> logout() async {
+    await deleteUser();
+    emit(UserInitial());
+  }
+
   Future<void> clearUserClass() async {
     await userRepository.clearClass();
+    emit(UserWithoutClass(await userRepository.getUser()));
   }
 
   Future<void> loginAndSaveId(String username, String password) async {
     emit(UserLoading());
     try {
-      final studentId = await userRepository.login(username, password);
-      Global.setIne(username);
-      Global.setBirthDate(password);
-      Global.setStudentId(studentId);
-      final user = await userRepository.getUser();
+      final user = await userRepository.login(username, password);
+      await Global.setUser(user);
+
       emit(UserLoggedIn(user));
     } catch (e) {
       emit(UserError(e.toString()));
-    }
-  }
-
-  Future<void> fetchMarks() async {
-    emit(UserLoading());
-    try {
-      final user = await userRepository.getUser();
-      if (user.studentId != null) {
-        final File marks = await userRepository.getMarks(user.studentId!);
-        if (kDebugMode) {
-          print(marks.path);
-        }
-        final File absences = await userRepository.getAbsences(user.studentId!);
-        if (kDebugMode) {
-          print(absences.path);
-        }
-        emit(UserLoaded(user));
-      } else {
-        throw Exception('No student ID found in SharedPreferences');
-      }
-    } catch (e) {
-      emit(UserError(e.toString()));
-    }
-  }
-
-  Future<void> checkStudentId() async {
-    final user = await getCurrentUser();
-
-    if (user.studentId != null) {
-      emit(UserLoggedIn(user));
-    } else {
-      emit(UserInitial());
     }
   }
 }

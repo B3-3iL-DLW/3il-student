@@ -37,7 +37,10 @@ class PdfCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PdfViewPage(filePath: filePath),
+              builder: (context) => PdfViewPage(
+                filePath: filePath,
+                documentTitle: 'Test',
+              ),
             ),
           );
         },

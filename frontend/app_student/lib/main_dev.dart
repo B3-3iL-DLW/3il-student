@@ -1,25 +1,66 @@
 import 'package:app_student/config/dev_config.dart';
 import 'package:app_student/routes.dart';
+import 'package:app_student/users/cubit/user_cubit.dart';
 import 'package:app_student/utils/custom_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:provider/provider.dart';
 
+import 'api/api_service.dart';
+import 'api/users/repositories/user_repository.dart';
 import 'config/config.dart';
+import 'login/cubit/login_cubit.dart';
 import 'utils/global.dart';
 
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+}
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+
   await dotenv.load();
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   initializeDateFormatting('fr_FR', null).then((_) {
     runApp(
-      Provider<Config>(
-        create: (_) => DevConfig(),
-        child: const MyApp(),
+      MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider<Config>(
+            create: (_) => DevConfig(),
+          ),
+          RepositoryProvider<UserRepository>(
+            create: (context) => UserRepository(
+              apiService: ApiService(apiUrl: context.read<Config>().apiUrl),
+            ),
+          ),
+        ],
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider<UserCubit>(
+              create: (context) =>
+                  UserCubit(userRepository: context.read<UserRepository>())
+                    ..fetchUser(),
+            ),
+            BlocProvider<LoginCubit>(
+              create: (context) =>
+                  LoginCubit(userRepository: context.read<UserRepository>()),
+            ),
+          ],
+          child: const MyApp(),
+        ),
       ),
     );
   });
@@ -48,7 +89,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'my3iL',
-      theme: CustomTheme.theme,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        // Orange 3IL
+        focusColor: CustomTheme.secondaryColor,
+        primaryColor: CustomTheme.primaryColor,
+        // Bleu 3IL
+        secondaryHeaderColor: CustomTheme.primaryColor,
+        fontFamily: 'Arial',
+      ),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

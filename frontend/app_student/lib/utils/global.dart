@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:app_student/api/users/models/user_model.dart';
 
 class Global {
   static late double screenWidth;
@@ -14,33 +16,19 @@ class Global {
     return await SharedPreferences.getInstance();
   }
 
-  static Future<int?> get studentId async {
+  static Future<void> setUser(UserModel user) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getInt('studentId');
+    String userJson = jsonEncode(user.toJson());
+    prefs.setString('user', userJson);
   }
 
-  static Future<void> setStudentId(int value) async {
+  static Future<UserModel?> getUser() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setInt('studentId', value);
-  }
-
-  static Future<String> get ine async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('ine') ?? '';
-  }
-
-  static Future<void> setIne(String value) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('ine', value);
-  }
-
-  static Future<String> get birthDate async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('birthDate') ?? '';
-  }
-
-  static Future<void> setBirthDate(String value) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('birthDate', value);
+    String? userJson = prefs.getString('user');
+    if (userJson != null) {
+      return UserModel.fromJson(jsonDecode(userJson));
+    } else {
+      return null;
+    }
   }
 }
