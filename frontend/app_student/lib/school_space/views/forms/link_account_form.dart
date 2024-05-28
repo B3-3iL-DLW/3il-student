@@ -14,8 +14,8 @@ class LinkAccountForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-    String ine = '050223219JD';
-    String birthDate = '07/12/2002'; // Set your default birth date here
+    String ine = '';
+    String birthDate = '';
     final birthDateController = TextEditingController(text: birthDate);
     final ineController = TextEditingController(text: ine);
 
