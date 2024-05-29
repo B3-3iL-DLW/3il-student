@@ -13,10 +13,12 @@ class DayScheduleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String formattedDate =
-        DateFormat('EEEE dd MMMM yyyy', 'fr_FR').format(daySchedule.date);
-    String capitalizedDate =
+    final Locale locale = Localizations.localeOf(context);
+    final DateFormat formatter = DateFormat.yMMMMd(locale.toString());
+    final String formattedDate = formatter.format(daySchedule.date);
+    final String capitalizedDate =
         formattedDate[0].toUpperCase() + formattedDate.substring(1);
+
     return SingleChildScrollView(
       child: Column(
         children: [

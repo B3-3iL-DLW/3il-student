@@ -6,6 +6,7 @@ import 'package:app_student/utils/custom_layout.dart';
 import 'package:app_student/utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class LinkAccountForm extends StatelessWidget {
@@ -13,6 +14,7 @@ class LinkAccountForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     final formKey = GlobalKey<FormState>();
     String ine = '';
     String birthDate = '';
@@ -23,17 +25,18 @@ class LinkAccountForm extends StatelessWidget {
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
       body: Column(
         children: [
-          const HeaderTitle('Connexion'),
+          HeaderTitle(localizations.loginButton),
           Form(
             key: formKey,
             child: Column(
               children: [
                 TextFormField(
                   controller: ineController,
-                  decoration: const InputDecoration(labelText: 'INE'),
+                  decoration:
+                      InputDecoration(labelText: localizations.ineLabel),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your INE';
+                      return localizations.ineError;
                     }
                     return null;
                   },
@@ -44,7 +47,7 @@ class LinkAccountForm extends StatelessWidget {
                 TextFormField(
                   controller: birthDateController,
                   decoration: InputDecoration(
-                    labelText: 'Birth Date',
+                    labelText: localizations.birthDateLabel,
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.calendar_today),
                       onPressed: () async {
@@ -65,7 +68,7 @@ class LinkAccountForm extends StatelessWidget {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your birth date';
+                      return localizations.birthDateError;
                     }
                     return null;
                   },
@@ -79,7 +82,7 @@ class LinkAccountForm extends StatelessWidget {
         ],
       ),
       bottomContent: CustomButton(
-        text: 'Valider',
+        text: localizations.validateButton,
         onPressed: () {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
