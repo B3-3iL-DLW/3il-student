@@ -1,0 +1,169 @@
+{
+  "error404": "Page not found {pageUri}",
+  "@error404": {
+    "description": "Error message for a page not found",
+    "placeholders": {
+      "pageUri": {
+        "type": "String",
+        "example": "/login"
+      }
+    }
+  },
+  "genericError": "An error occurred",
+  "@genericError": {
+    "description": "Generic error message",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "An error occurred"
+      }
+    }
+  },
+  "loginButton": "Login",
+  "@loginButton": {
+    "description": "Text for the login button"
+  },
+  "loginFirstNameLabel": "First name",
+  "@loginFirstName": {
+    "description": "Text for the first name label"
+  },
+  "loginFirstNameHint": "Enter your first name",
+  "@loginFirstNameHint": {
+    "description": "Placeholder text for the first name"
+  },
+  "loginIneLabel": "INE",
+  "@loginIneLabel": {
+    "description": "Text for the INE label"
+  },
+  "loginIneHint": "Enter your INE number",
+  "@loginIneHint": {
+    "description": "Placeholder text for the INE number"
+  },
+  "loginBirthDateLabel": "Birth date",
+  "@loginBirthDateLabel": {
+    "description": "Text for the birth date label"
+  },
+  "loginWelcomeTitle": "Hello :)",
+  "@loginWelcomeTitle": {
+    "description": "Welcome text of the login page"
+  },
+  "loginWelcomeTitleError": "Oops, it's going to be okay",
+  "@loginWelcomeTitleError": {
+    "description": "Error welcome text of the login page"
+  },
+  "loginFieldError": "Please fill in all fields",
+  "@loginFieldError": {
+    "description": "Error message for the login fields"
+  },
+  "classSelectionTitle": "Hello {firstName} !",
+  "@classSelectionTitle": {
+    "description": "Welcome text of the class selection page",
+    "placeholders": {
+      "firstName": {
+        "type": "String",
+        "example": "John"
+      }
+    }
+  },
+  "classSelectionSubtitle": "Select your class",
+  "@classSelectionSubtitle": {
+    "description": "Subtitle text of the class selection page"
+  },
+  "eventDuration": "1h30",
+  "@eventDuration": {
+    "description": "The duration of the event",
+    "example": "1h30"
+  },
+  "roomLabel": "Room",
+  "@roomLabel": {
+    "description": "Label for the room",
+    "example": "Room"
+  },
+  "disconnectedMessage": "You have been disconnected",
+  "@disconnectedMessage": {
+    "description": "Error message for a disconnection"
+  },
+  "disconnect": "Disconnect",
+  "@disconnect": {
+    "description": "Text for the disconnect button"
+  },
+  "schedule": "Schedule",
+  "@schedule": {
+    "description": "Text for the schedule button"
+  },
+  "profil": "Profile",
+  "@profil": {
+    "description": "Text for the profile button"
+  },
+  "profilMessageTitle": "Hello {firstName} !",
+  "@profilMessageTitle": {
+    "description": "Welcome message of the profile page",
+    "placeholders": {
+      "firstName": {
+        "type": "String",
+        "example": "John"
+      }
+    }
+  },
+  "profilChangeClassButton": "Change class",
+  "@profilChangeClassButton": {
+    "description": "Text for the change class button"
+  },
+  "noConnectionMessage": "No connection",
+  "@noConnectionMessage": {
+    "description": "Error message for a lack of connection"
+  },
+  "termsAndPrivacy": "By using the service, you agree to our terms of use and privacy policy.",
+  "confirmLogout": "Are you sure you want to log out?",
+  "@confirmLogout": {
+    "description": "Logout confirmation message"
+  },
+  "confirmLogoutMessage": "You will be logged out of your session",
+  "@confirmLogoutMessage": {
+    "description": "Logout confirmation message"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Text for the cancel button"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Text for the confirm button"
+  },
+  "my3il": "My3il",
+  "@my3il": {
+    "description": "Text for the menu"
+  },
+  "my3ilSpaceLinked": "Your space is linked! You can now check your grades and absences :)",
+  "@my3ilSpaceLinked": {
+    "description": "Message displayed when the My3iL space is linked"
+  },
+  "linkMy3ilSpace": "This space allows you to link your Exnet 3il account to the application to check your grades and absences.",
+  "@linkMy3ilSpace": {
+    "description": "Message explaining the usefulness of the My3iL space"
+  },
+  "linkAccountButton": "Link my account",
+  "@linkAccountButton": {
+    "description": "Text for the button to link the Exnet 3iL account"
+  },
+  "ineLabel": "INE number",
+  "@ineLabel": {
+    "description": "Label for the INE field"
+  },
+  "ineError": "Please enter your INE",
+  "@ineError": {
+    "description": "Error message for the INE field"
+  },
+  "birthDateLabel": "Birth date",
+  "@birthDateLabel": {
+    "description": "Label for the birth date field"
+  },
+  "birthDateError": "Please enter your birth date",
+  "@birthDateError": {
+    "description": "Error message for the birth date field"
+  },
+  "validateButton": "Validate",
+  "@validateButton": {
+    "description": "Text for the button to validate the form"
+  }
+}

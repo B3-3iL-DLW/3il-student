@@ -115,23 +115,55 @@
   },
   "termsAndPrivacy": "En utilisant le service, vous acceptez nos conditions d'utilisation et notre politique de confidentialité.",
   "confirmLogout": "Êtes-vous sûr de vouloir vous déconnecter ?",
-    "@confirmLogout": {
-        "description": "Message de confirmation de déconnexion"
-    },
+  "@confirmLogout": {
+    "description": "Message de confirmation de déconnexion"
+  },
   "confirmLogoutMessage": "Vous serez déconnecté de votre session",
-    "@confirmLogoutMessage": {
-        "description": "Message de confirmation de déconnexion"
-    },
-    "cancel": "Annuler",
-    "@cancel": {
-        "description": "Texte du bouton pour annuler"
-    },
-    "confirm": "Confirmer",
-    "@confirm": {
-        "description": "Texte du bouton pour confirmer"
-    },
-    "my3il": "My3il",
-    "@my3il": {
-        "description": "Texte du menu"
-    }
+  "@confirmLogoutMessage": {
+    "description": "Message de confirmation de déconnexion"
+  },
+  "cancel": "Annuler",
+  "@cancel": {
+    "description": "Texte du bouton pour annuler"
+  },
+  "confirm": "Confirmer",
+  "@confirm": {
+    "description": "Texte du bouton pour confirmer"
+  },
+  "my3il": "My3il",
+  "@my3il": {
+    "description": "Texte du menu"
+  },
+  "my3ilSpaceLinked": "Votre espace est relié ! Vous pouvez désormais consulter vos notes et absences :)",
+  "@my3ilSpaceLinked": {
+    "description": "Message affiché lorsque l'espace My3iL est relié"
+  },
+  "linkMy3ilSpace": "Cet espace vous permet de relier votre compte Exnet 3il à l'application pour consulter vos notes et absences.",
+  "@linkMy3ilSpace": {
+    "description": "Message expliquant l'utilité de l'espace My3iL"
+  },
+  "linkAccountButton": "Relier mon compte",
+  "@linkAccountButton": {
+    "description": "Texte du bouton pour relier le compte Exnet 3iL"
+  },
+  "ineLabel": "Numéro INE",
+  "@ineLabel": {
+    "description": "Label pour le champ INE"
+  },
+  "ineError": "Veuillez entrer votre INE",
+  "@ineError": {
+    "description": "Message d'erreur pour le champ INE"
+  },
+  "birthDateLabel": "Date de naissance",
+  "@birthDateLabel": {
+    "description": "Label pour le champ Date de naissance"
+  },
+  "birthDateError": "Veuillez entrer votre date de naissance",
+  "@birthDateError": {
+    "description": "Message d'erreur pour le champ Date de naissance"
+  },
+  "validateButton": "Valider",
+  "@validateButton": {
+    "description": "Texte du bouton pour valider le formulaire"
+  }
 }
