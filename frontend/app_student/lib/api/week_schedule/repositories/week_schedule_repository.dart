@@ -24,7 +24,7 @@ class WeekScheduleRepository {
     } on HttpException catch (he) {
       throw HttpException('HTTP error: $he');
     } on SocketException catch (_) {
-      throw SocketException('Pas de connexion internet');
+      throw const SocketException('Pas de connexion internet');
     } on FormatException catch (fe) {
       throw FormatException('Erreur de format: $fe');
     } on TypeError catch (_) {

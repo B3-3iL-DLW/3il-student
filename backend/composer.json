@@ -8,6 +8,7 @@
         "ext-ctype": "*",
         "ext-curl": "*",
         "ext-dom": "*",
+        "ext-http": "*",
         "ext-iconv": "*",
         "ext-simplexml": "*",
         "doctrine/dbal": "^3",
@@ -15,6 +16,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.1",
         "guzzlehttp/guzzle": "^7.8",
+        "kreait/firebase-bundle": "^5.2",
         "symfony/apache-pack": "^1.0",
         "symfony/console": "6.4.*",
         "symfony/css-selector": "6.4.*",
@@ -30,8 +32,7 @@
         "symfony/twig-bundle": "6.4.*",
         "symfony/yaml": "6.4.*",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0",
-      "ext-http": "*"
+        "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.51",

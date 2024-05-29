@@ -1,27 +1,25 @@
-import 'package:app_student/utils/custom_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:app_student/shared_components/app_bar.dart';
 
 class PdfViewPage extends StatelessWidget {
   final String filePath;
+  final String documentTitle;
 
-  const PdfViewPage({super.key, required this.filePath});
+  const PdfViewPage(
+      {super.key, required this.filePath, required this.documentTitle});
 
   @override
   Widget build(BuildContext context) {
-    return CustomLayout(
-      appBar: AppBar(
-        title: const Text('PDF View'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.download),
-            onPressed: () {
-              // Implement your download functionality here
-            },
+    return Scaffold(
+      appBar: const CustomAppBar(),
+      body: Column(
+        children: [
+          Expanded(
+            child: PDFView(filePath: filePath),
           ),
         ],
       ),
-      body: PDFView(filePath: filePath),
     );
   }
 }

@@ -5,19 +5,19 @@ import 'package:app_student/utils/custom_button.dart';
 import 'package:app_student/utils/custom_layout.dart';
 import 'package:app_student/utils/global.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class LinkAccountForm extends StatelessWidget {
-  final UserCubit userCubit;
-
-  const LinkAccountForm({super.key, required this.userCubit});
+  const LinkAccountForm({super.key});
 
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
     String ine = '';
     String birthDate = '';
-    final birthDateController = TextEditingController();
+    final birthDateController = TextEditingController(text: birthDate);
+    final ineController = TextEditingController(text: ine);
 
     return CustomLayout(
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
@@ -29,6 +29,7 @@ class LinkAccountForm extends StatelessWidget {
             child: Column(
               children: [
                 TextFormField(
+                  controller: ineController,
                   decoration: const InputDecoration(labelText: 'INE'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -41,6 +42,7 @@ class LinkAccountForm extends StatelessWidget {
                   },
                 ),
                 TextFormField(
+                  controller: birthDateController,
                   decoration: InputDecoration(
                     labelText: 'Birth Date',
                     suffixIcon: IconButton(
@@ -70,7 +72,6 @@ class LinkAccountForm extends StatelessWidget {
                   onSaved: (value) {
                     birthDate = value!;
                   },
-                  controller: birthDateController,
                 ),
               ],
             ),
@@ -82,13 +83,11 @@ class LinkAccountForm extends StatelessWidget {
         onPressed: () {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
-            userCubit.loginAndSaveId(ine, birthDate);
+            context.read<UserCubit>().loginAndSaveId(ine, birthDate);
             Navigator.of(context).pop();
           }
         },
       ),
-      // Add your bottomBar here if you have one
-      // bottomBar: YourBottomBar(),
     );
   }
 }

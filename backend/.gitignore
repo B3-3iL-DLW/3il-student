@@ -13,3 +13,6 @@
 .php-cs-fixer.php
 .php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
+
+### creds fireabse ###
+my3il_firebase_creds.json

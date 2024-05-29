@@ -4,13 +4,12 @@ import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:go_router/go_router.dart';
 import '../../menu/menu_view.dart';
 import '../../shared_components/header_logo.dart';
 import '../../shared_components/header_title.dart';
 import '../../utils/custom_layout.dart';
 import '../../utils/global.dart';
-import 'forms/link_account_form.dart';
 import 'widgets/pdf_card.dart';
 
 class SchoolSpacePage extends StatefulWidget {
@@ -21,14 +20,6 @@ class SchoolSpacePage extends StatefulWidget {
 }
 
 class SchoolSpacePageState extends State<SchoolSpacePage> {
-  late final UserCubit userCubit;
-
-  @override
-  void initState() {
-    super.initState();
-    userCubit = context.read<UserCubit>();
-  }
-
   @override
   Widget build(BuildContext context) {
     return CustomLayout(
@@ -36,7 +27,9 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
           if (state is UserLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           } else if (state is UserLoggedIn) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +42,7 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: const Text(
-                    'Votre espace est relié ! Vous pouvez désormais consulter vos notes et absences :).',
+                    'Votre espace est relié ! Vous pouvez désormais consulter vos notes et absences :)',
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
@@ -57,16 +50,13 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
                   ),
                 ),
                 const SizedBox(height: 40),
-                PdfCard(
-                    filePath: state.user.marksFile!.path,
-                    title: 'Relevé de notes'),
-                const SizedBox(height: 20),
-                PdfCard(
-                    filePath: state.user.absencesFile!.path,
-                    title: "Relevé d'absences"),
+                ...?state.user.documents?.map((doc) => PdfCard(
+                      filePath: doc.file!.path,
+                      title: doc.title,
+                    )),
               ],
             );
-          } else if (state is UserInitial) {
+          } else if (state is UserWihtoutLink) {
             return Column(
               children: [
                 const Padding(
@@ -91,13 +81,7 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
                 CustomButton(
                   text: 'Relier mon compte',
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            LinkAccountForm(userCubit: userCubit),
-                      ),
-                    );
+                    context.push('/linkAccountForm');
                   },
                 ),
               ],

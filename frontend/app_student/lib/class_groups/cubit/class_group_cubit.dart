@@ -24,8 +24,7 @@ class ClassGroupCubit extends Cubit<ClassGroupState> {
       emit(ClassGroupError(fe.message));
     } on HttpException catch (he) {
       emit(ClassGroupError(he.message));
-    }
-    catch (e) {
+    } catch (e) {
       emit(ClassGroupError(e.toString()));
     }
   }

@@ -30,7 +30,8 @@ class ApiService {
           }
         }).toList();
       } else {
-        throw Exception('ERROR ${response.statusCode} Echec du chargement des données');
+        throw Exception(
+            'ERROR ${response.statusCode} Echec du chargement des données');
       }
     } on TimeoutException catch (te) {
       throw TimeoutException('Request timed out: $te');

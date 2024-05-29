@@ -1,0 +1,6 @@
+# app/config/config.yml (Symfony without Flex)
+# config/packages/firebase.yaml (Symfony with Flex)
+kreait_firebase:
+  projects:
+    my3iL:
+      credentials: '%kernel.project_dir%/my3il_firebase_creds.json'

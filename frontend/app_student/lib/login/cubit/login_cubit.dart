@@ -1,13 +1,15 @@
 import 'package:app_student/api/users/repositories/user_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:meta/meta.dart';
+import '../../api/users/models/user_model.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   final UserRepository userRepository;
 
-  LoginCubit(this.userRepository) : super(LoginInitial()) {
+  LoginCubit({required this.userRepository}) : super(LoginInitial()) {
     checkUserAuthentication();
   }
 
@@ -23,15 +25,30 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginFieldError());
       return;
     }
-    await userRepository.saveUserDetails(name, '', ine: null, birthDate: null);
+
+    final notificationSettings = await FirebaseMessaging.instance
+        .requestPermission(
+            provisional: true,
+            sound: true,
+            badge: true,
+            alert: true,
+            announcement: false);
+
+    if (notificationSettings.authorizationStatus ==
+        AuthorizationStatus.authorized) {
+      await FirebaseMessaging.instance.getToken();
+    }
+
+    UserModel user = UserModel.create(name, null, null, null, null, null);
+
+    await userRepository.createUser(user);
     emit(RedirectToClassSelection());
   }
 
   Future<bool> checkUserAuthentication() async {
     try {
       var user = await userRepository.getUser();
-      // Si la classe est vide
-      if (user.className == '') {
+      if (user.hasClassName == false || user.isEmpty) {
         emit(LoginInitial());
         return false;
       }
@@ -41,5 +58,9 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginInitial());
       return false;
     }
+  }
+
+  Future<void> logout() async {
+    emit(LoginInitial());
   }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Service\FirebaseService;
 use App\Service\JsonService;
 use App\Service\TimetableService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,7 +34,7 @@ class TimetableController extends AbstractController
      * @throws ClientExceptionInterface
      */
     #[Route('/api/timetable', name: 'api_timetable')]
-    public function index(Request $request): Response
+    public function index(Request $request, FirebaseService $firebase): Response
     {
         $classParam = $request->query->get('class_param');
         if (!$classParam) {
@@ -43,7 +44,7 @@ class TimetableController extends AbstractController
         $xmlUrl = $this->timetableService->getXmlFile($classParam);
 
         if ($xmlUrl) {
-            $timetable = $this->timetableService->fetchAndParseData($xmlUrl);
+            $timetable = $this->timetableService->fetchAndParseData($xmlUrl)['weeks'];
             $jsonTimeTable = $this->jsonService->EntityToJson($timetable);
 
             return new Response($jsonTimeTable, Response::HTTP_OK, ['Content-Type' => 'application/json']);

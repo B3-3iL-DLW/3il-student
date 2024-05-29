@@ -18,7 +18,7 @@ class WeekSchedule
     #[ORM\Column(length: 255)]
     private ?string $code = null;
 
-    #[ORM\OneToMany(targetEntity: DaySchedule::class, mappedBy: 'weekSchedule')]
+    #[ORM\OneToMany(targetEntity: DaySchedule::class, mappedBy: 'weekSchedule', cascade: ['persist', 'remove'])]
     private Collection $DaySchedule;
 
     public function __construct()

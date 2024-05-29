@@ -1,3 +1,4 @@
+import 'package:app_student/login/cubit/login_cubit.dart';
 import 'package:app_student/menu/menu_view.dart';
 import 'package:app_student/profil/views/widgets/user_class_card.dart';
 import 'package:app_student/routes.dart';
@@ -27,7 +28,7 @@ class ProfilPage extends StatelessWidget {
         builder: (context, state) {
           if (state is UserLoading) {
             return Container();
-          } else if (state is UserNameLoaded) {
+          } else if (state is UserWihtoutLink) {
             final user = state.user;
             return Column(
               children: [
@@ -35,20 +36,22 @@ class ProfilPage extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 10.0),
                   child: HeaderTitle(
                     AppLocalizations.of(context)!
-                        .profilMessageTitle(user.firstName),
+                        .profilMessageTitle(user.firstName!),
                   ),
                 ),
                 UserClassCard(
                   className: user.className!,
-                  firstName: user.firstName,
-                  onTap: () {
+                  firstName: user.firstName!,
+                  onTap: () async {
                     context.read<UserCubit>().clearUserClass();
-                    GoRouter.of(context).go(AppRoutes.classListPage);
+                    if (context.mounted) {
+                      context.pushReplacement('/classList');
+                    }
                   },
                 ),
               ],
             );
-          } else if (state is UserLoaded) {
+          } else if (state is UserLoggedIn) {
             final user = state.user;
 
             final birthDateString =
@@ -60,16 +63,15 @@ class ProfilPage extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 10.0),
                   child: HeaderTitle(
                     AppLocalizations.of(context)!
-                        .profilMessageTitle(user.firstName),
+                        .profilMessageTitle(user.firstName!),
                   ),
                 ),
                 UserClassCard(
                   className: user.className!,
-                  firstName: user.firstName,
-                  onTap: () {
-                    context.read<UserCubit>().clearUserClass();
-                    GoRouter.of(context).go(AppRoutes.classListPage);
-                  },
+                  firstName: user.firstName!, onTap: () {},
+                  // onTap: () {
+                  //   context.read<UserCubit>().clearUserClass();
+                  // },
                 ),
                 UserInfoCard(ine: user.ine!, birthDate: birthDateString),
               ],
@@ -87,9 +89,14 @@ class ProfilPage extends StatelessWidget {
             return CustomButton(
               text: AppLocalizations.of(context)!.disconnect,
               onPressed: () async {
-                final goRouter = GoRouter.of(context);
-                await context.read<UserCubit>().deleteUser();
-                goRouter.go(AppRoutes.loginPage);
+                await context.read<UserCubit>().logout();
+                if (context.mounted) {
+                  await context.read<LoginCubit>().logout();
+                }
+                if (context.mounted) {
+                  context.pushReplacement(AppRoutes.loginPage);
+                }
+
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   Fluttertoast.showToast(
                     msg: AppLocalizations.of(context)!.disconnectedMessage,

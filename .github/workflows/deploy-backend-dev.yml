@@ -37,7 +37,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/imjames/www/API-3IL/dev/backend
-            composer2 install
+            composer2 install --ignore-platform-req=ext-http --ignore-platform-req=ext-sodium
       
       - name: SSH Into Server and execute Linter for PHP
         uses: appleboy/ssh-action@master
