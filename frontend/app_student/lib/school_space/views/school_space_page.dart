@@ -53,9 +53,9 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
                 ),
                 const SizedBox(height: 40),
                 ...?state.user.documents?.map((doc) => PdfCard(
-                      filePath: doc.file!.path,
-                      title: doc.title,
-                    )),
+                  filePath: doc.file!.path,
+                  title: doc.title,
+                )),
               ],
             );
           } else if (state is UserWihtoutLink) {
