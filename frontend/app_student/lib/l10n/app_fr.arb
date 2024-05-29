@@ -115,23 +115,32 @@
   },
   "termsAndPrivacy": "En utilisant le service, vous acceptez nos conditions d'utilisation et notre politique de confidentialité.",
   "confirmLogout": "Êtes-vous sûr de vouloir vous déconnecter ?",
-    "@confirmLogout": {
-        "description": "Message de confirmation de déconnexion"
-    },
+  "@confirmLogout": {
+    "description": "Message de confirmation de déconnexion"
+  },
   "confirmLogoutMessage": "Vous serez déconnecté de votre session",
-    "@confirmLogoutMessage": {
-        "description": "Message de confirmation de déconnexion"
-    },
-    "cancel": "Annuler",
-    "@cancel": {
-        "description": "Texte du bouton pour annuler"
-    },
-    "confirm": "Confirmer",
-    "@confirm": {
-        "description": "Texte du bouton pour confirmer"
-    },
-    "my3il": "My3il",
-    "@my3il": {
-        "description": "Texte du menu"
+  "@confirmLogoutMessage": {
+    "description": "Message de confirmation de déconnexion"
+  },
+  "cancel": "Annuler",
+  "@cancel": {
+    "description": "Texte du bouton pour annuler"
+  },
+  "confirm": "Confirmer",
+  "@confirm": {
+    "description": "Texte du bouton pour confirmer"
+  },
+  "my3il": "My3il",
+  "@my3il": {
+    "description": "Texte du menu"
+  },
+  "errors_code": "{error, select, already_exists{Cette ressource existe déjà} internal{Une erreur imprévue s'est produite} invalid{Requête invalide} method_not_allowed{Méthode HTTP invalide} not_found{Ressource introuvable} permission_denied{Accès refusé} too_many_requests{Nombre maximum de requêtes atteint} unauthorized{Authentification requise} email_already_used{Adresse e-mail déjà utilisée} passwordincorrect{Mot de passe actuel incorrect} invalid_credentials{E-mail ou mot de passe incorrect} unauthorized_identity{Cette application est réservée aux professionnels de santé} HttpException{Erreur de requête Http} JsonDecodeException{Erreur décodage JSON}  JsonDeserializationException{Erreur serialization du JSON} too_many_observations{Trop de résultat} other{Une erreur imprévue s'est produite}}",
+  "@errors_code": {
+    "description": "All API error message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
     }
+  }
 }
