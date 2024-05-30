@@ -8,8 +8,8 @@ workflows:
       vars:
         PROD_API_URL: "https://api.lukasvalois.com"
         DEV_API_URL: "https://api-dev.lukasvalois.com"
-      groups:
-        - firebase_credentials
+      android_signing:
+        - GooglePlayLukas
     triggering:
       events:
         - push
@@ -27,19 +27,16 @@ workflows:
       - name: Flutter analyze
         script: |
           flutter analyze
-      - name: Flutter unit tests
-        script: |
-          flutter test
-        ignore_failure: true
       - name: Add Firebase configuration
         script: |
-          echo $FIREBASE_CONFIG | base64 --decode > android/app/google-services.json
+          #!/usr/bin/env sh
+          set -e # exit on first failed command
+
+          PROJECT_ROOT=$CM_BUILD_DIR/frontend/app_student   
+          echo $ANDROID_FIREBASE_SECRET > $PROJECT_ROOT/android/app/google-services.json
       - name: Build AAB with Flutter
         script: |
-          BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))      
-          flutter build appbundle --release \
-            --build-name=1.0.$BUILD_NUMBER \
-            --build-number=$BUILD_NUMBER
+          flutter build appbundle --release
     artifacts:
       - build/**/outputs/**/*.aab
       - build/**/outputs/**/mapping.txt
@@ -50,8 +47,4 @@ workflows:
           - lukas.valois@gmail.com
         notify:
           success: true
-          failure: false
-      google_play:
-        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
-        track: $GOOGLE_PLAY_TRACK
-        submit_as_draft: true
+          failure: true
