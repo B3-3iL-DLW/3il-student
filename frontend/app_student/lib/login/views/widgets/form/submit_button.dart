@@ -4,6 +4,7 @@ import 'package:app_student/utils/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../users/cubit/user_cubit.dart';
 
@@ -21,9 +22,14 @@ class SubmitButton extends StatelessWidget {
       text: AppLocalizations.of(context)!.loginButton,
       onPressed: () async {
         final String name = nameController.text.trim();
-        await context.read<LoginCubit>().saveLoginDetails(name);
-        if (context.mounted) {
-          await context.read<UserCubit>().fetchUser();
+        final loginCubit = context.read<LoginCubit>();
+        final userCubit = context.read<UserCubit>();
+
+        await loginCubit.saveLoginDetails(name);
+        await userCubit.fetchUser();
+
+        if (userCubit.state is UserWithoutClass && context.mounted) {
+          GoRouter.of(context).push('/classList');
         }
       },
       backgroundColor: CustomTheme.secondaryColor,

@@ -27,7 +27,7 @@ class ProfilPage extends StatelessWidget {
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
           if (state is UserLoading) {
-            return Container();
+            return const CircularProgressIndicator();
           } else if (state is UserWihtoutLink) {
             final user = state.user;
             return Column(
