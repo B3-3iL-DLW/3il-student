@@ -34,7 +34,7 @@ workflows:
         script: |
           #!/usr/bin/env sh
           set -e # exit on first failed command
-          echo $ANDROID_FIREBASE_SECRET > $PROJECT_ROOT/android/app/google-services.json
+          echo $ANDROID_FIREBASE_SECRET | base64 --decode > $PROJECT_ROOT/android/app/google-services.json
       - name: Build AAB with Flutter
         script: |
           flutter build appbundle --release
