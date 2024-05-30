@@ -82,7 +82,11 @@ workflows:
         - name: Discord notification
           script: | 
             set -ex
-            APP_LINK=$(echo $CM_ARTIFACT_LINKS | jq -r '.[] | select(.name=="app.aab") | .url')
+            # Convertir le tableau JSON en une liste de liens
+            APP_LINKS=$(echo $CM_ARTIFACT_LINKS | jq -r '.[] | .url')
+
+            # Convertir la liste de liens en une chaîne avec des sauts de ligne
+            APP_LINKS=$(echo $APP_LINKS | tr ' ' '\n')
           
             # Get first 7 digits of commit number
             COMMIT=$(echo "${CM_COMMIT}" | sed 's/^\(........\).*/\1/;q')
@@ -93,8 +97,8 @@ workflows:
             # Get commit author
             AUTHOR=$(git show -s --format='%ae' $CM_COMMIT)
             
-            # Publish the notification
+            # Utiliser APP_LINKS dans la notification
             curl -H "Content-Type: multipart/form-data" \
-            -F 'payload_json={"username" : "codemagic-bot", "content": "**Commit:** `'"$COMMIT"'`\n\n**Commit message:** '"$COMMIT_MESSAGE"'\n\n**Branch:** '"$CM_BRANCH"'\n\n**Author:** '"$AUTHOR"'\n\n**Artifacts: **\n\n'"$APP_LINK"'\n\n"}' \
+            -F 'payload_json={"username" : "codemagic-bot", "content": "@everyone\n**Commit:** `'"$COMMIT"'`\n\n**Commit message:** '"$COMMIT_MESSAGE"'\n\n**Branch:** '"$CM_BRANCH"'\n\n**Author:** '"$AUTHOR"'\n\n**Artifacts: **\n\n'"$APP_LINKS"'\n\n"}' \
             -F "file1=@release_notes.txt" \
             $WEBHOOK_URL
