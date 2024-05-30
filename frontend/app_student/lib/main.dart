@@ -115,9 +115,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('fr'),
-      ],
+      supportedLocales: const [Locale('en', ''), Locale('fr', '')],
       routerConfig: router,
       builder: (context, child) {
         Global.init(context);

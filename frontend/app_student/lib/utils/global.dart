@@ -21,14 +21,4 @@ class Global {
     String userJson = jsonEncode(user.toJson());
     prefs.setString('user', userJson);
   }
-
-  static Future<UserModel?> getUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? userJson = prefs.getString('user');
-    if (userJson != null) {
-      return UserModel.fromJson(jsonDecode(userJson));
-    } else {
-      return null;
-    }
-  }
 }

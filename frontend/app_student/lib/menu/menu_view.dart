@@ -24,7 +24,7 @@ class MenuBarViewState extends State<MenuBarView> {
   void _setSelectedIndex() {
     final route = GoRouter.of(context).routeInformationProvider.value.uri.path;
 
-    if (route == AppRoutes.loginPage) {
+    if (route == AppRoutes.schoolSpace) {
       _selectedIndex = 0;
     } else if (route == AppRoutes.schedulePage) {
       _selectedIndex = 1;
@@ -40,13 +40,13 @@ class MenuBarViewState extends State<MenuBarView> {
 
     switch (index) {
       case 0:
-        GoRouter.of(context).go(AppRoutes.schoolSpace);
+        GoRouter.of(context).pushReplacement(AppRoutes.schoolSpace);
         break;
       case 1:
-        GoRouter.of(context).go(AppRoutes.schedulePage);
+        GoRouter.of(context).pushReplacement(AppRoutes.schedulePage);
         break;
       case 2:
-        GoRouter.of(context).go(AppRoutes.profilPage);
+        GoRouter.of(context).pushReplacement(AppRoutes.profilPage);
         break;
     }
   }

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:app_student/config/dev_config.dart';
 import 'package:app_student/routes.dart';
 import 'package:app_student/users/cubit/user_cubit.dart';
@@ -34,7 +36,8 @@ void main() async {
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  initializeDateFormatting('fr_FR', null).then((_) {
+  initializeDateFormatting(PlatformDispatcher.instance.locale.toString(), null)
+      .then((_) {
     runApp(
       MultiRepositoryProvider(
         providers: [
@@ -104,9 +107,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('fr'),
-      ],
+      supportedLocales: const [Locale('en', ''), Locale('fr', '')],
       routerConfig: router,
       builder: (context, child) {
         Global.init(context);

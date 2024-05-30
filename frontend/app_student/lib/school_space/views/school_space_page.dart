@@ -22,6 +22,8 @@ class SchoolSpacePage extends StatefulWidget {
 class SchoolSpacePageState extends State<SchoolSpacePage> {
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return CustomLayout(
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
       body: BlocBuilder<UserCubit, UserState>(
@@ -34,16 +36,16 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                HeaderTitle(AppLocalizations.of(context)!.my3il),
+                HeaderTitle(localizations.my3il),
                 Container(
                   padding: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
                     color: CustomTheme.primaryColorLight.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: const Text(
-                    'Votre espace est relié ! Vous pouvez désormais consulter vos notes et absences :)',
-                    style: TextStyle(
+                  child: Text(
+                    localizations.my3ilSpaceLinked,
+                    style: const TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -59,9 +61,9 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
           } else if (state is UserWihtoutLink) {
             return Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 10.0),
-                  child: HeaderTitle('My3iL'),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: HeaderTitle(localizations.my3il),
                 ),
                 Container(
                   padding: const EdgeInsets.all(10.0),
@@ -69,9 +71,9 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
                     color: CustomTheme.primaryColorLight.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: const Text(
-                    'Cet espace vous permet de relier votre compte Exnet 3il à l\'application pour consulter vos notes et absences.',
-                    style: TextStyle(
+                  child: Text(
+                    localizations.linkMy3ilSpace,
+                    style: const TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -79,12 +81,16 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
                 ),
                 SizedBox(height: Global.screenHeight * 0.2),
                 CustomButton(
-                  text: 'Relier mon compte',
+                  text: localizations.linkAccountButton,
                   onPressed: () {
                     context.push('/linkAccountForm');
                   },
                 ),
               ],
+            );
+          } else if (state is UserError) {
+            return Center(
+              child: Text(state.message),
             );
           } else {
             return const SizedBox.shrink();
