@@ -58,6 +58,25 @@ workflows:
 
           # Note that you don't need to include title and changelog if you do not want to.
           # Any number of artifacts can be included with the release.
+      - name: Discord notification
+        script: | 
+          set -ex
+          APP_LINK=$(echo $CM_ARTIFACT_LINKS | jq -r '.[] | select(.name=="app.aab") | .url')
+        
+          # Get first 7 digits of commit number
+          COMMIT=$(echo "${CM_COMMIT}" | sed 's/^\(........\).*/\1/;q')
+
+          # Get commit message
+          COMMIT_MESSAGE=$(git log --format=%B -n 1 $CM_COMMIT)
+          
+          # Get commit author
+          AUTHOR=$(git show -s --format='%ae' $CM_COMMIT)
+          
+          # Publish the notification
+          curl -H "Content-Type: multipart/form-data" \
+          -F 'payload_json={"username" : "codemagic-bot", "content": "**Commit:** `'"$COMMIT"'`\n\n**Commit message:** '"$COMMIT_MESSAGE"'\n\n**Branch:** '"$CM_BRANCH"'\n\n**Author:** '"$AUTHOR"'\n\n**Artifacts: **\n\n'"$APP_LINK"'\n\n"}' \
+          -F "file1=@release_notes.txt" \
+          $WEBHOOK_URL
     artifacts:
       - build/**/outputs/**/*.aab
       - build/**/outputs/**/mapping.txt
