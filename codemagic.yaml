@@ -1,6 +1,6 @@
 workflows:
   flutter-app:
-    name: my3iL
+    name: Android Build
     working_directory: frontend/app_student
     environment:
       flutter: "3.19.2"
