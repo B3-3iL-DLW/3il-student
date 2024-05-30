@@ -8,6 +8,7 @@ workflows:
       vars:
         PROD_API_URL: "https://api.lukasvalois.com"
         DEV_API_URL: "https://api-dev.lukasvalois.com"
+        PROJECT_ROOT: "$CM_BUILD_DIR/frontend/app_student"
       android_signing:
         - GooglePlayLukas
       groups:
@@ -22,7 +23,7 @@ workflows:
     scripts:
       - name: Set up local.properties
         script: |
-          echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+          echo "flutter.sdk=$HOME/programs/flutter" > "$PROJECT_ROOT/android/local.properties"
       - name: Get Flutter packages
         script: |
           flutter packages pub get
@@ -33,8 +34,6 @@ workflows:
         script: |
           #!/usr/bin/env sh
           set -e # exit on first failed command
-
-          PROJECT_ROOT=$CM_BUILD_DIR/frontend/app_student   
           echo $ANDROID_FIREBASE_SECRET > $PROJECT_ROOT/android/app/google-services.json
       - name: Build AAB with Flutter
         script: |
