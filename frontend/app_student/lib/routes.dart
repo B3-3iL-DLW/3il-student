@@ -28,6 +28,17 @@ class AppRoutes {
 
   static final routes = [
     GoRoute(
+      redirect: (BuildContext context, GoRouterState state) {
+        final userCubit = context.read<UserCubit>();
+        if (userCubit.state is UserWithoutClass) {
+          return classListPage;
+        } else if ((userCubit.state is UserWihtoutLink) ||
+            (userCubit.state is UserLoggedIn)) {
+          return schedulePage;
+        }
+
+        return loginPage;
+      },
       path: classListPage,
       pageBuilder: (context, state) => MaterialPage<void>(
         key: state.pageKey,
@@ -47,24 +58,18 @@ class AppRoutes {
           ], child: const ClassGroupPage()),
         ),
       ),
-      // redirect: (context, state) {
-      //   final loginCubit = context.read<LoginCubit>();
-      //   if (loginCubit.state is RedirectToClassSelection) {
-      //     return classListPage;
-      //   }
-      //   return null;
-      // },
     ),
     GoRoute(
       redirect: (BuildContext context, GoRouterState state) {
-        final loginCubit = context.read<LoginCubit>();
         final userCubit = context.read<UserCubit>();
-        if (loginCubit.state is LoginAuthenticated) {
-          if (userCubit.state is UserWithoutClass) {
-            return classListPage;
-          }
+
+        if (userCubit.state is UserWithoutClass) {
+          return classListPage;
+        } else if ((userCubit.state is UserWihtoutLink) ||
+            (userCubit.state is UserLoggedIn)) {
           return schedulePage;
         }
+
         return loginPage;
       },
       path: loginPage,
@@ -82,6 +87,18 @@ class AppRoutes {
       ),
     ),
     GoRoute(
+      redirect: (BuildContext context, GoRouterState state) {
+        final userCubit = context.read<UserCubit>();
+
+        if ((userCubit.state is UserWihtoutLink) ||
+            (userCubit.state is UserLoggedIn)) {
+          return schedulePage;
+        } else if (userCubit.state is UserWithoutClass) {
+          return classListPage;
+        }
+
+        return loginPage;
+      },
       path: schedulePage,
       pageBuilder: (context, state) => MaterialPage<void>(
         key: state.pageKey,
@@ -108,15 +125,20 @@ class AppRoutes {
           ),
         ),
       ),
-      // redirect: (context, state) {
-      //   final loginCubit = context.read<LoginCubit>();
-      //   if (loginCubit.state is LoginAuthenticated) {
-      //     return schedulePage;
-      //   }
-      //   return null;
-      // },
     ),
     GoRoute(
+      redirect: (BuildContext context, GoRouterState state) {
+        final userCubit = context.read<UserCubit>();
+
+        if ((userCubit.state is UserWihtoutLink) ||
+            (userCubit.state is UserLoggedIn)) {
+          return profilPage;
+        } else if (userCubit.state is UserWithoutClass) {
+          return classListPage;
+        }
+
+        return loginPage;
+      },
       path: profilPage,
       pageBuilder: (context, state) => MaterialPage<void>(
         key: state.pageKey,
@@ -124,6 +146,18 @@ class AppRoutes {
       ),
     ),
     GoRoute(
+      redirect: (BuildContext context, GoRouterState state) {
+        final userCubit = context.read<UserCubit>();
+
+        if ((userCubit.state is UserWihtoutLink) ||
+            (userCubit.state is UserLoggedIn)) {
+          return schoolSpace;
+        } else if (userCubit.state is UserWithoutClass) {
+          return classListPage;
+        }
+
+        return loginPage;
+      },
       path: schoolSpace,
       pageBuilder: (context, state) => MaterialPage<void>(
         key: state.pageKey,
@@ -131,6 +165,19 @@ class AppRoutes {
       ),
     ),
     GoRoute(
+      redirect: (BuildContext context, GoRouterState state) {
+        final userCubit = context.read<UserCubit>();
+
+        if (userCubit.state is UserWihtoutLink) {
+          return linkAccountFormPage;
+        } else if (userCubit.state is UserLoggedIn) {
+          return schoolSpace;
+        } else if (userCubit.state is UserWithoutClass) {
+          return classListPage;
+        }
+
+        return loginPage;
+      },
       path: linkAccountFormPage, // Use the new constant here
       pageBuilder: (context, state) => MaterialPage<void>(
         key: state.pageKey,

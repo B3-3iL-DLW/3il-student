@@ -88,6 +88,10 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
                 ),
               ],
             );
+          } else if (state is UserError) {
+            return Center(
+              child: Text(state.message),
+            );
           } else {
             return const SizedBox.shrink();
           }
