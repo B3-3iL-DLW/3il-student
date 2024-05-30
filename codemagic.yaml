@@ -75,7 +75,6 @@ workflows:
           # Publish the notification
           curl -H "Content-Type: multipart/form-data" \
           -F 'payload_json={"username" : "codemagic-bot", "content": "**Commit:** `'"$COMMIT"'`\n\n**Commit message:** '"$COMMIT_MESSAGE"'\n\n**Branch:** '"$CM_BRANCH"'\n\n**Author:** '"$AUTHOR"'\n\n**Artifacts: **\n\n'"$APP_LINK"'\n\n"}' \
-          -F "file1=@release_notes.txt" \
           $WEBHOOK_URL
     artifacts:
       - build/**/outputs/**/*.aab
