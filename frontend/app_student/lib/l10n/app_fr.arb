@@ -134,6 +134,38 @@
   "@my3il": {
     "description": "Texte du menu"
   },
+  "my3ilSpaceLinked": "Votre espace est relié ! Vous pouvez désormais consulter vos notes et absences :)",
+  "@my3ilSpaceLinked": {
+    "description": "Message affiché lorsque l'espace My3iL est relié"
+  },
+  "linkMy3ilSpace": "Cet espace vous permet de relier votre compte Exnet 3il à l'application pour consulter vos notes et absences.",
+  "@linkMy3ilSpace": {
+    "description": "Message expliquant l'utilité de l'espace My3iL"
+  },
+  "linkAccountButton": "Relier mon compte",
+  "@linkAccountButton": {
+    "description": "Texte du bouton pour relier le compte Exnet 3iL"
+  },
+  "ineLabel": "Numéro INE",
+  "@ineLabel": {
+    "description": "Label pour le champ INE"
+  },
+  "ineError": "Veuillez entrer votre INE",
+  "@ineError": {
+    "description": "Message d'erreur pour le champ INE"
+  },
+  "birthDateLabel": "Date de naissance",
+  "@birthDateLabel": {
+    "description": "Label pour le champ Date de naissance"
+  },
+  "birthDateError": "Veuillez entrer votre date de naissance",
+  "@birthDateError": {
+    "description": "Message d'erreur pour le champ Date de naissance"
+  },
+  "validateButton": "Valider",
+  "@validateButton": {
+    "description": "Texte du bouton pour valider le formulaire"
+  },
   "errors_code": "{error, select, already_exists{Cette ressource existe déjà} internal{Une erreur imprévue s'est produite} invalid{Requête invalide} method_not_allowed{Méthode HTTP invalide} not_found{Ressource introuvable} permission_denied{Accès refusé} too_many_requests{Nombre maximum de requêtes atteint} unauthorized{Authentification requise} email_already_used{Adresse e-mail déjà utilisée} passwordincorrect{Mot de passe actuel incorrect} invalid_credentials{E-mail ou mot de passe incorrect} unauthorized_identity{Cette application est réservée aux professionnels de santé} HttpException{Erreur de requête Http} JsonDecodeException{Erreur décodage JSON}  JsonDeserializationException{Erreur serialization du JSON} too_many_observations{Trop de résultat} other{Une erreur imprévue s'est produite}}",
   "@errors_code": {
     "description": "All API error message",
