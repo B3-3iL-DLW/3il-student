@@ -10,6 +10,8 @@ workflows:
         DEV_API_URL: "https://api-dev.lukasvalois.com"
       android_signing:
         - GooglePlayLukas
+      groups:
+        - firebase_things
     triggering:
       events:
         - push
