@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:app_student/api/api_service.dart';
 import 'package:app_student/api/week_schedule/entities/week_schedule_entity.dart';
 import 'package:app_student/api/week_schedule/models/week_schedule_model.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WeekScheduleRepository {
   final ApiService apiService;
@@ -22,14 +21,16 @@ class WeekScheduleRepository {
               throw FormatException('Format incorrect: $e');
             }
           });
-    } on HttpException catch (he) {
-      throw he;
-    } on SocketException catch (se) {
-      throw  se;
-    } on FormatException catch (fe) {
-      throw fe;
-    } on TimeoutException catch (te) {
-      throw te;
+    } on ArgumentError catch (_) {
+      rethrow;
+    } on SocketException catch (_) {
+      rethrow;
+    } on FormatException catch (_) {
+      rethrow;
+    } on TimeoutException catch (_) {
+      rethrow;
+    } on HttpException catch (_) {
+      rethrow;
     } catch (e) {
       throw Exception(e.toString());
     }

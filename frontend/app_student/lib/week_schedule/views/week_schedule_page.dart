@@ -1,4 +1,3 @@
-import 'package:app_student/shared_components/network_error.dart';
 import 'package:app_student/week_schedule/cubit/week_schedule_cubit.dart';
 import 'package:app_student/week_schedule/views/widgets/datepicker_button.dart';
 import 'package:app_student/week_schedule/views/widgets/day_schedule_widget.dart';

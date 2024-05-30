@@ -30,17 +30,19 @@ class ApiService {
           }
         }).toList();
       } else {
-        throw HttpException('HttpException');
+        throw const HttpException('HttpException');
       }
-    } on TimeoutException catch (te) {
+    } on TimeoutException catch (_) {
       throw TimeoutException('too_many_requests');
     } on SocketException catch (_) {
-      throw SocketException('noConnected');
-    } on FormatException catch (_) {
-      throw FormatException('invalid');
+      throw const SocketException('noConnected');
+    }on ArgumentError catch (_) {
+      throw ArgumentError('invalid_url');
     } on HttpException catch (_) {
-      throw HttpException('HttpException');
-    } catch (e) {
+      throw const HttpException('HttpException');
+    }  on FormatException catch (_) {
+      throw const FormatException('invalid');
+    }catch (e) {
       throw Exception('other');
     }
   }

@@ -60,6 +60,11 @@ class WeekScheduleCubit extends Cubit<WeekScheduleState> {
         return;
       }
       emit(WeekScheduleError(fe.message));
+    } on ArgumentError catch (ae) {
+      if (isClosed) {
+        return;
+      }
+      emit(WeekScheduleError(ae.message));
     } catch (e) {
       if (isClosed) {
         return;
