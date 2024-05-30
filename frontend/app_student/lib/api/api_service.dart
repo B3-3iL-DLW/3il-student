@@ -36,13 +36,13 @@ class ApiService {
       throw TimeoutException('too_many_requests');
     } on SocketException catch (_) {
       throw const SocketException('noConnected');
-    }on ArgumentError catch (_) {
+    } on ArgumentError catch (_) {
       throw ArgumentError('invalid_url');
     } on HttpException catch (_) {
       throw const HttpException('HttpException');
-    }  on FormatException catch (_) {
+    } on FormatException catch (_) {
       throw const FormatException('invalid');
-    }catch (e) {
+    } catch (e) {
       throw Exception('other');
     }
   }

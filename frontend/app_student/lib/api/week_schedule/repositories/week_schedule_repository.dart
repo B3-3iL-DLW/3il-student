@@ -13,14 +13,14 @@ class WeekScheduleRepository {
   Future<List<WeekScheduleModel>> getWeeksSchedule(className) async {
     try {
       return await apiService.getData('/api/timetable?class_param=$className',
-              (item) {
-            try {
-              final entity = WeekScheduleEntity.fromJson(item);
-              return WeekScheduleModel.fromEntity(entity);
-            } catch (e) {
-              throw FormatException('Format incorrect: $e');
-            }
-          });
+          (item) {
+        try {
+          final entity = WeekScheduleEntity.fromJson(item);
+          return WeekScheduleModel.fromEntity(entity);
+        } catch (e) {
+          throw FormatException('Format incorrect: $e');
+        }
+      });
     } on ArgumentError catch (_) {
       rethrow;
     } on SocketException catch (_) {
