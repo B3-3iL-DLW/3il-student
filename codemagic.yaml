@@ -97,8 +97,17 @@ workflows:
             # Get commit author
             AUTHOR=$(git show -s --format='%ae' $CM_COMMIT)
             
-            # Utiliser APP_LINKS dans la notification
+            # Générer la chaîne JSON avec jq
+            PAYLOAD_JSON=$(jq -n \
+                              --arg commit "$COMMIT" \
+                              --arg message "$COMMIT_MESSAGE" \
+                              --arg branch "$CM_BRANCH" \
+                              --arg author "$AUTHOR" \
+                              --arg links "$APP_LINKS" \
+                              '{username: "codemagic-bot", content: "@everyone\n**Commit:** `\($commit)`\n\n**Commit message:** \($message)\n\n**Branch:** \($branch)\n\n**Author:** \($author)\n\n**Artifacts: **\n\n\($links)\n\n"}')
+
+            # Utiliser PAYLOAD_JSON dans la notification
             curl -H "Content-Type: multipart/form-data" \
-            -F 'payload_json={"username" : "codemagic-bot", "content": "@everyone\n**Commit:** `'"$COMMIT"'`\n\n**Commit message:** '"$COMMIT_MESSAGE"'\n\n**Branch:** '"$CM_BRANCH"'\n\n**Author:** '"$AUTHOR"'\n\n**Artifacts: **\n\n'"$APP_LINKS"'\n\n"}' \
+            -F "payload_json=$PAYLOAD_JSON" \
             -F "file1=@release_notes.txt" \
             $WEBHOOK_URL
