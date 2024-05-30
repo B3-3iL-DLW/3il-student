@@ -30,19 +30,18 @@ class ApiService {
           }
         }).toList();
       } else {
-        throw Exception(
-            'ERROR ${response.statusCode} Echec du chargement des données');
+        throw HttpException('HttpException');
       }
     } on TimeoutException catch (te) {
-      throw TimeoutException('Request timed out: $te');
+      throw TimeoutException('too_many_requests');
     } on SocketException catch (_) {
-      rethrow;
+      throw SocketException('noConnected');
     } on FormatException catch (_) {
-      rethrow;
+      throw FormatException('invalid');
     } on HttpException catch (_) {
-      rethrow;
+      throw HttpException('HttpException');
     } catch (e) {
-      throw Exception(e.toString());
+      throw Exception('other');
     }
   }
 }

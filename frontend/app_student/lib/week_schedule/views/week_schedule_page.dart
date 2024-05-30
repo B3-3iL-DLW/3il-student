@@ -5,6 +5,7 @@ import 'package:app_student/week_schedule/views/widgets/day_schedule_widget.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../menu/menu_view.dart';
 import '../../shared_components/app_bar.dart';
 import '../../utils/custom_layout.dart';
@@ -51,13 +52,13 @@ class WeekSchedulePage extends StatelessWidget {
           } else if (state is WeekScheduleError) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Fluttertoast.showToast(
-                msg: state.message,
+                msg: AppLocalizations.of(context)!.errors_code(state.message),
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
                 textColor: Colors.white,
               );
             });
-            return const NetworkError();
+            return const SizedBox.shrink();
           } else {
             return const SizedBox.shrink();
           }
