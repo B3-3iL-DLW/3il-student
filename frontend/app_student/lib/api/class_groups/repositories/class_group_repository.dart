@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:app_student/api/class_groups/entities/class_group_entity.dart';
@@ -19,16 +20,18 @@ class ClassGroupRepository {
           throw FormatException('Failed to parse JSON: $e');
         }
       });
-    } on HttpException catch (he) {
-      throw Exception('HTTP error: $he');
-    } on FormatException catch (fe) {
-      throw Exception('Failed to parse JSON: $fe');
-    } on SocketException catch (se) {
-      throw Exception('No internet connection: $se');
-    } on TypeError catch (te) {
-      throw Exception('Type error: $te');
+    } on ArgumentError catch (_) {
+      rethrow;
+    } on SocketException catch (_) {
+      rethrow;
+    } on FormatException catch (_) {
+      rethrow;
+    } on TimeoutException catch (_) {
+      rethrow;
+    } on HttpException catch (_) {
+      rethrow;
     } catch (e) {
-      throw Exception('Failed to load data: $e');
+      throw Exception(e.toString());
     }
   }
 }

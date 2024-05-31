@@ -18,12 +18,14 @@ class ClassGroupCubit extends Cubit<ClassGroupState> {
       emit(ClassGroupLoading());
       final classes = await classRepository.getClasses();
       emit(ClassGroupLoaded(classes));
+    } on HttpException catch (he) {
+      emit(ClassGroupError(he.message));
     } on SocketException catch (se) {
       emit(ClassGroupError(se.message));
     } on FormatException catch (fe) {
       emit(ClassGroupError(fe.message));
-    } on HttpException catch (he) {
-      emit(ClassGroupError(he.message));
+    } on ArgumentError catch (ae) {
+      emit(ClassGroupError(ae.message));
     } catch (e) {
       emit(ClassGroupError(e.toString()));
     }
