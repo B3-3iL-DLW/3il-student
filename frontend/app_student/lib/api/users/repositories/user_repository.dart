@@ -21,15 +21,27 @@ class UserRepository {
   }
 
   Future<UserModel> getUser() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userJson = prefs.getString('user');
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userJson = prefs.getString('user');
 
-    if (userJson != null) {
-      Map<String, dynamic> userMap = jsonDecode(userJson);
+      if (userJson != null) {
+        Map<String, dynamic> userMap = jsonDecode(userJson);
 
-      return UserModel.fromJson(userMap);
-    } else {
-      throw Exception('No user found in cache');
+        return UserModel.fromJson(userMap);
+      } else {
+        throw Exception('No user found in cache');
+      }
+    } on HttpException catch (_) {
+      rethrow;
+    } on SocketException catch (_) {
+      rethrow;
+    } on FormatException catch (_) {
+      rethrow;
+    } on ArgumentError catch (_) {
+      rethrow;
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 
