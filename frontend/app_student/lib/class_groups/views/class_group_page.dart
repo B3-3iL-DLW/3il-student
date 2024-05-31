@@ -57,7 +57,8 @@ class ClassGroupPage extends StatelessWidget {
                 } else if (classState is ClassGroupError) {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     Fluttertoast.showToast(
-                      msg: AppLocalizations.of(context)!.errors_code(classState.message),
+                      msg: AppLocalizations.of(context)!
+                          .errors_code(classState.message),
                       toastLength: Toast.LENGTH_LONG,
                       gravity: ToastGravity.BOTTOM,
                       textColor: Colors.white,
