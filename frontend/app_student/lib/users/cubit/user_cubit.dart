@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_student/api/class_groups/models/class_group_model.dart';
 import 'package:app_student/api/users/models/user_model.dart';
 import 'package:bloc/bloc.dart';
@@ -30,14 +32,31 @@ class UserCubit extends Cubit<UserState> {
           emit(UserWihtoutLink(user));
         }
       }
-    } catch (e) {
-      if (!isClosed) {
-        if (e.toString() == 'Exception: No user found in cache') {
-          emit(UserInitial());
-        } else {
-          emit(UserError(e.toString()));
-        }
+    } on HttpException catch (he) {
+      if (isClosed) {
+        return;
       }
+      emit(UserError(he.message));
+    } on SocketException catch (se) {
+      if (isClosed) {
+        return;
+      }
+      emit(UserError(se.message));
+    } on FormatException catch (fe) {
+      if (isClosed) {
+        return;
+      }
+      emit(UserError(fe.message));
+    } on ArgumentError catch (ae) {
+      if (isClosed) {
+        return;
+      }
+      emit(UserError(ae.message));
+    } catch (e) {
+      if (isClosed) {
+        return;
+      }
+      emit(UserError(e.toString()));
     }
   }
 

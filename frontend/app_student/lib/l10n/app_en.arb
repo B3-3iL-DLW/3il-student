@@ -165,5 +165,14 @@
   "validateButton": "Validate",
   "@validateButton": {
     "description": "Text for the button to validate the form"
+  },
+  "errors_code": "{error, select, already_exists{This resource already exists} internal{An unexpected error occurred} invalid{Invalid request} method_not_allowed{Invalid HTTP method} noConnected{Connection problem} not_found{Resource not found} permission_denied{Access denied} too_many_requests{Maximum number of requests reached} unauthorized{Authentication required} email_already_used{Email address already used} passwordincorrect{Current password incorrect} invalid_credentials{Incorrect email or password} unauthorized_identity{This application is reserved for healthcare professionals} HttpException{HTTP request error} invalid_url{Invalid URL} JsonDecodeException{JSON decoding error} JsonDeserializationException{JSON serialization error} too_many_observations{Too many results} other{An unexpected error occurred}}",
+  "@errors_code": {
+    "description": "All API error messages",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
   }
 }

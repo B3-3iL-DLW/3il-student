@@ -76,6 +76,16 @@ class ProfilPage extends StatelessWidget {
                 UserInfoCard(ine: user.ine!, birthDate: birthDateString),
               ],
             );
+          } else if (state is UserError) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Fluttertoast.showToast(
+                msg: AppLocalizations.of(context)!.errors_code(state.message),
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                textColor: Colors.white,
+              );
+            });
+            return const SizedBox.shrink();
           } else {
             return const SizedBox.shrink();
           }

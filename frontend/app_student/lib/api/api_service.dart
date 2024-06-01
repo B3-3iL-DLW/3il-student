@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -29,12 +30,20 @@ class ApiService {
           }
         }).toList();
       } else {
-        throw Exception('ERROR ${response.statusCode} Failed to load data');
+        throw const HttpException('HttpException');
       }
-    } on TimeoutException catch (e) {
-      throw Exception('Request time out: $e');
+    } on TimeoutException catch (_) {
+      throw TimeoutException('too_many_requests');
+    } on SocketException catch (_) {
+      throw const SocketException('noConnected');
+    } on ArgumentError catch (_) {
+      throw ArgumentError('invalid_url');
+    } on HttpException catch (_) {
+      throw const HttpException('HttpException');
+    } on FormatException catch (_) {
+      throw const FormatException('invalid');
     } catch (e) {
-      throw Exception('Failed to load data: $e');
+      throw Exception('other');
     }
   }
 }
