@@ -29,7 +29,6 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
-          print(state);
           if (state is UserLoading) {
             return const Center(
               child: CircularProgressIndicator(),
