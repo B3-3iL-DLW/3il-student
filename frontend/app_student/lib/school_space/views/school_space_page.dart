@@ -29,6 +29,7 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
       appBar: HeaderLogo(appBarHeight: Global.screenHeight * 0.3),
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
+          print(state);
           if (state is UserLoading) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -98,7 +99,7 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
                 textColor: Colors.white,
               );
             });
-            return const SizedBox.shrink();
+            return Text(state.message);
           } else {
             return const SizedBox.shrink();
           }
