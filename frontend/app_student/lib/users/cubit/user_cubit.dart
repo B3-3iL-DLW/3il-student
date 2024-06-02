@@ -103,6 +103,9 @@ class UserCubit extends Cubit<UserState> {
       emit(UserLoggedIn(user));
     } catch (e) {
       emit(UserError(e.toString()));
+      await Future.delayed(const Duration(seconds: 4));
+      UserModel user = await userRepository.getUser();
+      emit(UserWihtoutLink(user));
     }
   }
 }

@@ -57,7 +57,7 @@ class UserRepository {
 
   Future<UserModel> login(String ine, String birthDate) async {
     final response = await http.post(
-      Uri.parse('${apiService.apiUrl}/api/student/login'),
+      Uri.parse('${apiService.apiUrl}/api/login'),
       body: {'username': ine, 'password': birthDate},
     );
 

@@ -98,7 +98,7 @@ class SchoolSpacePageState extends State<SchoolSpacePage> {
                 textColor: Colors.white,
               );
             });
-            return const SizedBox.shrink();
+            return Text(state.message);
           } else {
             return const SizedBox.shrink();
           }
